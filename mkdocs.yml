@@ -8,6 +8,11 @@ nav:
   - Requirements: generated/requirements.md
   - Architecture: generated/architecture.md
   - RTM: generated/rtm.md
+  - Test results: generated/tests.md
+  - Security: generated/security.md
+  - Impact of last change: generated/impact.md
+  - Metrics: generated/metrics.md
+  - Summary: generated/summary.md
   - Decisions: decisions.md
   - Pipeline: pipeline.md
   - Digital thread: thread.md

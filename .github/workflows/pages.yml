@@ -1,0 +1,103 @@
+name: Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build reports and site
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Full history is required for thread versioning and impact diffs.
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Update digital thread
+        run: mbse thread update
+
+      - name: Validate requirements, model, and schema
+        run: mbse validate all
+
+      - name: Check traceability
+        run: mbse trace check
+
+      - name: Build requirements traceability matrix
+        run: mbse trace rtm
+
+      - name: Requirements coverage
+        continue-on-error: true
+        run: mbse reqcov
+
+      - name: Run tests
+        continue-on-error: true
+        run: pytest
+
+      - name: Security gate
+        continue-on-error: true
+        run: mbse security
+
+      - name: Impact analysis
+        continue-on-error: true
+        run: mbse impact --base HEAD~1 --head HEAD
+
+      - name: Generate pipeline summary
+        run: mbse report
+
+      - name: Build site
+        run: mkdocs build --strict
+
+      - name: Upload pipeline reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-reports
+          path: build/reports/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

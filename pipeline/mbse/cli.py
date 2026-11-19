@@ -9,6 +9,8 @@ from pathlib import Path
 
 import click
 
+from . import impact as impact_module
+from . import reports as reports_module
 from . import thread as thread_module
 from . import thread_diff as thread_diff_module
 from . import thread_query as thread_query_module
@@ -324,12 +326,45 @@ def thread_query(
 
 
 @cli.command()
-@click.option("--base", "base_ref", metavar="REF", help="Base git reference.")
-@click.option("--head", "head_ref", metavar="REF", help="Head git reference.")
-def impact(base_ref: str | None, head_ref: str | None) -> None:
+@click.option(
+    "--base",
+    "base_ref",
+    default="origin/main",
+    show_default=True,
+    metavar="REF",
+    help="Base git reference.",
+)
+@click.option(
+    "--head",
+    "head_ref",
+    default="HEAD",
+    show_default=True,
+    metavar="REF",
+    help="Head git reference.",
+)
+def impact(base_ref: str, head_ref: str) -> None:
     """Analyse the impact of changes between two references."""
-    _ = (base_ref, head_ref)
-    _not_implemented("impact", 9)
+    root = Path(".")
+    try:
+        report = impact_module.analyse_impact(base_ref, head_ref, root=root)
+        impact_json, impact_md = impact_module.write_impact(report, root=root)
+        rtm_diff = impact_module.write_rtm_diff(base_ref, head_ref, root=root)
+    except OSError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    summary = report.get("summary", {})
+    risk = report.get("risk", {})
+    click.echo(f"changed_files: {summary.get('changed_files', 0)}")
+    for classification in (
+        "directly_changed",
+        "impacted",
+        "needs_review",
+        "needs_retest",
+    ):
+        click.echo(f"{classification}: {summary.get(classification, 0)}")
+    click.echo(f"risk: {risk.get('level', 'unknown')}")
+    for path in (impact_json, impact_md, rtm_diff):
+        click.echo(_display_path(Path(path)))
 
 
 _GENERATE_TARGETS = {
@@ -375,7 +410,28 @@ def generate(target: str) -> None:
 @cli.command()
 def report() -> None:
     """Produce the aggregate pipeline report."""
-    _not_implemented("report", 10)
+    root = Path(".")
+    try:
+        result = reports_module.write_summary(root=root)
+    except OSError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    summary_json = Path(result["summary_json"])
+    summary_md = Path(result["summary_md"])
+    status = result.get("status")
+    if not status:
+        try:
+            payload = json.loads(summary_json.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            status = "unknown"
+        else:
+            status = payload.get("status", "unknown")
+
+    click.echo(f"status: {status}")
+    click.echo(_display_path(summary_json))
+    click.echo(_display_path(summary_md))
+    for path in result.get("site_pages", []):
+        click.echo(_display_path(Path(path)))
 
 
 @cli.command()

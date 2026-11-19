@@ -36,7 +36,7 @@ report:
 gen:
 	$(MBSE) generate all
 
-site: gen
+site: gen report
 	mkdocs build --strict
 
 install:

@@ -1,0 +1,41 @@
+# Metrics
+
+Current pipeline counts. DORA metrics are not part of this report.
+
+## Pipeline counts
+
+| Metric | Value |
+| --- | --- |
+| Requirements | 13 |
+| Validation errors | 0 |
+| Validation warnings | 0 |
+| Quality score | 100.0 |
+| Traceability coverage (%) | 100.0 |
+| Verification coverage (%) | 100.0 |
+| Total tests | 258 |
+| Failed tests | 0 |
+| Requirements coverage (%) | 100.0 |
+| Line coverage (%) | 88.2 |
+| Security findings | 23 |
+| Impact risk | medium |
+| Thread nodes | 146 |
+| Thread edges | 295 |
+
+## Reports
+
+- [summary.json](../reports/summary.json)
+- [summary.md](../reports/summary.md)
+- [req_quality.json](../reports/req_quality.json)
+- [rtm.csv](../reports/rtm.csv)
+- [rtm.md](../reports/rtm.md)
+- [rtm.html](../reports/rtm.html)
+- [junit.xml](../reports/junit.xml)
+- [coverage.xml](../reports/coverage.xml)
+- [reqcov.json](../reports/reqcov.json)
+- [security.json](../reports/security.json)
+- [security.sarif](../reports/security.sarif)
+- [sbom.json](../reports/sbom.json)
+- [impact.json](../reports/impact.json)
+- [impact.md](../reports/impact.md)
+- [rtm_diff.md](../reports/rtm_diff.md)
+- [thread_diff.md](../reports/thread_diff.md)

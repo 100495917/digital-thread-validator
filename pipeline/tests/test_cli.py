@@ -619,3 +619,175 @@ def test_thread_query_requires_exactly_one_option(
 
     assert result.exit_code == 2
     assert "exactly one of --upstream, --downstream, --why-failed, --history" in result.output
+
+
+def _impact_report() -> dict:
+    return {
+        "base": "origin/main",
+        "head": "HEAD",
+        "changed_files": ["requirements/req.yaml", "src/demo.py"],
+        "artifacts": {
+            "directly_changed": [
+                {
+                    "id": "REQ-001",
+                    "type": "Requirement",
+                    "path": "requirements/req.yaml",
+                    "reasons": ["changed file"],
+                },
+            ],
+            "impacted": [
+                {
+                    "id": "BLK-demo",
+                    "type": "ModelElement",
+                    "path": "models/system.yaml",
+                    "reasons": ["downstream"],
+                },
+            ],
+            "needs_review": [
+                {
+                    "id": "REQ-002",
+                    "type": "Requirement",
+                    "path": "requirements/req2.yaml",
+                    "reasons": ["upstream"],
+                },
+            ],
+            "needs_retest": [
+                {
+                    "id": "tests/test_demo.py::test_status",
+                    "type": "Test",
+                    "path": "tests/test_demo.py",
+                    "reasons": ["downstream"],
+                },
+            ],
+        },
+        "summary": {
+            "changed_files": 2,
+            "directly_changed": 1,
+            "impacted": 1,
+            "needs_review": 1,
+            "needs_retest": 1,
+        },
+        "risk": {
+            "level": "high",
+            "safety_requirements": 1,
+            "security_requirements": 0,
+            "depth": 3,
+            "changed_files": 2,
+        },
+        "requirements": {"direct": ["REQ-001"], "affected": ["REQ-001", "REQ-002"]},
+    }
+
+
+def test_impact_prints_classification_counts_risk_and_paths(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    report = _impact_report()
+    impact_json = tmp_path / "build/reports/impact.json"
+    impact_md = tmp_path / "build/reports/impact.md"
+    rtm_diff = tmp_path / "build/reports/rtm_diff.md"
+    calls: dict[str, object] = {}
+
+    def fake_analyse(base: str, head: str = "HEAD", root: Path = Path(".")) -> dict:
+        calls["analyse"] = (base, head, root)
+        return report
+
+    def fake_write(value: dict, root: Path = Path(".")) -> tuple[Path, Path]:
+        calls["write"] = (value, root)
+        return impact_json, impact_md
+
+    def fake_rtm(base: str, head: str, root: Path = Path(".")) -> Path:
+        calls["rtm"] = (base, head, root)
+        return rtm_diff
+
+    monkeypatch.setattr(cli_module.impact_module, "analyse_impact", fake_analyse)
+    monkeypatch.setattr(cli_module.impact_module, "write_impact", fake_write)
+    monkeypatch.setattr(cli_module.impact_module, "write_rtm_diff", fake_rtm)
+
+    result = CliRunner().invoke(cli, ["impact", "--base", "origin/develop", "--head", "feature"])
+
+    assert result.exit_code == 0, result.output
+    assert "changed_files: 2" in result.output
+    assert "directly_changed: 1" in result.output
+    assert "impacted: 1" in result.output
+    assert "needs_review: 1" in result.output
+    assert "needs_retest: 1" in result.output
+    assert "risk: high" in result.output
+    assert "build/reports/impact.json" in result.output
+    assert "build/reports/impact.md" in result.output
+    assert "build/reports/rtm_diff.md" in result.output
+    assert calls["analyse"] == ("origin/develop", "feature", Path("."))
+    assert calls["write"] == (report, Path("."))
+    assert calls["rtm"] == ("origin/develop", "feature", Path("."))
+
+
+def test_impact_uses_default_references(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.chdir(tmp_path)
+    report = _impact_report()
+    base = tmp_path / "build/reports/impact.json"
+    md = tmp_path / "build/reports/impact.md"
+    rtm = tmp_path / "build/reports/rtm_diff.md"
+    calls: dict[str, object] = {}
+
+    def fake_analyse(base_ref: str, head_ref: str = "HEAD", root: Path = Path(".")) -> dict:
+        calls["analyse"] = (base_ref, head_ref, root)
+        return report
+
+    monkeypatch.setattr(cli_module.impact_module, "analyse_impact", fake_analyse)
+    monkeypatch.setattr(
+        cli_module.impact_module, "write_impact", lambda value, root=Path("."): (base, md)
+    )
+    monkeypatch.setattr(
+        cli_module.impact_module,
+        "write_rtm_diff",
+        lambda base_ref, head_ref, root=Path("."): rtm,
+    )
+
+    result = CliRunner().invoke(cli, ["impact"])
+
+    assert result.exit_code == 0, result.output
+    assert calls["analyse"] == ("origin/main", "HEAD", Path("."))
+
+
+def test_impact_failure_exits_nonzero(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    def fake_analyse(base_ref: str, head_ref: str = "HEAD", root: Path = Path(".")) -> dict:
+        raise OSError("impact report write failed")
+
+    monkeypatch.setattr(cli_module.impact_module, "analyse_impact", fake_analyse)
+
+    result = CliRunner().invoke(cli, ["impact"])
+
+    assert result.exit_code == 1
+    assert "impact report write failed" in result.output
+    assert "Traceback" not in result.output
+
+
+def test_report_prints_status_and_summary_paths(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    summary_json = tmp_path / "build/reports/summary.json"
+    summary_md = tmp_path / "build/reports/summary.md"
+    site_page = tmp_path / "docs/generated/summary.md"
+    copied = tmp_path / "docs/reports/impact.json"
+
+    def fake_write_summary(root: Path = Path(".")) -> dict:
+        _write(summary_json, '{"status": "pass"}')
+        return {
+            "summary_json": summary_json,
+            "summary_md": summary_md,
+            "site_pages": [site_page],
+            "reports_copied": [copied],
+        }
+
+    monkeypatch.setattr(cli_module.reports_module, "write_summary", fake_write_summary)
+
+    result = CliRunner().invoke(cli, ["report"])
+
+    assert result.exit_code == 0, result.output
+    assert "status: pass" in result.output
+    assert "build/reports/summary.json" in result.output
+    assert "build/reports/summary.md" in result.output
+    assert "docs/generated/summary.md" in result.output

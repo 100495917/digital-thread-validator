@@ -1,0 +1,57 @@
+name: PR Impact
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  impact:
+    name: Analyse PR impact
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Full history is required to diff the PR base against HEAD.
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Update digital thread
+        run: mbse thread update
+
+      - name: Analyse impact
+        run: |
+          mbse impact \
+            --base "origin/${{ github.base_ref }}" \
+            --head HEAD
+
+      - name: Upload impact reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: impact-analysis
+          path: |
+            build/reports/impact.json
+            build/reports/impact.md
+            build/reports/rtm_diff.md
+          if-no-files-found: warn
+
+      - name: Comment impact analysis on PR
+        if: always()
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: impact-analysis
+          path: build/reports/impact.md

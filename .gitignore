@@ -1,6 +1,7 @@
 # Build and generated output
 build/
 site/
+docs/reports/
 dist/
 *.egg-info/
 

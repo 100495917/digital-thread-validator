@@ -22,6 +22,7 @@ dependencies = [
 dev = [
     "pytest",
     "pytest-cov",
+    "pytest-html",
     "httpx>=0.27",
     "pyyaml",
     "mkdocs-material",
@@ -43,7 +44,7 @@ packages = ["mbse", "mbse.templates"]
 [tool.pytest.ini_options]
 testpaths = ["tests", "pipeline/tests"]
 pythonpath = ["src"]
-addopts = "-ra --strict-markers --junitxml=build/reports/junit.xml --cov --cov-report=term-missing --cov-report=xml:build/reports/coverage.xml --cov-report=html:build/htmlcov"
+addopts = "-ra --strict-markers --junitxml=build/reports/junit.xml --html=build/reports/pytest.html --self-contained-html --cov --cov-report=term-missing --cov-report=xml:build/reports/coverage.xml --cov-report=html:build/htmlcov"
 markers = [
     "req: requirement-based test",
     "perf: performance test",
