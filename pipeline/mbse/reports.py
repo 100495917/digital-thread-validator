@@ -240,6 +240,41 @@ def _requirements_coverage(root: Path) -> float:
     return round(_as_float(summary.get("coverage")), 1)
 
 
+def _empty_metrics() -> dict[str, Any]:
+    """Return the metrics shape used when the metrics stage is unavailable."""
+    return {
+        "deployment_frequency": {"releases": 0, "window_days": 30, "per_week": 0.0},
+        "lead_time_hours": {"median": 0.0, "samples": 0},
+        "change_failure_rate": {"failed": 0, "total": 0, "rate": 0.0},
+        "mean_time_to_restore_hours": {"mean": 0.0, "incidents": 0},
+        "pipeline": {
+            "tests_total": 0,
+            "tests_passed": 0,
+            "tests_failed": 0,
+            "flaky_tests": 0,
+            "coverage_percent": 0.0,
+        },
+        "stages": [],
+        "source": "git",
+        "status": "partial",
+    }
+
+
+def _metrics_summary(root: Path) -> dict[str, Any]:
+    """Collect Phase 13 metrics, degrading to zeros when unavailable."""
+    try:
+        from . import metrics as metrics_module
+    except ImportError:
+        return _empty_metrics()
+    try:
+        collected = metrics_module.collect_metrics(root)
+    except Exception:  # noqa: BLE001 - metrics are optional in reporting
+        return _empty_metrics()
+    if not isinstance(collected, dict):
+        return _empty_metrics()
+    return collected
+
+
 def build_summary(root: Path = Path(".")) -> dict[str, Any]:
     """Build the deterministic aggregate pipeline summary."""
     root = Path(root)
@@ -253,6 +288,7 @@ def build_summary(root: Path = Path(".")) -> dict[str, Any]:
     security = _security_summary(reports / "security.json")
     impact = _impact_summary(reports / "impact.json")
     thread = _thread_summary(root)
+    metrics = _metrics_summary(root)
 
     status = (
         "pass"
@@ -269,6 +305,7 @@ def build_summary(root: Path = Path(".")) -> dict[str, Any]:
         "security": security,
         "impact": impact,
         "thread": thread,
+        "metrics": metrics,
     }
 
 
@@ -302,6 +339,62 @@ def _badge(status: str) -> str:
     return f"![pipeline](https://img.shields.io/badge/pipeline-{state})"
 
 
+def _metrics_sections(metrics: dict[str, Any]) -> list[str]:
+    """Render DORA, pipeline, and stage-duration tables for the metrics."""
+
+    def section(name: str) -> dict[str, Any]:
+        value = metrics.get(name, {})
+        return value if isinstance(value, dict) else {}
+
+    deployment = section("deployment_frequency")
+    lead = section("lead_time_hours")
+    failure = section("change_failure_rate")
+    restore = section("mean_time_to_restore_hours")
+    pipeline = section("pipeline")
+
+    lines = [
+        "## DORA metrics",
+        "",
+        *_table(
+            ("Metric", "Value"),
+            [
+                ("Deployments (30 days)", _as_int(deployment.get("releases"))),
+                ("Deployment frequency (per week)", _as_float(deployment.get("per_week"))),
+                ("Lead time median (hours)", _as_float(lead.get("median"))),
+                ("Change failure rate", _as_float(failure.get("rate"))),
+                ("Mean time to restore (hours)", _as_float(restore.get("mean"))),
+            ],
+        ),
+        "",
+        "## Pipeline metrics",
+        "",
+        *_table(
+            ("Metric", "Value"),
+            [
+                ("Tests", _as_int(pipeline.get("tests_total"))),
+                ("Passed", _as_int(pipeline.get("tests_passed"))),
+                ("Failed", _as_int(pipeline.get("tests_failed"))),
+                ("Flaky tests", _as_int(pipeline.get("flaky_tests"))),
+                ("Coverage (%)", _as_float(pipeline.get("coverage_percent"))),
+            ],
+        ),
+        "",
+    ]
+
+    stages = metrics.get("stages")
+    if isinstance(stages, list) and stages:
+        rows = [
+            (str(stage.get("name", "")), _as_float(stage.get("duration_seconds")))
+            for stage in stages
+            if isinstance(stage, dict)
+        ]
+        if rows:
+            lines.extend(["## Stage durations", "", *_table(("Stage", "Duration (s)"), rows), ""])
+
+    lines.extend(["- [metrics.json](../reports/metrics.json)", ""])
+    return lines
+
+
 def _summary_markdown(summary: dict[str, Any], root: Path) -> str:
     validation = summary["validation"]
     traceability = summary["traceability"]
@@ -310,6 +403,7 @@ def _summary_markdown(summary: dict[str, Any], root: Path) -> str:
     security = summary["security"]
     impact = summary["impact"]
     thread = summary["thread"]
+    metrics = summary["metrics"]
 
     lines = [
         _badge(summary["status"]),
@@ -357,6 +451,7 @@ def _summary_markdown(summary: dict[str, Any], root: Path) -> str:
         "",
         *_table(("Metric", "Value"), [("Line coverage (%)", coverage["percent"])]),
         "",
+        *_metrics_sections(metrics),
         "## Security",
         "",
         *_table(
@@ -598,10 +693,11 @@ def _metrics_page(summary: dict[str, Any], root: Path) -> str:
     security = summary["security"]
     impact = summary["impact"]
     thread = summary["thread"]
+    metrics = summary["metrics"]
     lines = [
         "# Metrics",
         "",
-        "Current pipeline counts. DORA metrics are not part of this report.",
+        "Current pipeline counts and DORA metrics.",
         "",
         "## Pipeline counts",
         "",
@@ -628,6 +724,7 @@ def _metrics_page(summary: dict[str, Any], root: Path) -> str:
             ],
         ),
         "",
+        *_metrics_sections(metrics),
         *_report_links(root),
         "",
     ]

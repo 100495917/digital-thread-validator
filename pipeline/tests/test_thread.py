@@ -114,7 +114,14 @@ JUNIT = """\
 @pytest.fixture(autouse=True)
 def _clear_ci_environment(monkeypatch) -> None:
     """Keep git-based metadata assertions independent of the CI environment."""
-    for name in ("GITHUB_SHA", "GITHUB_RUN_ID", "GITHUB_REF_NAME", "GITHUB_ACTOR"):
+    for name in (
+        "GITHUB_SHA",
+        "GITHUB_RUN_ID",
+        "GITHUB_REF_NAME",
+        "GITHUB_ACTOR",
+        "DEPLOY_ENVIRONMENT",
+        "DEPLOY_IMAGE_TAG",
+    ):
         monkeypatch.delenv(name, raising=False)
 
 
@@ -188,8 +195,8 @@ def test_build_graph_contains_every_node_and_edge_type(tmp_path: Path) -> None:
     nodes = _nodes(graph)
     edge_set = {(edge.source, edge.target, edge.type) for edge in graph.edges}
 
-    assert {node.type for node in graph.nodes} == set(NODE_TYPES)
-    assert {edge.type for edge in graph.edges} == set(EDGE_TYPES)
+    assert {node.type for node in graph.nodes} == set(NODE_TYPES) - {"Deployment"}
+    assert {edge.type for edge in graph.edges} == set(EDGE_TYPES) - {"DEPLOYED_AS"}
 
     requirement_one = nodes["REQ-001"]
     requirement_two = nodes["REQ-002"]
@@ -281,6 +288,47 @@ def test_build_graph_contains_every_node_and_edge_type(tmp_path: Path) -> None:
         (commit_sha, "release-1.0.0", "INCLUDED_IN"),
     }
     assert expected_edges <= edge_set
+
+
+def test_deployment_environment_adds_node_edge_and_metadata(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    commit_sha = _write_project(tmp_path, with_git=True)
+    monkeypatch.setenv("DEPLOY_ENVIRONMENT", "staging")
+    monkeypatch.setenv("DEPLOY_IMAGE_TAG", "ghcr.io/demo/app:abc123")
+
+    graph = build_graph(tmp_path)
+    nodes = _nodes(graph)
+    edge_set = {(edge.source, edge.target, edge.type) for edge in graph.edges}
+
+    deployment_id = f"deployment-staging-{commit_sha}"
+    deployment = nodes[deployment_id]
+    assert deployment.type == "Deployment"
+    assert deployment.path == ""
+    assert deployment.version == "staging"
+    assert deployment.sha256 == hashlib.sha256(commit_sha.encode("utf-8")).hexdigest()
+    assert deployment.last_changed_commit == commit_sha
+    assert deployment.attributes == {
+        "environment": "staging",
+        "image_tag": "ghcr.io/demo/app:abc123",
+        "commit_sha": commit_sha,
+    }
+    assert (commit_sha, deployment_id, "DEPLOYED_AS") in edge_set
+    assert graph.metadata["deployment"] == {
+        "environment": "staging",
+        "image_tag": "ghcr.io/demo/app:abc123",
+        "commit_sha": commit_sha,
+    }
+
+
+def test_deployment_environment_absent_leaves_graph_unchanged(tmp_path: Path) -> None:
+    _write_project(tmp_path, with_git=True)
+
+    graph = build_graph(tmp_path)
+
+    assert "Deployment" not in {node.type for node in graph.nodes}
+    assert "DEPLOYED_AS" not in {edge.type for edge in graph.edges}
+    assert "deployment" not in graph.metadata
 
 
 def test_metadata_contains_commit_and_tool_information(tmp_path: Path) -> None:

@@ -41,6 +41,7 @@ NODE_TYPES = (
     "Report",
     "Commit",
     "Release",
+    "Deployment",
 )
 
 EDGE_TYPES = (
@@ -53,6 +54,7 @@ EDGE_TYPES = (
     "RESULT_OF",
     "CHANGED_IN",
     "INCLUDED_IN",
+    "DEPLOYED_AS",
 )
 
 REPORT_PATHS = (
@@ -603,6 +605,38 @@ def build_graph(root: Path = Path(".")) -> ThreadGraph:
             ),
         )
     )
+
+    deployment_environment = os.environ.get("DEPLOY_ENVIRONMENT", "").strip()
+    if deployment_environment:
+        image_tag = os.environ.get("DEPLOY_IMAGE_TAG", "").strip() or commit_sha
+        deployment_sha = (
+            hashlib.sha256(commit_sha.encode("utf-8")).hexdigest() if commit_sha != "local" else ""
+        )
+        commit_identifier = commit_sha if commit_sha != "local" else "local"
+        deployment_id = f"deployment-{deployment_environment}-{commit_identifier}"
+        nodes.append(
+            ThreadNode(
+                id=deployment_id,
+                type="Deployment",
+                path="",
+                sha256=deployment_sha,
+                version=deployment_environment,
+                last_changed_commit=commit_sha if commit_sha != "local" else "",
+                attributes=_json_safe(
+                    {
+                        "environment": deployment_environment,
+                        "image_tag": image_tag,
+                        "commit_sha": commit_sha,
+                    }
+                ),
+            )
+        )
+        edges.add((commit_sha, deployment_id, "DEPLOYED_AS"))
+        metadata["deployment"] = {
+            "environment": deployment_environment,
+            "image_tag": image_tag,
+            "commit_sha": commit_sha,
+        }
 
     if model is not None:
         release_id = f"release-{release_version}"

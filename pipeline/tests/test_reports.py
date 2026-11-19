@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import json
+import sys
+import types
 from pathlib import Path
 
+import mbse
 from mbse import reports
 
 
@@ -209,6 +212,12 @@ def _full_tree(root: Path, *, junit_failures: int = 0, security_status: str = "p
     _write_thread(root)
 
 
+def _install_metrics(monkeypatch, module: types.ModuleType) -> None:
+    """Replace ``mbse.metrics`` so report rendering is independent of Git."""
+    monkeypatch.setitem(sys.modules, "mbse.metrics", module)
+    monkeypatch.setattr(mbse, "metrics", module, raising=False)
+
+
 def test_build_summary_shape_and_values(tmp_path: Path) -> None:
     _full_tree(tmp_path)
 
@@ -223,6 +232,7 @@ def test_build_summary_shape_and_values(tmp_path: Path) -> None:
         "security",
         "impact",
         "thread",
+        "metrics",
     }
     assert summary["status"] == "pass"
     assert summary["validation"] == {
@@ -265,6 +275,23 @@ def test_build_summary_shape_and_values(tmp_path: Path) -> None:
         "removed": 1,
         "modified": 2,
         "stale": 0,
+    }
+    assert set(summary["metrics"]) == {
+        "deployment_frequency",
+        "lead_time_hours",
+        "change_failure_rate",
+        "mean_time_to_restore_hours",
+        "pipeline",
+        "stages",
+        "source",
+        "status",
+    }
+    assert set(summary["metrics"]["pipeline"]) == {
+        "tests_total",
+        "tests_passed",
+        "tests_failed",
+        "flaky_tests",
+        "coverage_percent",
     }
 
 
@@ -330,6 +357,96 @@ def test_missing_reports_degrade(tmp_path: Path) -> None:
         "modified": 0,
         "stale": 0,
     }
+    assert set(summary["metrics"]) == {
+        "deployment_frequency",
+        "lead_time_hours",
+        "change_failure_rate",
+        "mean_time_to_restore_hours",
+        "pipeline",
+        "stages",
+        "source",
+        "status",
+    }
+    assert summary["metrics"]["pipeline"] == {
+        "tests_total": 0,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "flaky_tests": 0,
+        "coverage_percent": 0.0,
+    }
+
+
+def test_metrics_page_includes_dora_pipeline_and_stages(tmp_path: Path, monkeypatch) -> None:
+    _full_tree(tmp_path)
+    module = types.ModuleType("mbse.metrics")
+    module.collect_metrics = lambda root: {
+        "deployment_frequency": {"releases": 4, "window_days": 30, "per_week": 0.93},
+        "lead_time_hours": {"median": 12.5, "samples": 3},
+        "change_failure_rate": {"failed": 1, "total": 10, "rate": 0.1},
+        "mean_time_to_restore_hours": {"mean": 2.0, "incidents": 1},
+        "pipeline": {
+            "tests_total": 12,
+            "tests_passed": 10,
+            "tests_failed": 1,
+            "flaky_tests": 2,
+            "coverage_percent": 88.5,
+        },
+        "stages": [{"name": "validate", "duration_seconds": 12.5}],
+        "source": "git",
+        "status": "ok",
+    }
+    _install_metrics(monkeypatch, module)
+
+    result = reports.write_summary(tmp_path)
+
+    page = (tmp_path / "docs" / "generated" / "metrics.md").read_text(encoding="utf-8")
+    assert "## DORA metrics" in page
+    assert "| Deployment frequency (per week) | 0.93 |" in page
+    assert "| Lead time median (hours) | 12.5 |" in page
+    assert "| Change failure rate | 0.1 |" in page
+    assert "| Mean time to restore (hours) | 2.0 |" in page
+    assert "## Pipeline metrics" in page
+    assert "| Tests | 12 |" in page
+    assert "| Flaky tests | 2 |" in page
+    assert "| Coverage (%) | 88.5 |" in page
+    assert "## Stage durations" in page
+    assert "| validate | 12.5 |" in page
+    assert "[metrics.json](../reports/metrics.json)" in page
+
+    summary_md = Path(result["summary_md"]).read_text(encoding="utf-8")
+    assert "| Deployment frequency (per week) | 0.93 |" in summary_md
+    assert "## Stage durations" in summary_md
+    assert "[metrics.json](../reports/metrics.json)" in summary_md
+
+
+def test_metrics_unavailable_degrades_to_zeros(tmp_path: Path, monkeypatch) -> None:
+    _full_tree(tmp_path)
+    module = types.ModuleType("mbse.metrics")
+
+    def _unavailable(root: Path) -> dict:
+        raise RuntimeError("metrics unavailable")
+
+    module.collect_metrics = _unavailable
+    _install_metrics(monkeypatch, module)
+
+    summary = reports.build_summary(tmp_path)
+
+    assert summary["metrics"]["pipeline"] == {
+        "tests_total": 0,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "flaky_tests": 0,
+        "coverage_percent": 0.0,
+    }
+    assert summary["metrics"]["deployment_frequency"]["per_week"] == 0.0
+    assert summary["metrics"]["stages"] == []
+
+    reports.write_summary(tmp_path)
+
+    page = (tmp_path / "docs" / "generated" / "metrics.md").read_text(encoding="utf-8")
+    assert "| Deployment frequency (per week) | 0.0 |" in page
+    assert "| Tests | 0 |" in page
+    assert "## Stage durations" not in page
 
 
 def test_thread_diff_counts_parse_sections(tmp_path: Path) -> None:
@@ -359,6 +476,9 @@ def test_write_summary_pages_links_and_copies(tmp_path: Path) -> None:
     markdown = summary_md.read_text(encoding="utf-8")
     assert "pipeline-passing-brightgreen" in markdown
     assert "../reports/junit.xml" in markdown
+    assert "DORA metrics" in markdown
+    assert "Pipeline metrics" in markdown
+    assert "../reports/metrics.json" in markdown
 
     expected_pages = {
         "summary.md",
@@ -389,6 +509,13 @@ def test_write_summary_pages_links_and_copies(tmp_path: Path) -> None:
 
     metrics_page = (tmp_path / "docs" / "generated" / "metrics.md").read_text(encoding="utf-8")
     assert "Pipeline counts" in metrics_page
+    assert "DORA metrics" in metrics_page
+    assert "Deployment frequency (per week)" in metrics_page
+    assert "Change failure rate" in metrics_page
+    assert "Mean time to restore (hours)" in metrics_page
+    assert "Pipeline metrics" in metrics_page
+    assert "Flaky tests" in metrics_page
+    assert "../reports/metrics.json" in metrics_page
     assert "../reports/summary.json" in metrics_page
 
     copied = {Path(path).name for path in result["reports_copied"]}
