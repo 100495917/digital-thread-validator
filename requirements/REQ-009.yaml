@@ -1,0 +1,9 @@
+id: REQ-009
+title: "Status REST endpoint"
+text: "The system shall expose the current state through a REST endpoint GET /status."
+type: interface
+priority: medium
+owner: team-interface
+verification: test
+status: approved
+rationale: "A read-only status endpoint lets clients observe temperature, setpoint, heating and fail-safe state."

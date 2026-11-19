@@ -1,0 +1,9 @@
+id: REQ-006
+title: "Missing-sensor fail-safe"
+text: "The system shall enter fail-safe (heating off) if the sensor reading is missing for 3 consecutive cycles."
+type: safety
+priority: high
+owner: team-safety
+verification: test
+status: approved
+rationale: "Without fresh measurements the controller cannot bound the temperature, so it must fail safe."

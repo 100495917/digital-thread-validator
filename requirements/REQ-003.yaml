@@ -1,0 +1,10 @@
+id: REQ-003
+title: "Heating activation below hysteresis band"
+text: "The system shall activate heating when the temperature is below setpoint − 0.5 °C."
+type: functional
+priority: medium
+owner: team-control
+verification: test
+status: approved
+rationale: "Turning the heater on below the lower hysteresis bound keeps the room from drifting cold."
+parent: REQ-001

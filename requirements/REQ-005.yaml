@@ -1,0 +1,9 @@
+id: REQ-005
+title: "Over-temperature shutdown"
+text: "The system shall force heating off if the temperature exceeds 30 °C."
+type: safety
+priority: high
+owner: team-safety
+verification: test
+status: approved
+rationale: "Shutting the heater off above 30 °C bounds the risk of unsafe overheating."

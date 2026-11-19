@@ -1,0 +1,9 @@
+id: REQ-010
+title: "Setpoint update endpoint"
+text: "The system shall accept setpoint updates through PUT /setpoint."
+type: interface
+priority: medium
+owner: team-interface
+verification: test
+status: approved
+rationale: "A dedicated update endpoint gives clients a single, documented way to change the target temperature."

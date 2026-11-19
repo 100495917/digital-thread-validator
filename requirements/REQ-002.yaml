@@ -1,0 +1,9 @@
+id: REQ-002
+title: "Periodic sensor sampling"
+text: "The system shall read the temperature from the sensor every 5 seconds."
+type: interface
+priority: medium
+owner: team-control
+verification: test
+status: approved
+rationale: "Regular sampling gives the controller a bounded-staleness view of the room temperature."

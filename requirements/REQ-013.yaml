@@ -1,0 +1,10 @@
+id: REQ-013
+title: "Status endpoint latency"
+text: "The system shall respond to GET /status in under 100 ms (p95) under 50 req/s."
+type: performance
+priority: medium
+owner: team-performance
+verification: test
+status: approved
+rationale: "Polling clients need a responsive status endpoint so monitoring data stays fresh under load."
+parent: REQ-009

@@ -1,0 +1,64 @@
+system: SmartThermostat
+version: 1.0.0
+elements:
+  - id: BLK-controller
+    kind: block
+    name: TemperatureController
+    satisfies: [REQ-001, REQ-003, REQ-004, REQ-007]
+    allocated_to: src/thermostat/controller.py
+  - id: BLK-sensor
+    kind: block
+    name: SensorInterface
+    satisfies: [REQ-002]
+    allocated_to: src/thermostat/sensor.py
+  - id: BLK-heater
+    kind: block
+    name: HeaterActuator
+    satisfies: [REQ-003, REQ-004]
+    allocated_to: src/thermostat/heater.py
+  - id: BLK-safety
+    kind: block
+    name: SafetyMonitorController
+    satisfies: [REQ-005, REQ-006]
+    allocated_to: src/thermostat/safety.py
+  - id: BLK-validator
+    kind: block
+    name: SetpointValidator
+    satisfies: [REQ-008]
+    allocated_to: src/thermostat/validator.py
+  - id: BLK-api
+    kind: block
+    name: RestApi
+    satisfies: [REQ-009, REQ-010, REQ-013]
+    allocated_to: src/thermostat/api.py
+  - id: BLK-auth
+    kind: block
+    name: AuthMiddleware
+    satisfies: [REQ-011, REQ-012]
+    allocated_to: src/thermostat/auth.py
+  - id: IF-sensor
+    kind: interface
+    name: SensorInterface
+    satisfies: [REQ-002]
+    allocated_to: src/thermostat/sensor.py
+  - id: IF-rest
+    kind: interface
+    name: RestInterface
+    satisfies: [REQ-009, REQ-010]
+    allocated_to: src/thermostat/api.py
+  - id: BHV-control-loop
+    kind: behavior
+    name: ControlCycle
+    satisfies: [REQ-001]
+    allocated_to: src/thermostat/controller.py
+relations:
+  - {from: BLK-controller, to: IF-sensor, type: uses}
+  - {from: BLK-controller, to: BLK-heater, type: controls}
+  - {from: BLK-controller, to: BLK-safety, type: uses}
+  - {from: BLK-api, to: IF-rest, type: exposes}
+  - {from: BLK-api, to: BLK-controller, type: uses}
+  - {from: BLK-api, to: BLK-auth, type: uses}
+  - {from: BLK-validator, to: BLK-controller, type: validates}
+  - {from: BHV-control-loop, to: BLK-controller, type: realizes}
+  - {from: BLK-sensor, to: IF-sensor, type: implements}
+  - {from: BLK-auth, to: IF-rest, type: guards}

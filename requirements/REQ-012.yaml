@@ -1,0 +1,9 @@
+id: REQ-012
+title: "Token confidentiality in logs"
+text: "The system shall not log API tokens."
+type: security
+priority: high
+owner: team-security
+verification: test
+status: approved
+rationale: "Leaking tokens through logs would let anyone with log access impersonate an authorized client."

@@ -1,0 +1,9 @@
+id: REQ-001
+title: "Temperature setpoint tracking"
+text: "The system shall maintain the room temperature within ±1 °C of the setpoint."
+type: functional
+priority: high
+owner: team-control
+verification: test
+status: approved
+rationale: "Room comfort depends on keeping the measured temperature close to the requested setpoint."

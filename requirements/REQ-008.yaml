@@ -1,0 +1,9 @@
+id: REQ-008
+title: "Setpoint range validation"
+text: "The system shall accept setpoints only between 5 °C and 30 °C."
+type: functional
+priority: medium
+owner: team-control
+verification: test
+status: approved
+rationale: "Restricting setpoints to the supported band keeps the controller operating within validated limits."

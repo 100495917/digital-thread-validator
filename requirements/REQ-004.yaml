@@ -1,0 +1,10 @@
+id: REQ-004
+title: "Heating deactivation above hysteresis band"
+text: "The system shall deactivate heating when the temperature is at or above setpoint + 0.5 °C."
+type: functional
+priority: medium
+owner: team-control
+verification: test
+status: approved
+rationale: "Turning the heater off above the upper hysteresis bound prevents overshoot around the setpoint."
+parent: REQ-001

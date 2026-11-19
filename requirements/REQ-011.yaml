@@ -1,0 +1,10 @@
+id: REQ-011
+title: "Authenticated setpoint updates"
+text: "The system shall require an API token for PUT /setpoint."
+type: security
+priority: high
+owner: team-security
+verification: test
+status: approved
+rationale: "Only authenticated callers may change the setpoint, so unauthenticated requests cannot alter heating behaviour."
+parent: REQ-010

@@ -1,0 +1,9 @@
+id: REQ-007
+title: "Setpoint change response time"
+text: "The system shall respond to a setpoint change within 2 seconds."
+type: performance
+priority: medium
+owner: team-performance
+verification: test
+status: approved
+rationale: "Users expect the effect of a new setpoint to be visible almost immediately in the reported state."
