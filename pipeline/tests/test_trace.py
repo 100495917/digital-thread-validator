@@ -19,12 +19,13 @@ def _write_requirement(
     *,
     status: str = "approved",
     verification: str = "test",
+    requirement_type: str = "functional",
 ) -> None:
     lines = [
         f"id: {requirement_id}",
         'title: "Demo requirement"',
         'text: "The system shall satisfy the demo requirement."',
-        "type: functional",
+        f"type: {requirement_type}",
         "priority: high",
         "owner: team-demo",
         f"verification: {verification}",
@@ -176,3 +177,44 @@ def test_deprecated_requirement_with_test_reports_trc_005(tmp_path: Path) -> Non
     assert [finding.rule for finding in findings] == ["TRC-005"]
     assert "REQ-002" in findings[0].message
     assert findings[0].severity == "warning"
+
+
+def test_security_requirement_without_test_reports_trc_006(tmp_path: Path) -> None:
+    _make_project(
+        tmp_path,
+        requirements=(("REQ-011", "approved", "inspection"),),
+        satisfies=("REQ-011",),
+        code_tags=("REQ-011",),
+        test_tags=(),
+    )
+    _write_requirement(
+        tmp_path,
+        "REQ-011",
+        verification="inspection",
+        requirement_type="security",
+    )
+
+    findings = check_traceability(tmp_path)
+
+    assert [finding.rule for finding in findings] == ["TRC-006"]
+    assert "REQ-011" in findings[0].message
+    assert findings[0].requirement == "REQ-011"
+    assert findings[0].severity == "error"
+
+
+def test_security_requirement_with_test_has_no_trc_006(tmp_path: Path) -> None:
+    _make_project(
+        tmp_path,
+        requirements=(("REQ-011", "approved", "inspection"),),
+        satisfies=("REQ-011",),
+        code_tags=("REQ-011",),
+        test_tags=("REQ-011",),
+    )
+    _write_requirement(
+        tmp_path,
+        "REQ-011",
+        verification="inspection",
+        requirement_type="security",
+    )
+
+    assert check_traceability(tmp_path) == []

@@ -1,0 +1,23 @@
+# Gitleaks configuration for the digital-thread-validator project.
+#
+# Extends the upstream default ruleset and suppresses paths that only ever
+# contain dependency copies or generated reports (including the SBOM and SARIF
+# files emitted by `mbse security` and the CI workflow).
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Generated, vendored, and environment paths are not secrets."
+paths = [
+  '''(^|/)\.venv/''',
+  '''(^|/)build/''',
+  '''(^|/)site/''',
+  '''(^|/)node_modules/''',
+  '''(^|/)build/reports/sbom\.json$''',
+  '''(^|/)build/reports/security\.sarif$''',
+  '''(^|/)bandit\.sarif$''',
+  '''(^|/)semgrep\.sarif$''',
+  '''(^|/)trivy\.sarif$''',
+  '''(^|/)checkov\.sarif$''',
+]

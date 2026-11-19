@@ -3,7 +3,7 @@ MBSE ?= mbse
 BASE ?= origin/main
 HEAD ?= HEAD
 
-.PHONY: validate trace test test-selective thread impact report gen site install clean all
+.PHONY: validate trace test test-selective reqcov security thread impact report gen site install clean all
 
 validate:
 	$(MBSE) validate all
@@ -13,6 +13,12 @@ trace:
 
 test:
 	$(PY) -m pytest
+
+reqcov:
+	$(MBSE) reqcov
+
+security:
+	$(MBSE) security
 
 test-selective:
 	@ids="$$($(PY) -m mbse.select_tests)"; \
@@ -30,7 +36,7 @@ report:
 gen:
 	$(MBSE) generate all
 
-site:
+site: gen
 	mkdocs build --strict
 
 install:

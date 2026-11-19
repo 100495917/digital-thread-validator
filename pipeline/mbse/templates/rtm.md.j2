@@ -1,0 +1,7 @@
+# Requirements traceability matrix
+
+| Req ID | Title | Priority | Model elements | Code | Tests | Last result | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+{% for row in rows %}
+| {{ row.req_id }} | {{ row.title }} | {{ row.priority }} | {{ row.model_elements }} | {{ row.code }} | {{ row.tests }} | {{ row.last_result }} | {{ row.status }} |
+{% endfor %}

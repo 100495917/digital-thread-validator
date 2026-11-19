@@ -1,0 +1,22 @@
+site_name: Digital Thread Validator
+
+theme:
+  name: material
+
+nav:
+  - Overview: index.md
+  - Requirements: generated/requirements.md
+  - Architecture: generated/architecture.md
+  - RTM: generated/rtm.md
+  - Decisions: decisions.md
+  - Pipeline: pipeline.md
+  - DevSecOps: devsecops.md
+
+markdown_extensions:
+  - tables
+  - fenced_code
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format

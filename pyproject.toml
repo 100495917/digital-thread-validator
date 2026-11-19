@@ -39,11 +39,12 @@ mbse = "mbse.cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "pipeline"}
-packages = ["mbse"]
+packages = ["mbse", "mbse.templates"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "pipeline/tests"]
 pythonpath = ["src"]
+addopts = "-ra --strict-markers --junitxml=build/reports/junit.xml --cov --cov-report=term-missing --cov-report=xml:build/reports/coverage.xml --cov-report=html:build/htmlcov"
 markers = [
     "req: requirement-based test",
     "perf: performance test",
@@ -55,3 +56,7 @@ target-version = "py311"
 
 [tool.coverage.run]
 source = ["pipeline/mbse", "src/thermostat"]
+
+[tool.setuptools.package-data]
+mbse = ["templates/*.j2"]
+

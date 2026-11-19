@@ -190,6 +190,20 @@ def check_traceability(root: Path = Path(".")) -> list[Finding]:
                     )
                 )
 
+            if _normalise(requirement.type) == "security" and not link.test_paths:
+                findings.append(
+                    Finding(
+                        path=requirement.path,
+                        rule="TRC-006",
+                        severity="error",
+                        message=(
+                            f"{requirement.id} is an approved security requirement "
+                            "but has no requirement-tagged test"
+                        ),
+                        requirement=requirement.id,
+                    )
+                )
+
         if status == "deprecated" and link.test_paths:
             findings.append(
                 Finding(

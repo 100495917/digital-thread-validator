@@ -10,7 +10,20 @@ import click
 from . import trace as trace_module
 from . import validate_model, validate_reqs, validate_schema
 from .findings import Finding, sort_findings
+from .generate import (
+    generate_all,
+    generate_diagrams,
+    generate_docs,
+    generate_openapi,
+    generate_sbom,
+    generate_test_stubs,
+)
 from .loaders import LoadError, Requirement, load_model, load_requirements
+from .reqcov import compute_requirements_coverage, write_reqcov_report
+from .security import gate_failed as security_gate_failed
+from .security import run_all as run_security_scan
+from .security import write_sarif as write_security_sarif
+from .security import write_security_report
 
 
 def _not_implemented(command: str, phase: int) -> None:
@@ -187,6 +200,23 @@ def impact(base_ref: str | None, head_ref: str | None) -> None:
     _not_implemented("impact", 9)
 
 
+_GENERATE_TARGETS = {
+    "diagrams": lambda root: generate_diagrams(root=root),
+    "docs": lambda root: generate_docs(root=root),
+    "openapi": lambda root: generate_openapi(root=root),
+    "test-stubs": lambda root: generate_test_stubs(root=root),
+    "sbom": lambda root: generate_sbom(root=root),
+    "all": lambda root: generate_all(root=root),
+}
+
+
+def _as_paths(result: object) -> list[Path]:
+    """Normalise a generator return value to a list of paths."""
+    if isinstance(result, Path):
+        return [result]
+    return [Path(path) for path in result]  # type: ignore[union-attr]
+
+
 @cli.command()
 @click.argument(
     "target",
@@ -199,8 +229,15 @@ def impact(base_ref: str | None, head_ref: str | None) -> None:
 )
 def generate(target: str) -> None:
     """Generate diagrams, docs, OpenAPI, test stubs, and the SBOM."""
-    _ = target
-    _not_implemented("generate", 5)
+    root = Path(".")
+    function = _GENERATE_TARGETS[target]
+    try:
+        written = function(root)
+    except ValueError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    for path in _as_paths(written):
+        click.echo(_display_path(path))
 
 
 @cli.command()
@@ -210,9 +247,65 @@ def report() -> None:
 
 
 @cli.command()
-def reqcov() -> None:
+@click.option(
+    "--threshold",
+    type=click.FloatRange(min=0.0, max=100.0),
+    default=90.0,
+    show_default=True,
+    help="Minimum requirements coverage percentage.",
+)
+@click.option(
+    "--results",
+    "results_path",
+    type=click.Path(path_type=Path, dir_okay=False),
+    default=None,
+    help="Path to the req_results.json produced by the test run.",
+)
+def reqcov(threshold: float, results_path: Path | None) -> None:
     """Compute and gate requirements coverage."""
-    _not_implemented("reqcov", 6)
+    root = Path(".")
+    coverage = compute_requirements_coverage(root=root, results_path=results_path)
+    summary = coverage.get("summary", coverage)
+    summary["threshold"] = threshold
+    report = write_reqcov_report(coverage, root=root)
+
+    total = int(summary.get("total", 0))
+    covered = int(summary.get("covered", 0))
+    percentage = float(summary.get("coverage", 0.0))
+
+    click.echo(f"requirements coverage: {percentage:.1f}% ({covered}/{total})")
+    click.echo(_display_path(Path(report)))
+
+    if percentage < threshold:
+        sys.exit(1)
+
+
+@cli.command()
+def security() -> None:
+    """Run the security scanners and gate their findings."""
+    root = Path(".")
+    results = run_security_scan(root=root)
+    report = write_security_report(results, root=root)
+    sarif = write_security_sarif(results, root=root)
+
+    for result in results:
+        line = f"{result.tool}: {result.status}"
+        if result.findings:
+            line += f" ({len(result.findings)} finding(s))"
+        if result.note:
+            line += f" - {result.note}"
+        click.echo(line)
+
+    click.echo(_display_path(Path(report)))
+    click.echo(_display_path(Path(sarif)))
+
+    total = sum(len(result.findings) for result in results)
+    failed = security_gate_failed(results)
+    status = "failed" if failed else "passed"
+    click.echo(f"security: {len(results)} tool(s), {total} finding(s), gate {status}")
+
+    if failed:
+        sys.exit(1)
 
 
 @cli.command()

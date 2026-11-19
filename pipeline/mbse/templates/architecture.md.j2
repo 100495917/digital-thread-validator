@@ -1,0 +1,25 @@
+# {{ system }} architecture
+
+Version: {{ version }}
+
+## Elements
+
+| ID | Kind | Name | Satisfies | Allocated to |
+| --- | --- | --- | --- | --- |
+{% for element in elements %}
+| {{ element.id }} | {{ element.kind }} | {{ element.name }} | {{ element.satisfies }} | {{ element.allocated_to }} |
+{% endfor %}
+
+## Relations
+
+| From | To | Type |
+| --- | --- | --- |
+{% for relation in relations %}
+| {{ relation.from }} | {{ relation.to }} | {{ relation.type }} |
+{% endfor %}
+
+## Diagram
+
+```mermaid
+{{ mermaid }}
+```

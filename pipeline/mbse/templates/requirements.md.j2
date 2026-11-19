@@ -1,0 +1,7 @@
+# Requirements
+
+| ID | Title | Type | Priority | Owner | Verification | Status | Text |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+{% for requirement in requirements %}
+| {{ requirement.id }} | {{ requirement.title }} | {{ requirement.type }} | {{ requirement.priority }} | {{ requirement.owner }} | {{ requirement.verification }} | {{ requirement.status }} | {{ requirement.text }} |
+{% endfor %}
