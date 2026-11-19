@@ -110,3 +110,28 @@ syntax or APIs unavailable in 3.11.
 Rationale: CI and course evaluation environments pin 3.11. Compatibility is
 enforced by running tests in CI on the supported interpreter and by avoiding
 newer-only features in the tooling.
+
+### Phase 5: Graphviz for diagram rendering when PlantUML is absent
+
+Diagram sources are generated as PlantUML (`.puml`) and Graphviz (`.dot`).
+When the `dot` binary is available, `mbse generate diagrams` renders the block
+diagram to SVG; otherwise only the sources are written and the documentation
+embeds the equivalent Mermaid diagram.
+
+Rationale: PLAN.md allows PlantUML or Graphviz. PlantUML requires Java plus a
+jar, while Graphviz is commonly installed and is present on the development
+machine.
+
+### Phase 7: Security scanners degrade to Python fallbacks locally
+
+Gitleaks, Semgrep, Trivy, and Checkov may be absent from a developer machine.
+`mbse security` reports those tools as `unavailable` with a note, and CI runs
+the real tools. Secret scanning always has a Python fallback so a seeded
+credential fails locally as well.
+
+`pip-audit` JSON does not expose a reliable severity for every advisory, so
+every reported vulnerability is treated as high severity for the gate. This is
+stricter than the real severity, which is acceptable for a fail-closed gate.
+
+Rationale: the local environment must be usable offline without pretending a
+scan ran, and CI remains the authority for tool-backed checks.
