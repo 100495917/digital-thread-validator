@@ -29,8 +29,8 @@ still reported.
 | Bandit | High severity | High-confidence high-severity patterns (injection, unsafe deserialization, weak crypto) are exploitable. |
 | Semgrep | High severity | The `p/python` ruleset's high-severity findings are treated the same as Bandit's. |
 | pip-audit | Any known vulnerability (treated as high) | A pinned dependency with a published advisory needs an upgrade or a documented exception. |
-| Trivy (filesystem) | Critical | Critical vulnerable packages, secrets, or misconfigurations fail; high findings are reported for triage. |
-| Checkov (IaC) | High | Public buckets, missing encryption/versioning, and permissive policies fail. |
+| Trivy (filesystem) | Critical | Critical vulnerable packages or misconfigurations fail; high findings are reported for triage. |
+| Checkov (IaC) | Reported, soft-fail | Terraform findings are uploaded to the Security tab; the workflow does not block on them until the infrastructure baseline is accepted. |
 | Security requirements | `SEC-001` | Every approved `type: security` requirement must have at least one `@pytest.mark.req(...)` test. |
 | Traceability | `TRC-006` | Same rule expressed through the traceability checker: a security requirement with no req-tagged test is an error naming the requirement. |
 
@@ -42,7 +42,9 @@ components — so a clean `git diff` after regeneration is meaningful.
 
 Each scanner reports a status of `passed`, `failed`, `unavailable`, or `error`.
 
-- **Gitleaks**: when the `gitleaks` binary is absent, a built-in Python scanner
+- **Gitleaks**: CI downloads the OSS release binary and scans the checked-out
+  tree (no organisation licence or PR-comment permission is required). When the
+  `gitleaks` binary is absent locally, a built-in Python scanner
   walks tracked/working files (skipping `.git`, `.venv`, `build`, `site`, and
   `node_modules`) and flags AWS access key IDs, GitHub tokens, private-key
   headers, and long `api_key`/`api_token`/`secret`/`password` literals.
