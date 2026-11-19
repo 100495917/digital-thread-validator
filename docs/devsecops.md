@@ -29,7 +29,7 @@ still reported.
 | Bandit | High severity | High-confidence high-severity patterns (injection, unsafe deserialization, weak crypto) are exploitable. |
 | Semgrep | High severity | The `p/python` ruleset's high-severity findings are treated the same as Bandit's. |
 | pip-audit | Any known vulnerability (treated as high) | A pinned dependency with a published advisory needs an upgrade or a documented exception. |
-| Trivy (filesystem) | Critical | Critical vulnerable packages or misconfigurations fail; high findings are reported for triage. |
+| Trivy (filesystem) | Critical | Critical vulnerable packages fail; Terraform misconfigurations are reported by Checkov. |
 | Checkov (IaC) | Reported, soft-fail | Terraform findings are uploaded to the Security tab; the workflow does not block on them until the infrastructure baseline is accepted. |
 | Security requirements | `SEC-001` | Every approved `type: security` requirement must have at least one `@pytest.mark.req(...)` test. |
 | Traceability | `TRC-006` | Same rule expressed through the traceability checker: a security requirement with no req-tagged test is an error naming the requirement. |
