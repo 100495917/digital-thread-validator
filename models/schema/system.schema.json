@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/mbse/system.schema.json",
+  "title": "MBSE System Model",
+  "type": "object",
+  "required": [
+    "system",
+    "version",
+    "elements",
+    "relations"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "system": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "name",
+          "satisfies",
+          "allocated_to"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^(BLK|IF|BHV|ACT)-[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "block",
+              "interface",
+              "behavior",
+              "actor"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "satisfies": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^REQ-\\d{3}$"
+            }
+          },
+          "allocated_to": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "type"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "from": {
+            "type": "string",
+            "pattern": "^(BLK|IF|BHV|ACT)-[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "to": {
+            "type": "string",
+            "pattern": "^(BLK|IF|BHV|ACT)-[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

@@ -6,7 +6,11 @@ import sys
 from pathlib import Path
 
 import click
-import yaml
+
+from . import trace as trace_module
+from . import validate_model, validate_reqs, validate_schema
+from .findings import Finding, sort_findings
+from .loaders import LoadError, Requirement, load_model, load_requirements
 
 
 def _not_implemented(command: str, phase: int) -> None:
@@ -22,23 +26,53 @@ def _display_path(path: Path) -> str:
         return path.as_posix()
 
 
-def _yaml_files() -> tuple[list[Path], list[Path]]:
-    """Discover requirement and model YAML files in deterministic order."""
-    requirement_files = sorted(Path("requirements").glob("*.yaml"))
-    model_files = sorted(Path("models").rglob("*.yaml"))
-    return requirement_files, model_files
+def _artifact_counts(root: Path) -> tuple[int, int]:
+    """Count requirement and model YAML files in deterministic order."""
+    requirement_files = sorted((root / "requirements").glob("*.yaml"))
+    model_files = sorted((root / "models").rglob("*.yaml"))
+    return len(requirement_files), len(model_files)
 
 
-def _parse_yaml_files(paths: list[Path]) -> tuple[int, list[tuple[str, str]]]:
-    """Parse YAML files, returning the number read and ``(path, error)`` pairs."""
-    errors: list[tuple[str, str]] = []
-    for path in paths:
-        try:
-            yaml.safe_load(path.read_text(encoding="utf-8"))
-        except (OSError, UnicodeDecodeError, yaml.YAMLError) as exc:
-            message = " ".join(str(exc).split())
-            errors.append((_display_path(path), message))
-    return len(paths), errors
+def _load_error_finding(exc: LoadError) -> Finding:
+    """Convert a YAML load failure into a normal finding for reporting."""
+    message = getattr(exc, "message", None) or str(exc)
+    return Finding(path=exc.path, rule="LOAD-001", severity="error", message=message)
+
+
+def _requirement_findings(
+    root: Path,
+) -> tuple[list[Finding], list[Requirement] | None]:
+    """Load requirements, run quality rules, and write the quality report."""
+    try:
+        requirements = load_requirements(root)
+    except LoadError as exc:
+        return [_load_error_finding(exc)], None
+    findings = validate_reqs.validate_requirements(requirements)
+    validate_reqs.write_quality_report(requirements, findings, root=root)
+    return findings, requirements
+
+
+def _model_findings(root: Path, requirement_ids: set[str] | None = None) -> list[Finding]:
+    """Load the system model and run model rules."""
+    if not (root / "models" / "system.yaml").is_file():
+        return []
+    try:
+        model = load_model(root)
+        if requirement_ids is None:
+            requirement_ids = {requirement.id for requirement in load_requirements(root)}
+        return validate_model.validate_model(model, root=root, requirement_ids=requirement_ids)
+    except LoadError as exc:
+        return [_load_error_finding(exc)]
+
+
+def _emit_findings(findings: list[Finding]) -> tuple[int, int]:
+    """Print findings in deterministic order and return error/warning counts."""
+    ordered = sort_findings(findings)
+    for finding in ordered:
+        click.echo(f"{finding.path}: {finding.rule} {finding.severity}: {finding.message}")
+    errors = sum(1 for finding in ordered if finding.severity == "error")
+    warnings = sum(1 for finding in ordered if finding.severity == "warning")
+    return errors, warnings
 
 
 @click.group()
@@ -54,21 +88,26 @@ def cli() -> None:
     type=click.Choice(["schema", "reqs", "model", "all"], case_sensitive=False),
 )
 def validate(mode: str) -> None:
-    """Parse requirements and model YAML artifacts.
+    """Validate requirements, the system model, or their JSON schemas."""
+    root = Path(".")
+    requirement_count, model_count = _artifact_counts(root)
 
-    Phase 1 performs YAML parsing only; schema and rule checks arrive in Phase 3.
-    """
-    _ = mode  # Every mode currently performs the same Phase 1 parse check.
-    requirement_files, model_files = _yaml_files()
-    requirement_count, requirement_errors = _parse_yaml_files(requirement_files)
-    model_count, model_errors = _parse_yaml_files(model_files)
-    errors = sorted(requirement_errors + model_errors)
+    findings: list[Finding] = []
+    requirements: list[Requirement] | None = None
+    if mode in {"schema", "all"} and (root / "models" / "schema").is_dir():
+        findings.extend(validate_schema.validate_schemas(root=root))
+    if mode in {"reqs", "all"}:
+        requirement_findings, requirements = _requirement_findings(root)
+        findings.extend(requirement_findings)
+    if mode == "model":
+        findings.extend(_model_findings(root))
+    elif mode == "all" and requirements is not None:
+        findings.extend(_model_findings(root, {item.id for item in requirements}))
 
-    for path, message in errors:
-        click.echo(f"{path}: {message}")
+    errors, warnings = _emit_findings(findings)
     click.echo(
         f"validated {requirement_count} requirement file(s), "
-        f"{model_count} model file(s), {len(errors)} error(s)"
+        f"{model_count} model file(s), {errors} error(s), {warnings} warning(s)"
     )
 
     if errors:
@@ -83,13 +122,37 @@ def trace() -> None:
 @trace.command("check")
 def trace_check() -> None:
     """Check that every requirement has a complete traceability chain."""
-    _not_implemented("trace check", 4)
+    root = Path(".")
+    try:
+        links = trace_module.build_links(root=root)
+        findings = trace_module.check_traceability(root=root)
+        metrics = trace_module.compute_metrics(links, root=root)
+    except LoadError as exc:
+        _emit_findings([_load_error_finding(exc)])
+        sys.exit(1)
+        return
+
+    errors, _ = _emit_findings(findings)
+    click.echo(f"traceability coverage: {metrics['traceability_coverage']:.1f}%")
+    click.echo(f"verification coverage: {metrics['verification_coverage']:.1f}%")
+
+    if errors:
+        sys.exit(1)
 
 
 @trace.command("rtm")
 def trace_rtm() -> None:
     """Generate the requirement traceability matrix."""
-    _not_implemented("trace rtm", 4)
+    root = Path(".")
+    try:
+        paths = trace_module.write_rtm(root=root)
+    except LoadError as exc:
+        _emit_findings([_load_error_finding(exc)])
+        sys.exit(1)
+        return
+
+    for path in paths:
+        click.echo(_display_path(Path(path)))
 
 
 @cli.group()

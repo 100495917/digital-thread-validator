@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/mbse/requirements.schema.json",
+  "title": "MBSE Requirement",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "text",
+    "type",
+    "priority",
+    "owner",
+    "verification",
+    "status",
+    "rationale"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^REQ-\\d{3}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "functional",
+        "performance",
+        "safety",
+        "security",
+        "interface"
+      ]
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verification": {
+      "type": "string",
+      "enum": [
+        "test",
+        "analysis",
+        "inspection",
+        "demonstration",
+        "TBD"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "approved",
+        "deprecated"
+      ]
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "parent": {
+      "type": "string",
+      "pattern": "^REQ-\\d{3}$"
+    }
+  }
+}
