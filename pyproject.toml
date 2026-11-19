@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "digital-thread-validator"
+version = "0.1.0"
+description = "MBSE DevOps pipeline with digital thread for the Smart Thermostat Controller"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "click>=8.1",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "networkx",
+    "pyyaml",
+    "jsonschema",
+    "jinja2",
+    "click",
+    "mkdocs-material",
+    "bandit",
+    "pip-audit",
+    "cyclonedx-bom",
+    "pre-commit",
+    "yamllint",
+    "ruff",
+]
+
+[project.scripts]
+mbse = "mbse.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "pipeline"}
+packages = ["mbse"]
+
+[tool.pytest.ini_options]
+testpaths = ["pipeline/tests"]
+markers = [
+    "req: requirement-based test",
+    "perf: performance test",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.coverage.run]
+source = ["pipeline/mbse"]

@@ -1,0 +1,23 @@
+# Build and generated output
+build/
+site/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+
+# Python bytecode and caches
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mkdocs_cache/
+
+# Coverage
+.coverage
+coverage.xml
+htmlcov/
+
+# Digital thread scratch files (thread.json is tracked)
+digital_thread/history/*.tmp

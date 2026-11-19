@@ -1,0 +1,33 @@
+# CODEOWNERS for the digital-thread-validator repository.
+# Order matters: the last matching pattern wins on GitHub.
+# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Requirements engineering owns requirement artifacts.
+requirements/ @req-owners
+
+# Architecture owns the system model and its schemas.
+models/ @architects
+
+# Developers own the example system implementation and its tests.
+src/ @devs
+tests/ @devs
+
+# Developers own the MBSE tooling and its own tests.
+pipeline/ @devs
+
+# Developers own project documentation.
+docs/ @devs
+
+# Developers own repository automation and configuration.
+.github/ @devs
+Makefile @devs
+pyproject.toml @devs
+.pre-commit-config.yaml @devs
+.yamllint.yml @devs
+.gitleaks.toml @devs
+Dockerfile @devs
+docker-compose.staging.yml @devs
+
+# Project metadata.
+README.md @devs
+PLAN.md @devs
