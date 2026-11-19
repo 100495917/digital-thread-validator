@@ -7,8 +7,8 @@ from the requirement-tagged test results.
 
 | Metric | Value |
 | --- | --- |
-| Total | 258 |
-| Passed | 258 |
+| Total | 332 |
+| Passed | 332 |
 | Failed | 0 |
 | Skipped | 0 |
 
@@ -17,7 +17,7 @@ from the requirement-tagged test results.
 | Metric | Value |
 | --- | --- |
 | Requirements coverage (%) | 100.0 |
-| Line coverage (%) | 88.2 |
+| Line coverage (%) | 88.8 |
 
 ## Reports
 

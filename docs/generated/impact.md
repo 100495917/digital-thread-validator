@@ -4,7 +4,7 @@
 
 | Metric | Value |
 | --- | --- |
-| Changed files | 22 |
+| Changed files | 21 |
 | Directly changed | 0 |
 | Impacted | 0 |
 | Needs review | 0 |

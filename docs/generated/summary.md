@@ -19,12 +19,12 @@
 
 | Metric | Value |
 | --- | --- |
-| Total tests | 258 |
-| Passed | 258 |
+| Total tests | 332 |
+| Passed | 332 |
 | Failed | 0 |
 | Skipped | 0 |
 | Requirements coverage (%) | 100.0 |
-| Line coverage (%) | 88.2 |
+| Line coverage (%) | 88.8 |
 
 ## Security and impact
 

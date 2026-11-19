@@ -1,13 +1,13 @@
 {
   "edges": [
     {
-      "source": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "source": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "target": "release-1.0.0",
       "type": "INCLUDED_IN"
     },
     {
       "source": "BHV-control-loop",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -22,7 +22,7 @@
     },
     {
       "source": "BLK-api",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -47,7 +47,7 @@
     },
     {
       "source": "BLK-auth",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -67,7 +67,7 @@
     },
     {
       "source": "BLK-controller",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -97,7 +97,7 @@
     },
     {
       "source": "BLK-heater",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -117,7 +117,7 @@
     },
     {
       "source": "BLK-safety",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -137,7 +137,7 @@
     },
     {
       "source": "BLK-sensor",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -152,7 +152,7 @@
     },
     {
       "source": "BLK-validator",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -167,7 +167,7 @@
     },
     {
       "source": "IF-rest",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -187,7 +187,7 @@
     },
     {
       "source": "IF-sensor",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -202,17 +202,17 @@
     },
     {
       "source": "REQ-001",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
       "source": "REQ-002",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
       "source": "REQ-003",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -222,7 +222,7 @@
     },
     {
       "source": "REQ-004",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -232,37 +232,37 @@
     },
     {
       "source": "REQ-005",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
       "source": "REQ-006",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
       "source": "REQ-007",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
       "source": "REQ-008",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
       "source": "REQ-009",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
       "source": "REQ-010",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
       "source": "REQ-011",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -272,12 +272,12 @@
     },
     {
       "source": "REQ-012",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
       "source": "REQ-013",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -542,12 +542,12 @@
     },
     {
       "source": "src/thermostat/__init__.py",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
       "source": "src/thermostat/api.py",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -567,7 +567,7 @@
     },
     {
       "source": "src/thermostat/auth.py",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -582,7 +582,7 @@
     },
     {
       "source": "src/thermostat/controller.py",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -607,7 +607,7 @@
     },
     {
       "source": "src/thermostat/heater.py",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -622,7 +622,7 @@
     },
     {
       "source": "src/thermostat/safety.py",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -637,7 +637,7 @@
     },
     {
       "source": "src/thermostat/sensor.py",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -647,7 +647,7 @@
     },
     {
       "source": "src/thermostat/validator.py",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -657,7 +657,7 @@
     },
     {
       "source": "tests/integration/test_api.py::test_api_token_is_never_logged",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -672,7 +672,7 @@
     },
     {
       "source": "tests/integration/test_api.py::test_get_status_does_not_require_token",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -687,7 +687,7 @@
     },
     {
       "source": "tests/integration/test_api.py::test_get_status_returns_complete_state",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -702,7 +702,7 @@
     },
     {
       "source": "tests/integration/test_api.py::test_put_setpoint_out_of_range_returns_422",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -727,7 +727,7 @@
     },
     {
       "source": "tests/integration/test_api.py::test_put_setpoint_updates_controller",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -742,7 +742,7 @@
     },
     {
       "source": "tests/integration/test_api.py::test_put_setpoint_with_basic_auth_is_rejected",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -757,7 +757,7 @@
     },
     {
       "source": "tests/integration/test_api.py::test_put_setpoint_with_wrong_token_is_rejected",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -772,7 +772,7 @@
     },
     {
       "source": "tests/integration/test_api.py::test_put_setpoint_without_token_is_rejected",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -787,7 +787,7 @@
     },
     {
       "source": "tests/integration/test_api.py::test_status_enters_fail_safe_after_three_missing_readings",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -802,7 +802,7 @@
     },
     {
       "source": "tests/integration/test_api.py::test_status_reports_fail_safe_on_over_temperature",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -817,7 +817,7 @@
     },
     {
       "source": "tests/perf/test_status_perf.py::test_status_p95_under_100_ms",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -832,7 +832,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_001_temperature_is_held_within_deadband",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -847,7 +847,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_002_sensor_is_read_every_five_seconds",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -862,7 +862,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_003_heating_activates_below_setpoint_minus_half",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -882,7 +882,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_004_heating_deactivates_at_setpoint_plus_half",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -902,7 +902,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_005_heating_is_forced_off_above_30_degrees",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -917,7 +917,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_006_three_missing_readings_enter_fail_safe",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -932,7 +932,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_007_setpoint_change_takes_effect_immediately",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -947,7 +947,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_008_inclusive_setpoint_bounds_are_accepted",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -962,7 +962,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_008_invalid_setpoints_are_rejected",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -977,7 +977,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_009_get_status_exposes_current_state",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -992,7 +992,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_010_put_setpoint_accepts_updates",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1007,7 +1007,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_011_put_setpoint_requires_api_token",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1022,7 +1022,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_012_api_token_is_not_logged",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1037,7 +1037,7 @@
     },
     {
       "source": "tests/requirements/test_requirements.py::test_req_013_get_status_responds_under_100_ms",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1052,7 +1052,7 @@
     },
     {
       "source": "tests/unit/test_auth.py::test_bad_authorization_is_rejected",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1067,7 +1067,7 @@
     },
     {
       "source": "tests/unit/test_auth.py::test_correct_bearer_token_is_authorized",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1082,7 +1082,7 @@
     },
     {
       "source": "tests/unit/test_auth.py::test_redact_hides_secret",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1097,7 +1097,7 @@
     },
     {
       "source": "tests/unit/test_controller.py::test_heating_activates_below_setpoint_minus_delta",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1117,7 +1117,7 @@
     },
     {
       "source": "tests/unit/test_controller.py::test_heating_deactivates_at_upper_threshold",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1137,7 +1137,7 @@
     },
     {
       "source": "tests/unit/test_controller.py::test_heating_not_activated_exactly_at_lower_threshold",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1157,7 +1157,7 @@
     },
     {
       "source": "tests/unit/test_controller.py::test_heating_stays_off_inside_deadband",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1172,7 +1172,7 @@
     },
     {
       "source": "tests/unit/test_controller.py::test_heating_stays_on_inside_deadband",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1187,7 +1187,7 @@
     },
     {
       "source": "tests/unit/test_controller.py::test_heating_stays_on_just_below_upper_threshold",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1207,7 +1207,7 @@
     },
     {
       "source": "tests/unit/test_controller.py::test_invalid_setpoint_raises_and_is_not_applied",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1232,7 +1232,7 @@
     },
     {
       "source": "tests/unit/test_controller.py::test_setpoint_change_applies_immediately",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1247,7 +1247,7 @@
     },
     {
       "source": "tests/unit/test_safety.py::test_exactly_max_temperature_is_allowed",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1262,7 +1262,7 @@
     },
     {
       "source": "tests/unit/test_safety.py::test_over_temperature_latch_survives_normal_readings",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1277,7 +1277,7 @@
     },
     {
       "source": "tests/unit/test_safety.py::test_over_temperature_latches_fail_safe_and_turns_heater_off",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1292,7 +1292,7 @@
     },
     {
       "source": "tests/unit/test_safety.py::test_reset_clears_latched_fail_safe",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1312,7 +1312,7 @@
     },
     {
       "source": "tests/unit/test_safety.py::test_reset_clears_missing_reading_fail_safe",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1327,7 +1327,7 @@
     },
     {
       "source": "tests/unit/test_safety.py::test_three_missing_readings_latch_fail_safe_and_turn_heater_off",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1342,7 +1342,7 @@
     },
     {
       "source": "tests/unit/test_safety.py::test_two_missing_readings_do_not_trigger_fail_safe",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1357,7 +1357,7 @@
     },
     {
       "source": "tests/unit/test_safety.py::test_valid_reading_resets_missing_counter",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1372,7 +1372,7 @@
     },
     {
       "source": "tests/unit/test_sensor.py::test_default_sensor_repeatedly_reads_21_degrees",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1387,7 +1387,7 @@
     },
     {
       "source": "tests/unit/test_sensor.py::test_sensor_interval_is_five_seconds",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1402,7 +1402,7 @@
     },
     {
       "source": "tests/unit/test_sensor.py::test_sensor_sticks_at_last_reading",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1417,7 +1417,7 @@
     },
     {
       "source": "tests/unit/test_validator.py::test_boolean_values_are_rejected",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1432,7 +1432,7 @@
     },
     {
       "source": "tests/unit/test_validator.py::test_inclusive_bounds_are_accepted",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1447,7 +1447,7 @@
     },
     {
       "source": "tests/unit/test_validator.py::test_non_finite_values_are_rejected",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1462,7 +1462,7 @@
     },
     {
       "source": "tests/unit/test_validator.py::test_out_of_range_values_are_rejected",
-      "target": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "type": "CHANGED_IN"
     },
     {
@@ -1479,8 +1479,8 @@
   "metadata": {
     "author": "rotlerxd",
     "branch": "main",
-    "commit_sha": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
-    "timestamp": "2026-11-19T17:17:10+00:00",
+    "commit_sha": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+    "timestamp": "2026-11-19T17:42:46+00:00",
     "tool_versions": {
       "mbse": "0.1.0",
       "networkx": "3.7",
@@ -1602,11 +1602,11 @@
     {
       "attributes": {
         "author": "rotlerxd",
-        "message": "fix(ci): scope Trivy to vulnerable packages",
-        "short_sha": "7ff5f96"
+        "message": "feat: add impact analysis and pipeline reporting",
+        "short_sha": "2d3f022"
       },
-      "id": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
-      "last_changed_commit": "7ff5f964b8abaf3752519fa6bb4febab1b310449",
+      "id": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+      "last_changed_commit": "2d3f022f7827a5bbfa94298a1e197511c030461b",
       "path": "",
       "sha256": "",
       "type": "Commit",
@@ -1797,7 +1797,7 @@
       "id": "build/reports/coverage.xml",
       "last_changed_commit": "",
       "path": "build/reports/coverage.xml",
-      "sha256": "4d2bc42655bfd59aa866d24fe82d49a32c752402f434586d1de2e9102a11b514",
+      "sha256": "92654f1bc710af05ed426f07343578b219806bd4c86414e455ae684e143d3e3d",
       "type": "Report",
       "version": "1.0"
     },
@@ -1806,7 +1806,7 @@
       "id": "build/reports/junit.xml",
       "last_changed_commit": "",
       "path": "build/reports/junit.xml",
-      "sha256": "bce32a11b5dcdf4036f36f07dfdfdee0b4a057c09637faa95f708306d9bfbbdc",
+      "sha256": "9f3b70446584603e10042d4408d08a0cddf6eb39bda33edca5e741203195c289",
       "type": "Report",
       "version": "1.0"
     },
@@ -1833,7 +1833,7 @@
       "id": "build/reports/rtm.csv",
       "last_changed_commit": "",
       "path": "build/reports/rtm.csv",
-      "sha256": "20155565dff5b03b3bba2fa00b79e48f7e6face5c32dcb45a0847a0c85d68a37",
+      "sha256": "4e678131b3a6c20bf437b97606bbec487adac38cc23156fdbdd5488909f942f7",
       "type": "Report",
       "version": "1.0"
     },
@@ -1842,7 +1842,7 @@
       "id": "build/reports/rtm.html",
       "last_changed_commit": "",
       "path": "build/reports/rtm.html",
-      "sha256": "adbea11dc652249b4884f13789f46370d0623f760a2313f2491023bbc5bf89b4",
+      "sha256": "c1aa0a3f32fc87b97215cb303ab459f801f811f2bb105ec7511587909f07b0fe",
       "type": "Report",
       "version": "1.0"
     },
@@ -1851,7 +1851,7 @@
       "id": "build/reports/rtm.md",
       "last_changed_commit": "",
       "path": "build/reports/rtm.md",
-      "sha256": "7b2e76b19b0ac37feb6de47a8a5ec0212f9f78eaa84da78841af11bbd0146390",
+      "sha256": "fc33f349d3539967adfa98c266545cb3073120accef960adb26fdfb9c5956e59",
       "type": "Report",
       "version": "1.0"
     },
@@ -1860,7 +1860,7 @@
       "id": "build/reports/sbom.json",
       "last_changed_commit": "",
       "path": "build/reports/sbom.json",
-      "sha256": "a5a8c6cd6df0a0a91feb31b7596e7c4875d642a6e592de6c56a1b3347b5f19f3",
+      "sha256": "5661337c705c683825cb5cabc11d81609586d2210a3bb5a7ae1eb1d4153d4bce",
       "type": "Report",
       "version": "1.0"
     },
@@ -1869,7 +1869,7 @@
       "id": "build/reports/security.json",
       "last_changed_commit": "",
       "path": "build/reports/security.json",
-      "sha256": "89db13d26df5f603713535985c3a533783c661427f14ade0fbe64cc2b58d2cae",
+      "sha256": "cf5077ebb1cd1f26df8f4eac1b1bf5db794901ae09f47afeb6fdd29fb819b017",
       "type": "Report",
       "version": "1.0"
     },
@@ -1878,7 +1878,7 @@
       "id": "build/reports/security.sarif",
       "last_changed_commit": "",
       "path": "build/reports/security.sarif",
-      "sha256": "bfd351377818179d7b60b47d60aa26fcbd4fc5dd2c97b974033dab2a99a5857b",
+      "sha256": "607fc5714ae7c66c6a22eb1c1f5fe3ea23eb1edff965ff10ec196ecd463acf69",
       "type": "Report",
       "version": "1.0"
     },
@@ -1887,7 +1887,7 @@
       "id": "build/reports/thread_diff.md",
       "last_changed_commit": "",
       "path": "build/reports/thread_diff.md",
-      "sha256": "008372338d08d3fcc84c162009ba3bdc98107f2aa35d07e433127f01e12fa515",
+      "sha256": "89884b28ce1c0ae3bfe4d4c550e1a28f9970f9bd318e4c582479ad52d74a8b4e",
       "type": "Report",
       "version": "1.0"
     },
@@ -2101,7 +2101,7 @@
     },
     {
       "attributes": {
-        "duration": 0.00607,
+        "duration": 0.005903,
         "outcome": "passed",
         "requirements": [
           "REQ-012"
@@ -2116,7 +2116,7 @@
     },
     {
       "attributes": {
-        "duration": 0.006843,
+        "duration": 0.006974,
         "outcome": "passed",
         "requirements": [
           "REQ-009"
@@ -2131,7 +2131,7 @@
     },
     {
       "attributes": {
-        "duration": 0.010525,
+        "duration": 0.01045,
         "outcome": "passed",
         "requirements": [
           "REQ-009"
@@ -2146,7 +2146,7 @@
     },
     {
       "attributes": {
-        "duration": 0.017882,
+        "duration": 0.010896,
         "outcome": "passed",
         "requirements": [
           "REQ-008",
@@ -2162,7 +2162,7 @@
     },
     {
       "attributes": {
-        "duration": 0.013371,
+        "duration": 0.011101,
         "outcome": "passed",
         "requirements": [
           "REQ-010"
@@ -2177,7 +2177,7 @@
     },
     {
       "attributes": {
-        "duration": 0.004562,
+        "duration": 0.004351,
         "outcome": "passed",
         "requirements": [
           "REQ-011"
@@ -2192,7 +2192,7 @@
     },
     {
       "attributes": {
-        "duration": 0.004902,
+        "duration": 0.005012,
         "outcome": "passed",
         "requirements": [
           "REQ-011"
@@ -2207,7 +2207,7 @@
     },
     {
       "attributes": {
-        "duration": 0.009473,
+        "duration": 0.01057,
         "outcome": "passed",
         "requirements": [
           "REQ-011"
@@ -2222,7 +2222,7 @@
     },
     {
       "attributes": {
-        "duration": 0.016176,
+        "duration": 0.015342,
         "outcome": "passed",
         "requirements": [
           "REQ-006"
@@ -2237,7 +2237,7 @@
     },
     {
       "attributes": {
-        "duration": 0.006307,
+        "duration": 0.0074,
         "outcome": "passed",
         "requirements": [
           "REQ-005"
@@ -2252,7 +2252,7 @@
     },
     {
       "attributes": {
-        "duration": 0.473278,
+        "duration": 0.475906,
         "outcome": "passed",
         "requirements": [
           "REQ-013"
@@ -2267,7 +2267,7 @@
     },
     {
       "attributes": {
-        "duration": 9.4e-05,
+        "duration": 0.00016,
         "outcome": "passed",
         "requirements": [
           "REQ-001"
@@ -2282,7 +2282,7 @@
     },
     {
       "attributes": {
-        "duration": 6.7e-05,
+        "duration": 0.000494,
         "outcome": "passed",
         "requirements": [
           "REQ-002"
@@ -2297,7 +2297,7 @@
     },
     {
       "attributes": {
-        "duration": 7e-05,
+        "duration": 5.9e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-003"
@@ -2312,7 +2312,7 @@
     },
     {
       "attributes": {
-        "duration": 5.7e-05,
+        "duration": 5.3e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-004"
@@ -2327,7 +2327,7 @@
     },
     {
       "attributes": {
-        "duration": 5.8e-05,
+        "duration": 8.6e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-005"
@@ -2342,7 +2342,7 @@
     },
     {
       "attributes": {
-        "duration": 5.7e-05,
+        "duration": 7e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-006"
@@ -2357,7 +2357,7 @@
     },
     {
       "attributes": {
-        "duration": 6.2e-05,
+        "duration": 6e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-007"
@@ -2387,7 +2387,7 @@
     },
     {
       "attributes": {
-        "duration": 0.001,
+        "duration": 0.0,
         "outcome": "passed",
         "requirements": [
           "REQ-008"
@@ -2402,7 +2402,7 @@
     },
     {
       "attributes": {
-        "duration": 0.006905,
+        "duration": 0.005921,
         "outcome": "passed",
         "requirements": [
           "REQ-009"
@@ -2417,7 +2417,7 @@
     },
     {
       "attributes": {
-        "duration": 0.010924,
+        "duration": 0.011969,
         "outcome": "passed",
         "requirements": [
           "REQ-010"
@@ -2432,7 +2432,7 @@
     },
     {
       "attributes": {
-        "duration": 0.009695,
+        "duration": 0.009743,
         "outcome": "passed",
         "requirements": [
           "REQ-011"
@@ -2447,7 +2447,7 @@
     },
     {
       "attributes": {
-        "duration": 0.006026,
+        "duration": 0.00572,
         "outcome": "passed",
         "requirements": [
           "REQ-012"
@@ -2462,7 +2462,7 @@
     },
     {
       "attributes": {
-        "duration": 0.124363,
+        "duration": 0.127578,
         "outcome": "passed",
         "requirements": [
           "REQ-013"
@@ -2492,7 +2492,7 @@
     },
     {
       "attributes": {
-        "duration": 7.9e-05,
+        "duration": 5.8e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-011"
@@ -2507,7 +2507,7 @@
     },
     {
       "attributes": {
-        "duration": 5.7e-05,
+        "duration": 0.000103,
         "outcome": "passed",
         "requirements": [
           "REQ-012"
@@ -2522,7 +2522,7 @@
     },
     {
       "attributes": {
-        "duration": 6e-05,
+        "duration": 7e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-003"
@@ -2537,7 +2537,7 @@
     },
     {
       "attributes": {
-        "duration": 5.6e-05,
+        "duration": 5.5e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-004"
@@ -2552,7 +2552,7 @@
     },
     {
       "attributes": {
-        "duration": 5.5e-05,
+        "duration": 5.6e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-003"
@@ -2567,7 +2567,7 @@
     },
     {
       "attributes": {
-        "duration": 5.5e-05,
+        "duration": 4.8e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-001"
@@ -2582,7 +2582,7 @@
     },
     {
       "attributes": {
-        "duration": 5.1e-05,
+        "duration": 5.4e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-001"
@@ -2597,7 +2597,7 @@
     },
     {
       "attributes": {
-        "duration": 5.2e-05,
+        "duration": 4.7e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-004"
@@ -2628,7 +2628,7 @@
     },
     {
       "attributes": {
-        "duration": 5.8e-05,
+        "duration": 7.5e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-007"
@@ -2643,7 +2643,7 @@
     },
     {
       "attributes": {
-        "duration": 0.000164,
+        "duration": 6e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-005"
@@ -2673,7 +2673,7 @@
     },
     {
       "attributes": {
-        "duration": 5.3e-05,
+        "duration": 4.8e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-005"
@@ -2688,7 +2688,7 @@
     },
     {
       "attributes": {
-        "duration": 6.3e-05,
+        "duration": 6.5e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-005",
@@ -2704,7 +2704,7 @@
     },
     {
       "attributes": {
-        "duration": 5.7e-05,
+        "duration": 5.6e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-006"
@@ -2719,7 +2719,7 @@
     },
     {
       "attributes": {
-        "duration": 6.2e-05,
+        "duration": 5.7e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-006"
@@ -2734,7 +2734,7 @@
     },
     {
       "attributes": {
-        "duration": 5.5e-05,
+        "duration": 4.8e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-006"
@@ -2749,7 +2749,7 @@
     },
     {
       "attributes": {
-        "duration": 5.2e-05,
+        "duration": 0.000106,
         "outcome": "passed",
         "requirements": [
           "REQ-006"
@@ -2764,7 +2764,7 @@
     },
     {
       "attributes": {
-        "duration": 5.7e-05,
+        "duration": 7e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-002"
@@ -2779,7 +2779,7 @@
     },
     {
       "attributes": {
-        "duration": 5.1e-05,
+        "duration": 4.6e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-002"
@@ -2794,7 +2794,7 @@
     },
     {
       "attributes": {
-        "duration": 5.2e-05,
+        "duration": 4.7e-05,
         "outcome": "passed",
         "requirements": [
           "REQ-002"
@@ -2869,7 +2869,7 @@
     },
     {
       "attributes": {
-        "duration": 0.00607,
+        "duration": 0.005903,
         "outcome": "passed"
       },
       "id": "RESULT:tests/integration/test_api.py::test_api_token_is_never_logged",
@@ -2881,7 +2881,7 @@
     },
     {
       "attributes": {
-        "duration": 0.006843,
+        "duration": 0.006974,
         "outcome": "passed"
       },
       "id": "RESULT:tests/integration/test_api.py::test_get_status_does_not_require_token",
@@ -2893,7 +2893,7 @@
     },
     {
       "attributes": {
-        "duration": 0.010525,
+        "duration": 0.01045,
         "outcome": "passed"
       },
       "id": "RESULT:tests/integration/test_api.py::test_get_status_returns_complete_state",
@@ -2905,7 +2905,7 @@
     },
     {
       "attributes": {
-        "duration": 0.017882,
+        "duration": 0.010896,
         "outcome": "passed"
       },
       "id": "RESULT:tests/integration/test_api.py::test_put_setpoint_out_of_range_returns_422",
@@ -2917,7 +2917,7 @@
     },
     {
       "attributes": {
-        "duration": 0.013371,
+        "duration": 0.011101,
         "outcome": "passed"
       },
       "id": "RESULT:tests/integration/test_api.py::test_put_setpoint_updates_controller",
@@ -2929,7 +2929,7 @@
     },
     {
       "attributes": {
-        "duration": 0.004562,
+        "duration": 0.004351,
         "outcome": "passed"
       },
       "id": "RESULT:tests/integration/test_api.py::test_put_setpoint_with_basic_auth_is_rejected",
@@ -2941,7 +2941,7 @@
     },
     {
       "attributes": {
-        "duration": 0.004902,
+        "duration": 0.005012,
         "outcome": "passed"
       },
       "id": "RESULT:tests/integration/test_api.py::test_put_setpoint_with_wrong_token_is_rejected",
@@ -2953,7 +2953,7 @@
     },
     {
       "attributes": {
-        "duration": 0.009473,
+        "duration": 0.01057,
         "outcome": "passed"
       },
       "id": "RESULT:tests/integration/test_api.py::test_put_setpoint_without_token_is_rejected",
@@ -2965,7 +2965,7 @@
     },
     {
       "attributes": {
-        "duration": 0.016176,
+        "duration": 0.015342,
         "outcome": "passed"
       },
       "id": "RESULT:tests/integration/test_api.py::test_status_enters_fail_safe_after_three_missing_readings",
@@ -2977,7 +2977,7 @@
     },
     {
       "attributes": {
-        "duration": 0.006307,
+        "duration": 0.0074,
         "outcome": "passed"
       },
       "id": "RESULT:tests/integration/test_api.py::test_status_reports_fail_safe_on_over_temperature",
@@ -2989,7 +2989,7 @@
     },
     {
       "attributes": {
-        "duration": 0.473278,
+        "duration": 0.475906,
         "outcome": "passed"
       },
       "id": "RESULT:tests/perf/test_status_perf.py::test_status_p95_under_100_ms",
@@ -3001,7 +3001,7 @@
     },
     {
       "attributes": {
-        "duration": 9.4e-05,
+        "duration": 0.00016,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_001_temperature_is_held_within_deadband",
@@ -3013,7 +3013,7 @@
     },
     {
       "attributes": {
-        "duration": 6.7e-05,
+        "duration": 0.000494,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_002_sensor_is_read_every_five_seconds",
@@ -3025,7 +3025,7 @@
     },
     {
       "attributes": {
-        "duration": 7e-05,
+        "duration": 5.9e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_003_heating_activates_below_setpoint_minus_half",
@@ -3037,7 +3037,7 @@
     },
     {
       "attributes": {
-        "duration": 5.7e-05,
+        "duration": 5.3e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_004_heating_deactivates_at_setpoint_plus_half",
@@ -3049,7 +3049,7 @@
     },
     {
       "attributes": {
-        "duration": 5.8e-05,
+        "duration": 8.6e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_005_heating_is_forced_off_above_30_degrees",
@@ -3061,7 +3061,7 @@
     },
     {
       "attributes": {
-        "duration": 5.7e-05,
+        "duration": 7e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_006_three_missing_readings_enter_fail_safe",
@@ -3073,7 +3073,7 @@
     },
     {
       "attributes": {
-        "duration": 6.2e-05,
+        "duration": 6e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_007_setpoint_change_takes_effect_immediately",
@@ -3097,7 +3097,7 @@
     },
     {
       "attributes": {
-        "duration": 0.001,
+        "duration": 0.0,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_008_invalid_setpoints_are_rejected",
@@ -3109,7 +3109,7 @@
     },
     {
       "attributes": {
-        "duration": 0.006905,
+        "duration": 0.005921,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_009_get_status_exposes_current_state",
@@ -3121,7 +3121,7 @@
     },
     {
       "attributes": {
-        "duration": 0.010924,
+        "duration": 0.011969,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_010_put_setpoint_accepts_updates",
@@ -3133,7 +3133,7 @@
     },
     {
       "attributes": {
-        "duration": 0.009695,
+        "duration": 0.009743,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_011_put_setpoint_requires_api_token",
@@ -3145,7 +3145,7 @@
     },
     {
       "attributes": {
-        "duration": 0.006026,
+        "duration": 0.00572,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_012_api_token_is_not_logged",
@@ -3157,7 +3157,7 @@
     },
     {
       "attributes": {
-        "duration": 0.124363,
+        "duration": 0.127578,
         "outcome": "passed"
       },
       "id": "RESULT:tests/requirements/test_requirements.py::test_req_013_get_status_responds_under_100_ms",
@@ -3181,7 +3181,7 @@
     },
     {
       "attributes": {
-        "duration": 7.9e-05,
+        "duration": 5.8e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_auth.py::test_correct_bearer_token_is_authorized",
@@ -3193,7 +3193,7 @@
     },
     {
       "attributes": {
-        "duration": 5.7e-05,
+        "duration": 0.000103,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_auth.py::test_redact_hides_secret",
@@ -3205,7 +3205,7 @@
     },
     {
       "attributes": {
-        "duration": 6e-05,
+        "duration": 7e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_controller.py::test_heating_activates_below_setpoint_minus_delta",
@@ -3217,7 +3217,7 @@
     },
     {
       "attributes": {
-        "duration": 5.6e-05,
+        "duration": 5.5e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_controller.py::test_heating_deactivates_at_upper_threshold",
@@ -3229,7 +3229,7 @@
     },
     {
       "attributes": {
-        "duration": 5.5e-05,
+        "duration": 5.6e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_controller.py::test_heating_not_activated_exactly_at_lower_threshold",
@@ -3241,7 +3241,7 @@
     },
     {
       "attributes": {
-        "duration": 5.5e-05,
+        "duration": 4.8e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_controller.py::test_heating_stays_off_inside_deadband",
@@ -3253,7 +3253,7 @@
     },
     {
       "attributes": {
-        "duration": 5.1e-05,
+        "duration": 5.4e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_controller.py::test_heating_stays_on_inside_deadband",
@@ -3265,7 +3265,7 @@
     },
     {
       "attributes": {
-        "duration": 5.2e-05,
+        "duration": 4.7e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_controller.py::test_heating_stays_on_just_below_upper_threshold",
@@ -3289,7 +3289,7 @@
     },
     {
       "attributes": {
-        "duration": 5.8e-05,
+        "duration": 7.5e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_controller.py::test_setpoint_change_applies_immediately",
@@ -3301,7 +3301,7 @@
     },
     {
       "attributes": {
-        "duration": 0.000164,
+        "duration": 6e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_safety.py::test_exactly_max_temperature_is_allowed",
@@ -3325,7 +3325,7 @@
     },
     {
       "attributes": {
-        "duration": 5.3e-05,
+        "duration": 4.8e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_safety.py::test_over_temperature_latches_fail_safe_and_turns_heater_off",
@@ -3337,7 +3337,7 @@
     },
     {
       "attributes": {
-        "duration": 6.3e-05,
+        "duration": 6.5e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_safety.py::test_reset_clears_latched_fail_safe",
@@ -3349,7 +3349,7 @@
     },
     {
       "attributes": {
-        "duration": 5.7e-05,
+        "duration": 5.6e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_safety.py::test_reset_clears_missing_reading_fail_safe",
@@ -3361,7 +3361,7 @@
     },
     {
       "attributes": {
-        "duration": 6.2e-05,
+        "duration": 5.7e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_safety.py::test_three_missing_readings_latch_fail_safe_and_turn_heater_off",
@@ -3373,7 +3373,7 @@
     },
     {
       "attributes": {
-        "duration": 5.5e-05,
+        "duration": 4.8e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_safety.py::test_two_missing_readings_do_not_trigger_fail_safe",
@@ -3385,7 +3385,7 @@
     },
     {
       "attributes": {
-        "duration": 5.2e-05,
+        "duration": 0.000106,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_safety.py::test_valid_reading_resets_missing_counter",
@@ -3397,7 +3397,7 @@
     },
     {
       "attributes": {
-        "duration": 5.7e-05,
+        "duration": 7e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_sensor.py::test_default_sensor_repeatedly_reads_21_degrees",
@@ -3409,7 +3409,7 @@
     },
     {
       "attributes": {
-        "duration": 5.1e-05,
+        "duration": 4.6e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_sensor.py::test_sensor_interval_is_five_seconds",
@@ -3421,7 +3421,7 @@
     },
     {
       "attributes": {
-        "duration": 5.2e-05,
+        "duration": 4.7e-05,
         "outcome": "passed"
       },
       "id": "RESULT:tests/unit/test_sensor.py::test_sensor_sticks_at_last_reading",

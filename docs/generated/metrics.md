@@ -1,6 +1,6 @@
 # Metrics
 
-Current pipeline counts. DORA metrics are not part of this report.
+Current pipeline counts and DORA metrics.
 
 ## Pipeline counts
 
@@ -12,14 +12,36 @@ Current pipeline counts. DORA metrics are not part of this report.
 | Quality score | 100.0 |
 | Traceability coverage (%) | 100.0 |
 | Verification coverage (%) | 100.0 |
-| Total tests | 258 |
+| Total tests | 332 |
 | Failed tests | 0 |
 | Requirements coverage (%) | 100.0 |
-| Line coverage (%) | 88.2 |
+| Line coverage (%) | 88.8 |
 | Security findings | 23 |
 | Impact risk | medium |
 | Thread nodes | 146 |
 | Thread edges | 295 |
+
+## DORA metrics
+
+| Metric | Value |
+| --- | --- |
+| Deployments (30 days) | 0 |
+| Deployment frequency (per week) | 0.0 |
+| Lead time median (hours) | 0.81 |
+| Change failure rate | 0.0 |
+| Mean time to restore (hours) | 0.0 |
+
+## Pipeline metrics
+
+| Metric | Value |
+| --- | --- |
+| Tests | 332 |
+| Passed | 332 |
+| Failed | 0 |
+| Flaky tests | 0 |
+| Coverage (%) | 88.8 |
+
+- [metrics.json](../reports/metrics.json)
 
 ## Reports
 
