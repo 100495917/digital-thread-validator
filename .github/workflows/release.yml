@@ -1,0 +1,99 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, for example v1.0.0"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Build release artifacts
+    runs-on: ubuntu-latest
+
+    env:
+      # Tags use the ref name; manual runs use the requested version.
+      VERSION: ${{ github.event.inputs.version || github.ref_name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Validate requirements and model
+        run: mbse validate all
+
+      - name: Check traceability
+        run: mbse trace check
+
+      - name: Run tests
+        run: pytest
+
+      - name: Security gate
+        run: mbse security
+
+      - name: Update digital thread
+        run: mbse thread update
+
+      - name: Generate RTM
+        run: mbse trace rtm
+
+      - name: Freeze baseline
+        run: mbse baseline freeze "$VERSION"
+
+      - name: Generate changelog
+        run: mbse changelog --version "$VERSION" --output "CHANGELOG-$VERSION.md"
+
+      - name: Upload release artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-assets
+          path: |
+            baselines/baseline-${{ env.VERSION }}.json
+            CHANGELOG-${{ env.VERSION }}.md
+            build/reports/rtm.csv
+            build/reports/sbom.json
+            build/reports/summary.json
+            digital_thread/thread.json
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: ${{ env.VERSION }}
+          files: |
+            baselines/baseline-${{ env.VERSION }}.json
+            CHANGELOG-${{ env.VERSION }}.md
+            build/reports/rtm.csv
+            build/reports/sbom.json
+            build/reports/summary.json
+            digital_thread/thread.json
+          fail_on_unmatched_files: true

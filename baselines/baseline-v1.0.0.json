@@ -1,0 +1,3654 @@
+{
+  "artifacts": {
+    "models/schema/requirements.schema.json": "975a66234f4cf7ae3d211e9b3b380d07f00f4e99f29f6e88655d66ffab62a16c",
+    "models/schema/system.schema.json": "afa907117b83d3b8a0246e5dea509a49566497fd5a3f946566f113390561269e",
+    "models/system.yaml": "18206a1acd2cd3ec4f7ddb26654bea37895703de760f78eb0e62a39d42720e21",
+    "requirements/REQ-001.yaml": "fe51c8ebce45841286fd0acc7f8e8a75091db46440a3665845136f5c7a8087e3",
+    "requirements/REQ-002.yaml": "b1b2c4d2cc948fcdee0b49f4134e42f84c54b667b19f669fad4d8ce0e2a4b146",
+    "requirements/REQ-003.yaml": "b6d2d85449bc1f1dcd780d1e07f63a839e76c36f8b90e5a6b21c7b055a149edf",
+    "requirements/REQ-004.yaml": "3ca7c9843c853addfcb45d8220e86a410d15bbe4a09865f0591c0503a0d0c662",
+    "requirements/REQ-005.yaml": "593528957d7f3342f98e8d02c3adb755b9a30bdf398ea459a5ee5b023936b54f",
+    "requirements/REQ-006.yaml": "2a086f1a4d586580fc196f06c599f6c30378805d0de09d2b41e31dd690dffe0a",
+    "requirements/REQ-007.yaml": "cc9c8d3af8729b420814d991d0cdee4a8665af14beaa25e6d7fa651b4c0319b9",
+    "requirements/REQ-008.yaml": "f41805f6530977ab8a295829afbad559714ac750bc79b0c508242a11fb48eb92",
+    "requirements/REQ-009.yaml": "0ddc95f6360afc73c3f3046068262fbc541a04e2c78c8fbd13783221d5ce13c4",
+    "requirements/REQ-010.yaml": "7b62a9910a4fabdf2b3764b6cbee79a6347a82d0c1abdc4279f1079b93623331",
+    "requirements/REQ-011.yaml": "28ccf23168c36a18a77ade5d11fc9c5f45da8e2e894ae3ac39230ff467b430f7",
+    "requirements/REQ-012.yaml": "173a1bcc724fb32b08273f6a04d82d6d710b22300a37bf09789744031a8ca51d",
+    "requirements/REQ-013.yaml": "ac6ad0747bc2d7800b5ea2cf015c9c5c711c23ca52add01a0b25de9f76a73996",
+    "src/thermostat/__init__.py": "1c137a2d55bc196c2835753978c581adb6911109c7b55b789868fa94826253ca",
+    "src/thermostat/api.py": "24bcb1f1d81585f1e53ce5709fe426eafde1aa721517156cf96229d794694b4e",
+    "src/thermostat/auth.py": "a47d555e6fb4788cee10db41def916eb965261cb83301a935fbf6fc7aa849886",
+    "src/thermostat/controller.py": "bb10dc5a5a8dfc54972524718c29f0c00176de2d5303f6db74bb052563d12a27",
+    "src/thermostat/heater.py": "091eafdba0e093861f6a99f7d3d62f2cfdad8cc3862af8bccd4bd8a4d90043e1",
+    "src/thermostat/safety.py": "6099a8061da3e5e25ace4b6a0a1259c7a2ff4a3fe808d3e655145f6f2f49d929",
+    "src/thermostat/sensor.py": "61047c3a396329ee37214ccbb59d71fdc0e3924698cfb31f7fade4033d08b16b",
+    "src/thermostat/validator.py": "e2f5cea70f3296f8bc180a8beb657371beb7b3148424396d0a73e280829c8861",
+    "tests/conftest.py": "b59c29698b4459a2da8d61745d3db10ddc90ea2f5ee895f97165de13e56ae0af",
+    "tests/integration/test_api.py": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+    "tests/perf/test_status_perf.py": "cb3f91aecb6aec43ae2c0abf0984d1f6bb7dde675e6314133ea7424eab7a111c",
+    "tests/requirements/test_requirements.py": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+    "tests/unit/test_auth.py": "e7a7ea11539133bd8ac1394214a31d59b1dc3c4bf1815ecbec798a59cafae6b9",
+    "tests/unit/test_controller.py": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+    "tests/unit/test_safety.py": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+    "tests/unit/test_sensor.py": "b46c563025b08beeb6b0f2717aab3b8afd1e020a27b8c03eeeaa266cb4abaf62",
+    "tests/unit/test_validator.py": "f5ba766f88c74ef79b6cbe3576e32d5892f8e28e4e5e1698b98af7f6ce177a50"
+  },
+  "rtm": [
+    {
+      "Code": "src/thermostat/controller.py",
+      "Last result": "pass",
+      "Model elements": "BHV-control-loop; BLK-controller",
+      "Priority": "high",
+      "Req ID": "REQ-001",
+      "Status": "complete",
+      "Tests": "tests/requirements/test_requirements.py; tests/unit/test_controller.py",
+      "Title": "Temperature setpoint tracking"
+    },
+    {
+      "Code": "src/thermostat/sensor.py",
+      "Last result": "pass",
+      "Model elements": "BLK-sensor; IF-sensor",
+      "Priority": "medium",
+      "Req ID": "REQ-002",
+      "Status": "complete",
+      "Tests": "tests/requirements/test_requirements.py; tests/unit/test_sensor.py",
+      "Title": "Periodic sensor sampling"
+    },
+    {
+      "Code": "src/thermostat/controller.py; src/thermostat/heater.py",
+      "Last result": "pass",
+      "Model elements": "BLK-controller; BLK-heater",
+      "Priority": "medium",
+      "Req ID": "REQ-003",
+      "Status": "complete",
+      "Tests": "tests/requirements/test_requirements.py; tests/unit/test_controller.py",
+      "Title": "Heating activation below hysteresis band"
+    },
+    {
+      "Code": "src/thermostat/controller.py; src/thermostat/heater.py",
+      "Last result": "pass",
+      "Model elements": "BLK-controller; BLK-heater",
+      "Priority": "medium",
+      "Req ID": "REQ-004",
+      "Status": "complete",
+      "Tests": "tests/requirements/test_requirements.py; tests/unit/test_controller.py",
+      "Title": "Heating deactivation above hysteresis band"
+    },
+    {
+      "Code": "src/thermostat/safety.py",
+      "Last result": "pass",
+      "Model elements": "BLK-safety",
+      "Priority": "high",
+      "Req ID": "REQ-005",
+      "Status": "complete",
+      "Tests": "tests/integration/test_api.py; tests/requirements/test_requirements.py; tests/unit/test_safety.py",
+      "Title": "Over-temperature shutdown"
+    },
+    {
+      "Code": "src/thermostat/safety.py",
+      "Last result": "pass",
+      "Model elements": "BLK-safety",
+      "Priority": "high",
+      "Req ID": "REQ-006",
+      "Status": "complete",
+      "Tests": "tests/integration/test_api.py; tests/requirements/test_requirements.py; tests/unit/test_safety.py",
+      "Title": "Missing-sensor fail-safe"
+    },
+    {
+      "Code": "src/thermostat/controller.py",
+      "Last result": "pass",
+      "Model elements": "BLK-controller",
+      "Priority": "medium",
+      "Req ID": "REQ-007",
+      "Status": "complete",
+      "Tests": "tests/requirements/test_requirements.py; tests/unit/test_controller.py",
+      "Title": "Setpoint change response time"
+    },
+    {
+      "Code": "src/thermostat/validator.py",
+      "Last result": "pass",
+      "Model elements": "BLK-validator",
+      "Priority": "medium",
+      "Req ID": "REQ-008",
+      "Status": "complete",
+      "Tests": "tests/integration/test_api.py; tests/requirements/test_requirements.py; tests/unit/test_controller.py; tests/unit/test_validator.py",
+      "Title": "Setpoint range validation"
+    },
+    {
+      "Code": "src/thermostat/api.py",
+      "Last result": "pass",
+      "Model elements": "BLK-api; IF-rest",
+      "Priority": "medium",
+      "Req ID": "REQ-009",
+      "Status": "complete",
+      "Tests": "tests/integration/test_api.py; tests/requirements/test_requirements.py",
+      "Title": "Status REST endpoint"
+    },
+    {
+      "Code": "src/thermostat/api.py",
+      "Last result": "pass",
+      "Model elements": "BLK-api; IF-rest",
+      "Priority": "medium",
+      "Req ID": "REQ-010",
+      "Status": "complete",
+      "Tests": "tests/integration/test_api.py; tests/requirements/test_requirements.py",
+      "Title": "Setpoint update endpoint"
+    },
+    {
+      "Code": "src/thermostat/auth.py",
+      "Last result": "pass",
+      "Model elements": "BLK-auth",
+      "Priority": "high",
+      "Req ID": "REQ-011",
+      "Status": "complete",
+      "Tests": "tests/integration/test_api.py; tests/requirements/test_requirements.py; tests/unit/test_auth.py",
+      "Title": "Authenticated setpoint updates"
+    },
+    {
+      "Code": "src/thermostat/auth.py",
+      "Last result": "pass",
+      "Model elements": "BLK-auth",
+      "Priority": "high",
+      "Req ID": "REQ-012",
+      "Status": "complete",
+      "Tests": "tests/integration/test_api.py; tests/requirements/test_requirements.py; tests/unit/test_auth.py",
+      "Title": "Token confidentiality in logs"
+    },
+    {
+      "Code": "src/thermostat/api.py",
+      "Last result": "pass",
+      "Model elements": "BLK-api",
+      "Priority": "medium",
+      "Req ID": "REQ-013",
+      "Status": "complete",
+      "Tests": "tests/perf/test_status_perf.py; tests/requirements/test_requirements.py",
+      "Title": "Status endpoint latency"
+    }
+  ],
+  "thread": {
+    "edges": [
+      {
+        "source": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "target": "release-1.0.0",
+        "type": "INCLUDED_IN"
+      },
+      {
+        "source": "BHV-control-loop",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "BHV-control-loop",
+        "target": "REQ-001",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BHV-control-loop",
+        "target": "src/thermostat/controller.py",
+        "type": "ALLOCATED_TO"
+      },
+      {
+        "source": "BLK-api",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "BLK-api",
+        "target": "REQ-009",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-api",
+        "target": "REQ-010",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-api",
+        "target": "REQ-013",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-api",
+        "target": "src/thermostat/api.py",
+        "type": "ALLOCATED_TO"
+      },
+      {
+        "source": "BLK-auth",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "BLK-auth",
+        "target": "REQ-011",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-auth",
+        "target": "REQ-012",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-auth",
+        "target": "src/thermostat/auth.py",
+        "type": "ALLOCATED_TO"
+      },
+      {
+        "source": "BLK-controller",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "BLK-controller",
+        "target": "REQ-001",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-controller",
+        "target": "REQ-003",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-controller",
+        "target": "REQ-004",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-controller",
+        "target": "REQ-007",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-controller",
+        "target": "src/thermostat/controller.py",
+        "type": "ALLOCATED_TO"
+      },
+      {
+        "source": "BLK-heater",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "BLK-heater",
+        "target": "REQ-003",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-heater",
+        "target": "REQ-004",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-heater",
+        "target": "src/thermostat/heater.py",
+        "type": "ALLOCATED_TO"
+      },
+      {
+        "source": "BLK-safety",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "BLK-safety",
+        "target": "REQ-005",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-safety",
+        "target": "REQ-006",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-safety",
+        "target": "src/thermostat/safety.py",
+        "type": "ALLOCATED_TO"
+      },
+      {
+        "source": "BLK-sensor",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "BLK-sensor",
+        "target": "REQ-002",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-sensor",
+        "target": "src/thermostat/sensor.py",
+        "type": "ALLOCATED_TO"
+      },
+      {
+        "source": "BLK-validator",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "BLK-validator",
+        "target": "REQ-008",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "BLK-validator",
+        "target": "src/thermostat/validator.py",
+        "type": "ALLOCATED_TO"
+      },
+      {
+        "source": "IF-rest",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "IF-rest",
+        "target": "REQ-009",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "IF-rest",
+        "target": "REQ-010",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "IF-rest",
+        "target": "src/thermostat/api.py",
+        "type": "ALLOCATED_TO"
+      },
+      {
+        "source": "IF-sensor",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "IF-sensor",
+        "target": "REQ-002",
+        "type": "SATISFIES"
+      },
+      {
+        "source": "IF-sensor",
+        "target": "src/thermostat/sensor.py",
+        "type": "ALLOCATED_TO"
+      },
+      {
+        "source": "REQ-001",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-002",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-003",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-003",
+        "target": "REQ-001",
+        "type": "DERIVES_FROM"
+      },
+      {
+        "source": "REQ-004",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-004",
+        "target": "REQ-001",
+        "type": "DERIVES_FROM"
+      },
+      {
+        "source": "REQ-005",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-006",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-007",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-008",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-009",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-010",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-011",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-011",
+        "target": "REQ-010",
+        "type": "DERIVES_FROM"
+      },
+      {
+        "source": "REQ-012",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-013",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "REQ-013",
+        "target": "REQ-009",
+        "type": "DERIVES_FROM"
+      },
+      {
+        "source": "RESULT:tests/integration/test_api.py::test_api_token_is_never_logged",
+        "target": "tests/integration/test_api.py::test_api_token_is_never_logged",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/integration/test_api.py::test_get_status_does_not_require_token",
+        "target": "tests/integration/test_api.py::test_get_status_does_not_require_token",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/integration/test_api.py::test_get_status_returns_complete_state",
+        "target": "tests/integration/test_api.py::test_get_status_returns_complete_state",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/integration/test_api.py::test_put_setpoint_out_of_range_returns_422",
+        "target": "tests/integration/test_api.py::test_put_setpoint_out_of_range_returns_422",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/integration/test_api.py::test_put_setpoint_updates_controller",
+        "target": "tests/integration/test_api.py::test_put_setpoint_updates_controller",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/integration/test_api.py::test_put_setpoint_with_basic_auth_is_rejected",
+        "target": "tests/integration/test_api.py::test_put_setpoint_with_basic_auth_is_rejected",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/integration/test_api.py::test_put_setpoint_with_wrong_token_is_rejected",
+        "target": "tests/integration/test_api.py::test_put_setpoint_with_wrong_token_is_rejected",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/integration/test_api.py::test_put_setpoint_without_token_is_rejected",
+        "target": "tests/integration/test_api.py::test_put_setpoint_without_token_is_rejected",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/integration/test_api.py::test_status_enters_fail_safe_after_three_missing_readings",
+        "target": "tests/integration/test_api.py::test_status_enters_fail_safe_after_three_missing_readings",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/integration/test_api.py::test_status_reports_fail_safe_on_over_temperature",
+        "target": "tests/integration/test_api.py::test_status_reports_fail_safe_on_over_temperature",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/perf/test_status_perf.py::test_status_p95_under_100_ms",
+        "target": "tests/perf/test_status_perf.py::test_status_p95_under_100_ms",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_001_temperature_is_held_within_deadband",
+        "target": "tests/requirements/test_requirements.py::test_req_001_temperature_is_held_within_deadband",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_002_sensor_is_read_every_five_seconds",
+        "target": "tests/requirements/test_requirements.py::test_req_002_sensor_is_read_every_five_seconds",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_003_heating_activates_below_setpoint_minus_half",
+        "target": "tests/requirements/test_requirements.py::test_req_003_heating_activates_below_setpoint_minus_half",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_004_heating_deactivates_at_setpoint_plus_half",
+        "target": "tests/requirements/test_requirements.py::test_req_004_heating_deactivates_at_setpoint_plus_half",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_005_heating_is_forced_off_above_30_degrees",
+        "target": "tests/requirements/test_requirements.py::test_req_005_heating_is_forced_off_above_30_degrees",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_006_three_missing_readings_enter_fail_safe",
+        "target": "tests/requirements/test_requirements.py::test_req_006_three_missing_readings_enter_fail_safe",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_007_setpoint_change_takes_effect_immediately",
+        "target": "tests/requirements/test_requirements.py::test_req_007_setpoint_change_takes_effect_immediately",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_008_inclusive_setpoint_bounds_are_accepted",
+        "target": "tests/requirements/test_requirements.py::test_req_008_inclusive_setpoint_bounds_are_accepted",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_008_invalid_setpoints_are_rejected",
+        "target": "tests/requirements/test_requirements.py::test_req_008_invalid_setpoints_are_rejected",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_009_get_status_exposes_current_state",
+        "target": "tests/requirements/test_requirements.py::test_req_009_get_status_exposes_current_state",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_010_put_setpoint_accepts_updates",
+        "target": "tests/requirements/test_requirements.py::test_req_010_put_setpoint_accepts_updates",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_011_put_setpoint_requires_api_token",
+        "target": "tests/requirements/test_requirements.py::test_req_011_put_setpoint_requires_api_token",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_012_api_token_is_not_logged",
+        "target": "tests/requirements/test_requirements.py::test_req_012_api_token_is_not_logged",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/requirements/test_requirements.py::test_req_013_get_status_responds_under_100_ms",
+        "target": "tests/requirements/test_requirements.py::test_req_013_get_status_responds_under_100_ms",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_auth.py::test_bad_authorization_is_rejected",
+        "target": "tests/unit/test_auth.py::test_bad_authorization_is_rejected",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_auth.py::test_correct_bearer_token_is_authorized",
+        "target": "tests/unit/test_auth.py::test_correct_bearer_token_is_authorized",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_auth.py::test_redact_hides_secret",
+        "target": "tests/unit/test_auth.py::test_redact_hides_secret",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_controller.py::test_heating_activates_below_setpoint_minus_delta",
+        "target": "tests/unit/test_controller.py::test_heating_activates_below_setpoint_minus_delta",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_controller.py::test_heating_deactivates_at_upper_threshold",
+        "target": "tests/unit/test_controller.py::test_heating_deactivates_at_upper_threshold",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_controller.py::test_heating_not_activated_exactly_at_lower_threshold",
+        "target": "tests/unit/test_controller.py::test_heating_not_activated_exactly_at_lower_threshold",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_controller.py::test_heating_stays_off_inside_deadband",
+        "target": "tests/unit/test_controller.py::test_heating_stays_off_inside_deadband",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_controller.py::test_heating_stays_on_inside_deadband",
+        "target": "tests/unit/test_controller.py::test_heating_stays_on_inside_deadband",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_controller.py::test_heating_stays_on_just_below_upper_threshold",
+        "target": "tests/unit/test_controller.py::test_heating_stays_on_just_below_upper_threshold",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_controller.py::test_invalid_setpoint_raises_and_is_not_applied",
+        "target": "tests/unit/test_controller.py::test_invalid_setpoint_raises_and_is_not_applied",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_controller.py::test_setpoint_change_applies_immediately",
+        "target": "tests/unit/test_controller.py::test_setpoint_change_applies_immediately",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_safety.py::test_exactly_max_temperature_is_allowed",
+        "target": "tests/unit/test_safety.py::test_exactly_max_temperature_is_allowed",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_safety.py::test_over_temperature_latch_survives_normal_readings",
+        "target": "tests/unit/test_safety.py::test_over_temperature_latch_survives_normal_readings",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_safety.py::test_over_temperature_latches_fail_safe_and_turns_heater_off",
+        "target": "tests/unit/test_safety.py::test_over_temperature_latches_fail_safe_and_turns_heater_off",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_safety.py::test_reset_clears_latched_fail_safe",
+        "target": "tests/unit/test_safety.py::test_reset_clears_latched_fail_safe",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_safety.py::test_reset_clears_missing_reading_fail_safe",
+        "target": "tests/unit/test_safety.py::test_reset_clears_missing_reading_fail_safe",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_safety.py::test_three_missing_readings_latch_fail_safe_and_turn_heater_off",
+        "target": "tests/unit/test_safety.py::test_three_missing_readings_latch_fail_safe_and_turn_heater_off",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_safety.py::test_two_missing_readings_do_not_trigger_fail_safe",
+        "target": "tests/unit/test_safety.py::test_two_missing_readings_do_not_trigger_fail_safe",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_safety.py::test_valid_reading_resets_missing_counter",
+        "target": "tests/unit/test_safety.py::test_valid_reading_resets_missing_counter",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_sensor.py::test_default_sensor_repeatedly_reads_21_degrees",
+        "target": "tests/unit/test_sensor.py::test_default_sensor_repeatedly_reads_21_degrees",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_sensor.py::test_sensor_interval_is_five_seconds",
+        "target": "tests/unit/test_sensor.py::test_sensor_interval_is_five_seconds",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_sensor.py::test_sensor_sticks_at_last_reading",
+        "target": "tests/unit/test_sensor.py::test_sensor_sticks_at_last_reading",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_validator.py::test_boolean_values_are_rejected",
+        "target": "tests/unit/test_validator.py::test_boolean_values_are_rejected",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_validator.py::test_inclusive_bounds_are_accepted",
+        "target": "tests/unit/test_validator.py::test_inclusive_bounds_are_accepted",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_validator.py::test_non_finite_values_are_rejected",
+        "target": "tests/unit/test_validator.py::test_non_finite_values_are_rejected",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "RESULT:tests/unit/test_validator.py::test_out_of_range_values_are_rejected",
+        "target": "tests/unit/test_validator.py::test_out_of_range_values_are_rejected",
+        "type": "RESULT_OF"
+      },
+      {
+        "source": "src/thermostat/__init__.py",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "src/thermostat/api.py",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "src/thermostat/api.py",
+        "target": "REQ-009",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/api.py",
+        "target": "REQ-010",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/api.py",
+        "target": "REQ-013",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/auth.py",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "src/thermostat/auth.py",
+        "target": "REQ-011",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/auth.py",
+        "target": "REQ-012",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/controller.py",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "src/thermostat/controller.py",
+        "target": "REQ-001",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/controller.py",
+        "target": "REQ-003",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/controller.py",
+        "target": "REQ-004",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/controller.py",
+        "target": "REQ-007",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/heater.py",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "src/thermostat/heater.py",
+        "target": "REQ-003",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/heater.py",
+        "target": "REQ-004",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/safety.py",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "src/thermostat/safety.py",
+        "target": "REQ-005",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/safety.py",
+        "target": "REQ-006",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/sensor.py",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "src/thermostat/sensor.py",
+        "target": "REQ-002",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "src/thermostat/validator.py",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "src/thermostat/validator.py",
+        "target": "REQ-008",
+        "type": "IMPLEMENTS"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_api_token_is_never_logged",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_api_token_is_never_logged",
+        "target": "REQ-012",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_api_token_is_never_logged",
+        "target": "src/thermostat/auth.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_get_status_does_not_require_token",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_get_status_does_not_require_token",
+        "target": "REQ-009",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_get_status_does_not_require_token",
+        "target": "src/thermostat/api.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_get_status_returns_complete_state",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_get_status_returns_complete_state",
+        "target": "REQ-009",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_get_status_returns_complete_state",
+        "target": "src/thermostat/api.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_out_of_range_returns_422",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_out_of_range_returns_422",
+        "target": "REQ-008",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_out_of_range_returns_422",
+        "target": "REQ-010",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_out_of_range_returns_422",
+        "target": "src/thermostat/api.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_out_of_range_returns_422",
+        "target": "src/thermostat/validator.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_updates_controller",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_updates_controller",
+        "target": "REQ-010",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_updates_controller",
+        "target": "src/thermostat/api.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_with_basic_auth_is_rejected",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_with_basic_auth_is_rejected",
+        "target": "REQ-011",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_with_basic_auth_is_rejected",
+        "target": "src/thermostat/auth.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_with_wrong_token_is_rejected",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_with_wrong_token_is_rejected",
+        "target": "REQ-011",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_with_wrong_token_is_rejected",
+        "target": "src/thermostat/auth.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_without_token_is_rejected",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_without_token_is_rejected",
+        "target": "REQ-011",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_put_setpoint_without_token_is_rejected",
+        "target": "src/thermostat/auth.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_status_enters_fail_safe_after_three_missing_readings",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_status_enters_fail_safe_after_three_missing_readings",
+        "target": "REQ-006",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_status_enters_fail_safe_after_three_missing_readings",
+        "target": "src/thermostat/safety.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_status_reports_fail_safe_on_over_temperature",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_status_reports_fail_safe_on_over_temperature",
+        "target": "REQ-005",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/integration/test_api.py::test_status_reports_fail_safe_on_over_temperature",
+        "target": "src/thermostat/safety.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/perf/test_status_perf.py::test_status_p95_under_100_ms",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/perf/test_status_perf.py::test_status_p95_under_100_ms",
+        "target": "REQ-013",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/perf/test_status_perf.py::test_status_p95_under_100_ms",
+        "target": "src/thermostat/api.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_001_temperature_is_held_within_deadband",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_001_temperature_is_held_within_deadband",
+        "target": "REQ-001",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_001_temperature_is_held_within_deadband",
+        "target": "src/thermostat/controller.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_002_sensor_is_read_every_five_seconds",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_002_sensor_is_read_every_five_seconds",
+        "target": "REQ-002",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_002_sensor_is_read_every_five_seconds",
+        "target": "src/thermostat/sensor.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_003_heating_activates_below_setpoint_minus_half",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_003_heating_activates_below_setpoint_minus_half",
+        "target": "REQ-003",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_003_heating_activates_below_setpoint_minus_half",
+        "target": "src/thermostat/controller.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_003_heating_activates_below_setpoint_minus_half",
+        "target": "src/thermostat/heater.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_004_heating_deactivates_at_setpoint_plus_half",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_004_heating_deactivates_at_setpoint_plus_half",
+        "target": "REQ-004",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_004_heating_deactivates_at_setpoint_plus_half",
+        "target": "src/thermostat/controller.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_004_heating_deactivates_at_setpoint_plus_half",
+        "target": "src/thermostat/heater.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_005_heating_is_forced_off_above_30_degrees",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_005_heating_is_forced_off_above_30_degrees",
+        "target": "REQ-005",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_005_heating_is_forced_off_above_30_degrees",
+        "target": "src/thermostat/safety.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_006_three_missing_readings_enter_fail_safe",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_006_three_missing_readings_enter_fail_safe",
+        "target": "REQ-006",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_006_three_missing_readings_enter_fail_safe",
+        "target": "src/thermostat/safety.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_007_setpoint_change_takes_effect_immediately",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_007_setpoint_change_takes_effect_immediately",
+        "target": "REQ-007",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_007_setpoint_change_takes_effect_immediately",
+        "target": "src/thermostat/controller.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_008_inclusive_setpoint_bounds_are_accepted",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_008_inclusive_setpoint_bounds_are_accepted",
+        "target": "REQ-008",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_008_inclusive_setpoint_bounds_are_accepted",
+        "target": "src/thermostat/validator.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_008_invalid_setpoints_are_rejected",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_008_invalid_setpoints_are_rejected",
+        "target": "REQ-008",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_008_invalid_setpoints_are_rejected",
+        "target": "src/thermostat/validator.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_009_get_status_exposes_current_state",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_009_get_status_exposes_current_state",
+        "target": "REQ-009",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_009_get_status_exposes_current_state",
+        "target": "src/thermostat/api.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_010_put_setpoint_accepts_updates",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_010_put_setpoint_accepts_updates",
+        "target": "REQ-010",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_010_put_setpoint_accepts_updates",
+        "target": "src/thermostat/api.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_011_put_setpoint_requires_api_token",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_011_put_setpoint_requires_api_token",
+        "target": "REQ-011",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_011_put_setpoint_requires_api_token",
+        "target": "src/thermostat/auth.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_012_api_token_is_not_logged",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_012_api_token_is_not_logged",
+        "target": "REQ-012",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_012_api_token_is_not_logged",
+        "target": "src/thermostat/auth.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_013_get_status_responds_under_100_ms",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_013_get_status_responds_under_100_ms",
+        "target": "REQ-013",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/requirements/test_requirements.py::test_req_013_get_status_responds_under_100_ms",
+        "target": "src/thermostat/api.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_auth.py::test_bad_authorization_is_rejected",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_auth.py::test_bad_authorization_is_rejected",
+        "target": "REQ-011",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_auth.py::test_bad_authorization_is_rejected",
+        "target": "src/thermostat/auth.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_auth.py::test_correct_bearer_token_is_authorized",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_auth.py::test_correct_bearer_token_is_authorized",
+        "target": "REQ-011",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_auth.py::test_correct_bearer_token_is_authorized",
+        "target": "src/thermostat/auth.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_auth.py::test_redact_hides_secret",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_auth.py::test_redact_hides_secret",
+        "target": "REQ-012",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_auth.py::test_redact_hides_secret",
+        "target": "src/thermostat/auth.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_activates_below_setpoint_minus_delta",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_activates_below_setpoint_minus_delta",
+        "target": "REQ-003",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_activates_below_setpoint_minus_delta",
+        "target": "src/thermostat/controller.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_activates_below_setpoint_minus_delta",
+        "target": "src/thermostat/heater.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_deactivates_at_upper_threshold",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_deactivates_at_upper_threshold",
+        "target": "REQ-004",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_deactivates_at_upper_threshold",
+        "target": "src/thermostat/controller.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_deactivates_at_upper_threshold",
+        "target": "src/thermostat/heater.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_not_activated_exactly_at_lower_threshold",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_not_activated_exactly_at_lower_threshold",
+        "target": "REQ-003",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_not_activated_exactly_at_lower_threshold",
+        "target": "src/thermostat/controller.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_not_activated_exactly_at_lower_threshold",
+        "target": "src/thermostat/heater.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_stays_off_inside_deadband",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_stays_off_inside_deadband",
+        "target": "REQ-001",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_stays_off_inside_deadband",
+        "target": "src/thermostat/controller.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_stays_on_inside_deadband",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_stays_on_inside_deadband",
+        "target": "REQ-001",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_stays_on_inside_deadband",
+        "target": "src/thermostat/controller.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_stays_on_just_below_upper_threshold",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_stays_on_just_below_upper_threshold",
+        "target": "REQ-004",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_stays_on_just_below_upper_threshold",
+        "target": "src/thermostat/controller.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_heating_stays_on_just_below_upper_threshold",
+        "target": "src/thermostat/heater.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_invalid_setpoint_raises_and_is_not_applied",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_invalid_setpoint_raises_and_is_not_applied",
+        "target": "REQ-007",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_invalid_setpoint_raises_and_is_not_applied",
+        "target": "REQ-008",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_invalid_setpoint_raises_and_is_not_applied",
+        "target": "src/thermostat/controller.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_invalid_setpoint_raises_and_is_not_applied",
+        "target": "src/thermostat/validator.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_setpoint_change_applies_immediately",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_setpoint_change_applies_immediately",
+        "target": "REQ-007",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_controller.py::test_setpoint_change_applies_immediately",
+        "target": "src/thermostat/controller.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_exactly_max_temperature_is_allowed",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_exactly_max_temperature_is_allowed",
+        "target": "REQ-005",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_exactly_max_temperature_is_allowed",
+        "target": "src/thermostat/safety.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_over_temperature_latch_survives_normal_readings",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_over_temperature_latch_survives_normal_readings",
+        "target": "REQ-005",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_over_temperature_latch_survives_normal_readings",
+        "target": "src/thermostat/safety.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_over_temperature_latches_fail_safe_and_turns_heater_off",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_over_temperature_latches_fail_safe_and_turns_heater_off",
+        "target": "REQ-005",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_over_temperature_latches_fail_safe_and_turns_heater_off",
+        "target": "src/thermostat/safety.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_reset_clears_latched_fail_safe",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_reset_clears_latched_fail_safe",
+        "target": "REQ-005",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_reset_clears_latched_fail_safe",
+        "target": "REQ-006",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_reset_clears_latched_fail_safe",
+        "target": "src/thermostat/safety.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_reset_clears_missing_reading_fail_safe",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_reset_clears_missing_reading_fail_safe",
+        "target": "REQ-006",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_reset_clears_missing_reading_fail_safe",
+        "target": "src/thermostat/safety.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_three_missing_readings_latch_fail_safe_and_turn_heater_off",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_three_missing_readings_latch_fail_safe_and_turn_heater_off",
+        "target": "REQ-006",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_three_missing_readings_latch_fail_safe_and_turn_heater_off",
+        "target": "src/thermostat/safety.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_two_missing_readings_do_not_trigger_fail_safe",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_two_missing_readings_do_not_trigger_fail_safe",
+        "target": "REQ-006",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_two_missing_readings_do_not_trigger_fail_safe",
+        "target": "src/thermostat/safety.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_valid_reading_resets_missing_counter",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_valid_reading_resets_missing_counter",
+        "target": "REQ-006",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_safety.py::test_valid_reading_resets_missing_counter",
+        "target": "src/thermostat/safety.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_sensor.py::test_default_sensor_repeatedly_reads_21_degrees",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_sensor.py::test_default_sensor_repeatedly_reads_21_degrees",
+        "target": "REQ-002",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_sensor.py::test_default_sensor_repeatedly_reads_21_degrees",
+        "target": "src/thermostat/sensor.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_sensor.py::test_sensor_interval_is_five_seconds",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_sensor.py::test_sensor_interval_is_five_seconds",
+        "target": "REQ-002",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_sensor.py::test_sensor_interval_is_five_seconds",
+        "target": "src/thermostat/sensor.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_sensor.py::test_sensor_sticks_at_last_reading",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_sensor.py::test_sensor_sticks_at_last_reading",
+        "target": "REQ-002",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_sensor.py::test_sensor_sticks_at_last_reading",
+        "target": "src/thermostat/sensor.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_validator.py::test_boolean_values_are_rejected",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_validator.py::test_boolean_values_are_rejected",
+        "target": "REQ-008",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_validator.py::test_boolean_values_are_rejected",
+        "target": "src/thermostat/validator.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_validator.py::test_inclusive_bounds_are_accepted",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_validator.py::test_inclusive_bounds_are_accepted",
+        "target": "REQ-008",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_validator.py::test_inclusive_bounds_are_accepted",
+        "target": "src/thermostat/validator.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_validator.py::test_non_finite_values_are_rejected",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_validator.py::test_non_finite_values_are_rejected",
+        "target": "REQ-008",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_validator.py::test_non_finite_values_are_rejected",
+        "target": "src/thermostat/validator.py",
+        "type": "EXERCISES"
+      },
+      {
+        "source": "tests/unit/test_validator.py::test_out_of_range_values_are_rejected",
+        "target": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "type": "CHANGED_IN"
+      },
+      {
+        "source": "tests/unit/test_validator.py::test_out_of_range_values_are_rejected",
+        "target": "REQ-008",
+        "type": "VERIFIES"
+      },
+      {
+        "source": "tests/unit/test_validator.py::test_out_of_range_values_are_rejected",
+        "target": "src/thermostat/validator.py",
+        "type": "EXERCISES"
+      }
+    ],
+    "metadata": {
+      "author": "rotlerxd",
+      "branch": "main",
+      "commit_sha": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+      "timestamp": "2026-11-19T17:42:46+00:00",
+      "tool_versions": {
+        "mbse": "0.1.0",
+        "networkx": "3.7",
+        "python": "3.15.0"
+      },
+      "workflow_run_id": ""
+    },
+    "nodes": [
+      {
+        "attributes": {
+          "implements": []
+        },
+        "id": "src/thermostat/__init__.py",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "src/thermostat/__init__.py",
+        "sha256": "1c137a2d55bc196c2835753978c581adb6911109c7b55b789868fa94826253ca",
+        "type": "CodeModule",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "implements": [
+            "REQ-009",
+            "REQ-010",
+            "REQ-013"
+          ]
+        },
+        "id": "src/thermostat/api.py",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "src/thermostat/api.py",
+        "sha256": "24bcb1f1d81585f1e53ce5709fe426eafde1aa721517156cf96229d794694b4e",
+        "type": "CodeModule",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "implements": [
+            "REQ-011",
+            "REQ-012"
+          ]
+        },
+        "id": "src/thermostat/auth.py",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "src/thermostat/auth.py",
+        "sha256": "a47d555e6fb4788cee10db41def916eb965261cb83301a935fbf6fc7aa849886",
+        "type": "CodeModule",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "implements": [
+            "REQ-001",
+            "REQ-003",
+            "REQ-004",
+            "REQ-007"
+          ]
+        },
+        "id": "src/thermostat/controller.py",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "src/thermostat/controller.py",
+        "sha256": "bb10dc5a5a8dfc54972524718c29f0c00176de2d5303f6db74bb052563d12a27",
+        "type": "CodeModule",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "implements": [
+            "REQ-003",
+            "REQ-004"
+          ]
+        },
+        "id": "src/thermostat/heater.py",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "src/thermostat/heater.py",
+        "sha256": "091eafdba0e093861f6a99f7d3d62f2cfdad8cc3862af8bccd4bd8a4d90043e1",
+        "type": "CodeModule",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "implements": [
+            "REQ-005",
+            "REQ-006"
+          ]
+        },
+        "id": "src/thermostat/safety.py",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "src/thermostat/safety.py",
+        "sha256": "6099a8061da3e5e25ace4b6a0a1259c7a2ff4a3fe808d3e655145f6f2f49d929",
+        "type": "CodeModule",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "implements": [
+            "REQ-002"
+          ]
+        },
+        "id": "src/thermostat/sensor.py",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "src/thermostat/sensor.py",
+        "sha256": "61047c3a396329ee37214ccbb59d71fdc0e3924698cfb31f7fade4033d08b16b",
+        "type": "CodeModule",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "implements": [
+            "REQ-008"
+          ]
+        },
+        "id": "src/thermostat/validator.py",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "src/thermostat/validator.py",
+        "sha256": "e2f5cea70f3296f8bc180a8beb657371beb7b3148424396d0a73e280829c8861",
+        "type": "CodeModule",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "author": "rotlerxd",
+          "message": "feat: add impact analysis and pipeline reporting",
+          "short_sha": "2d3f022"
+        },
+        "id": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "last_changed_commit": "2d3f022f7827a5bbfa94298a1e197511c030461b",
+        "path": "",
+        "sha256": "",
+        "type": "Commit",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "allocated_to": "src/thermostat/controller.py",
+          "kind": "behavior",
+          "name": "ControlCycle",
+          "satisfies": [
+            "REQ-001"
+          ]
+        },
+        "id": "BHV-control-loop",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "models/system.yaml",
+        "sha256": "18206a1acd2cd3ec4f7ddb26654bea37895703de760f78eb0e62a39d42720e21",
+        "type": "ModelElement",
+        "version": "1.0.0"
+      },
+      {
+        "attributes": {
+          "allocated_to": "src/thermostat/api.py",
+          "kind": "block",
+          "name": "RestApi",
+          "satisfies": [
+            "REQ-009",
+            "REQ-010",
+            "REQ-013"
+          ]
+        },
+        "id": "BLK-api",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "models/system.yaml",
+        "sha256": "18206a1acd2cd3ec4f7ddb26654bea37895703de760f78eb0e62a39d42720e21",
+        "type": "ModelElement",
+        "version": "1.0.0"
+      },
+      {
+        "attributes": {
+          "allocated_to": "src/thermostat/auth.py",
+          "kind": "block",
+          "name": "AuthMiddleware",
+          "satisfies": [
+            "REQ-011",
+            "REQ-012"
+          ]
+        },
+        "id": "BLK-auth",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "models/system.yaml",
+        "sha256": "18206a1acd2cd3ec4f7ddb26654bea37895703de760f78eb0e62a39d42720e21",
+        "type": "ModelElement",
+        "version": "1.0.0"
+      },
+      {
+        "attributes": {
+          "allocated_to": "src/thermostat/controller.py",
+          "kind": "block",
+          "name": "TemperatureController",
+          "satisfies": [
+            "REQ-001",
+            "REQ-003",
+            "REQ-004",
+            "REQ-007"
+          ]
+        },
+        "id": "BLK-controller",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "models/system.yaml",
+        "sha256": "18206a1acd2cd3ec4f7ddb26654bea37895703de760f78eb0e62a39d42720e21",
+        "type": "ModelElement",
+        "version": "1.0.0"
+      },
+      {
+        "attributes": {
+          "allocated_to": "src/thermostat/heater.py",
+          "kind": "block",
+          "name": "HeaterActuator",
+          "satisfies": [
+            "REQ-003",
+            "REQ-004"
+          ]
+        },
+        "id": "BLK-heater",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "models/system.yaml",
+        "sha256": "18206a1acd2cd3ec4f7ddb26654bea37895703de760f78eb0e62a39d42720e21",
+        "type": "ModelElement",
+        "version": "1.0.0"
+      },
+      {
+        "attributes": {
+          "allocated_to": "src/thermostat/safety.py",
+          "kind": "block",
+          "name": "SafetyMonitorController",
+          "satisfies": [
+            "REQ-005",
+            "REQ-006"
+          ]
+        },
+        "id": "BLK-safety",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "models/system.yaml",
+        "sha256": "18206a1acd2cd3ec4f7ddb26654bea37895703de760f78eb0e62a39d42720e21",
+        "type": "ModelElement",
+        "version": "1.0.0"
+      },
+      {
+        "attributes": {
+          "allocated_to": "src/thermostat/sensor.py",
+          "kind": "block",
+          "name": "SensorInterface",
+          "satisfies": [
+            "REQ-002"
+          ]
+        },
+        "id": "BLK-sensor",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "models/system.yaml",
+        "sha256": "18206a1acd2cd3ec4f7ddb26654bea37895703de760f78eb0e62a39d42720e21",
+        "type": "ModelElement",
+        "version": "1.0.0"
+      },
+      {
+        "attributes": {
+          "allocated_to": "src/thermostat/validator.py",
+          "kind": "block",
+          "name": "SetpointValidator",
+          "satisfies": [
+            "REQ-008"
+          ]
+        },
+        "id": "BLK-validator",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "models/system.yaml",
+        "sha256": "18206a1acd2cd3ec4f7ddb26654bea37895703de760f78eb0e62a39d42720e21",
+        "type": "ModelElement",
+        "version": "1.0.0"
+      },
+      {
+        "attributes": {
+          "allocated_to": "src/thermostat/api.py",
+          "kind": "interface",
+          "name": "RestInterface",
+          "satisfies": [
+            "REQ-009",
+            "REQ-010"
+          ]
+        },
+        "id": "IF-rest",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "models/system.yaml",
+        "sha256": "18206a1acd2cd3ec4f7ddb26654bea37895703de760f78eb0e62a39d42720e21",
+        "type": "ModelElement",
+        "version": "1.0.0"
+      },
+      {
+        "attributes": {
+          "allocated_to": "src/thermostat/sensor.py",
+          "kind": "interface",
+          "name": "SensorInterface",
+          "satisfies": [
+            "REQ-002"
+          ]
+        },
+        "id": "IF-sensor",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "models/system.yaml",
+        "sha256": "18206a1acd2cd3ec4f7ddb26654bea37895703de760f78eb0e62a39d42720e21",
+        "type": "ModelElement",
+        "version": "1.0.0"
+      },
+      {
+        "attributes": {
+          "version": "1.0.0"
+        },
+        "id": "release-1.0.0",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "models/system.yaml",
+        "sha256": "18206a1acd2cd3ec4f7ddb26654bea37895703de760f78eb0e62a39d42720e21",
+        "type": "Release",
+        "version": "1.0.0"
+      },
+      {
+        "attributes": {},
+        "id": "build/reports/coverage.xml",
+        "last_changed_commit": "",
+        "path": "build/reports/coverage.xml",
+        "sha256": "92654f1bc710af05ed426f07343578b219806bd4c86414e455ae684e143d3e3d",
+        "type": "Report",
+        "version": "1.0"
+      },
+      {
+        "attributes": {},
+        "id": "build/reports/junit.xml",
+        "last_changed_commit": "",
+        "path": "build/reports/junit.xml",
+        "sha256": "9f3b70446584603e10042d4408d08a0cddf6eb39bda33edca5e741203195c289",
+        "type": "Report",
+        "version": "1.0"
+      },
+      {
+        "attributes": {},
+        "id": "build/reports/req_quality.json",
+        "last_changed_commit": "",
+        "path": "build/reports/req_quality.json",
+        "sha256": "a69d1e4eede39a4a41076dc65fb18fba16af5d8daa7d18064098a81ab1adc087",
+        "type": "Report",
+        "version": "1.0"
+      },
+      {
+        "attributes": {},
+        "id": "build/reports/reqcov.json",
+        "last_changed_commit": "",
+        "path": "build/reports/reqcov.json",
+        "sha256": "34abdada090f214a067ce528ebf4caa230f2e621f2e35f085c7f9535a172ef43",
+        "type": "Report",
+        "version": "1.0"
+      },
+      {
+        "attributes": {},
+        "id": "build/reports/rtm.csv",
+        "last_changed_commit": "",
+        "path": "build/reports/rtm.csv",
+        "sha256": "4e678131b3a6c20bf437b97606bbec487adac38cc23156fdbdd5488909f942f7",
+        "type": "Report",
+        "version": "1.0"
+      },
+      {
+        "attributes": {},
+        "id": "build/reports/rtm.html",
+        "last_changed_commit": "",
+        "path": "build/reports/rtm.html",
+        "sha256": "c1aa0a3f32fc87b97215cb303ab459f801f811f2bb105ec7511587909f07b0fe",
+        "type": "Report",
+        "version": "1.0"
+      },
+      {
+        "attributes": {},
+        "id": "build/reports/rtm.md",
+        "last_changed_commit": "",
+        "path": "build/reports/rtm.md",
+        "sha256": "fc33f349d3539967adfa98c266545cb3073120accef960adb26fdfb9c5956e59",
+        "type": "Report",
+        "version": "1.0"
+      },
+      {
+        "attributes": {},
+        "id": "build/reports/sbom.json",
+        "last_changed_commit": "",
+        "path": "build/reports/sbom.json",
+        "sha256": "5661337c705c683825cb5cabc11d81609586d2210a3bb5a7ae1eb1d4153d4bce",
+        "type": "Report",
+        "version": "1.0"
+      },
+      {
+        "attributes": {},
+        "id": "build/reports/security.json",
+        "last_changed_commit": "",
+        "path": "build/reports/security.json",
+        "sha256": "cf5077ebb1cd1f26df8f4eac1b1bf5db794901ae09f47afeb6fdd29fb819b017",
+        "type": "Report",
+        "version": "1.0"
+      },
+      {
+        "attributes": {},
+        "id": "build/reports/security.sarif",
+        "last_changed_commit": "",
+        "path": "build/reports/security.sarif",
+        "sha256": "607fc5714ae7c66c6a22eb1c1f5fe3ea23eb1edff965ff10ec196ecd463acf69",
+        "type": "Report",
+        "version": "1.0"
+      },
+      {
+        "attributes": {},
+        "id": "build/reports/thread_diff.md",
+        "last_changed_commit": "",
+        "path": "build/reports/thread_diff.md",
+        "sha256": "89884b28ce1c0ae3bfe4d4c550e1a28f9970f9bd318e4c582479ad52d74a8b4e",
+        "type": "Report",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": null,
+          "priority": "high",
+          "status": "approved",
+          "title": "Temperature setpoint tracking",
+          "type": "functional",
+          "verification": "test"
+        },
+        "id": "REQ-001",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-001.yaml",
+        "sha256": "fe51c8ebce45841286fd0acc7f8e8a75091db46440a3665845136f5c7a8087e3",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": null,
+          "priority": "medium",
+          "status": "approved",
+          "title": "Periodic sensor sampling",
+          "type": "interface",
+          "verification": "test"
+        },
+        "id": "REQ-002",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-002.yaml",
+        "sha256": "b1b2c4d2cc948fcdee0b49f4134e42f84c54b667b19f669fad4d8ce0e2a4b146",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": "REQ-001",
+          "priority": "medium",
+          "status": "approved",
+          "title": "Heating activation below hysteresis band",
+          "type": "functional",
+          "verification": "test"
+        },
+        "id": "REQ-003",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-003.yaml",
+        "sha256": "b6d2d85449bc1f1dcd780d1e07f63a839e76c36f8b90e5a6b21c7b055a149edf",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": "REQ-001",
+          "priority": "medium",
+          "status": "approved",
+          "title": "Heating deactivation above hysteresis band",
+          "type": "functional",
+          "verification": "test"
+        },
+        "id": "REQ-004",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-004.yaml",
+        "sha256": "3ca7c9843c853addfcb45d8220e86a410d15bbe4a09865f0591c0503a0d0c662",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": null,
+          "priority": "high",
+          "status": "approved",
+          "title": "Over-temperature shutdown",
+          "type": "safety",
+          "verification": "test"
+        },
+        "id": "REQ-005",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-005.yaml",
+        "sha256": "593528957d7f3342f98e8d02c3adb755b9a30bdf398ea459a5ee5b023936b54f",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": null,
+          "priority": "high",
+          "status": "approved",
+          "title": "Missing-sensor fail-safe",
+          "type": "safety",
+          "verification": "test"
+        },
+        "id": "REQ-006",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-006.yaml",
+        "sha256": "2a086f1a4d586580fc196f06c599f6c30378805d0de09d2b41e31dd690dffe0a",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": null,
+          "priority": "medium",
+          "status": "approved",
+          "title": "Setpoint change response time",
+          "type": "performance",
+          "verification": "test"
+        },
+        "id": "REQ-007",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-007.yaml",
+        "sha256": "cc9c8d3af8729b420814d991d0cdee4a8665af14beaa25e6d7fa651b4c0319b9",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": null,
+          "priority": "medium",
+          "status": "approved",
+          "title": "Setpoint range validation",
+          "type": "functional",
+          "verification": "test"
+        },
+        "id": "REQ-008",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-008.yaml",
+        "sha256": "f41805f6530977ab8a295829afbad559714ac750bc79b0c508242a11fb48eb92",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": null,
+          "priority": "medium",
+          "status": "approved",
+          "title": "Status REST endpoint",
+          "type": "interface",
+          "verification": "test"
+        },
+        "id": "REQ-009",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-009.yaml",
+        "sha256": "0ddc95f6360afc73c3f3046068262fbc541a04e2c78c8fbd13783221d5ce13c4",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": null,
+          "priority": "medium",
+          "status": "approved",
+          "title": "Setpoint update endpoint",
+          "type": "interface",
+          "verification": "test"
+        },
+        "id": "REQ-010",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-010.yaml",
+        "sha256": "7b62a9910a4fabdf2b3764b6cbee79a6347a82d0c1abdc4279f1079b93623331",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": "REQ-010",
+          "priority": "high",
+          "status": "approved",
+          "title": "Authenticated setpoint updates",
+          "type": "security",
+          "verification": "test"
+        },
+        "id": "REQ-011",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-011.yaml",
+        "sha256": "28ccf23168c36a18a77ade5d11fc9c5f45da8e2e894ae3ac39230ff467b430f7",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": null,
+          "priority": "high",
+          "status": "approved",
+          "title": "Token confidentiality in logs",
+          "type": "security",
+          "verification": "test"
+        },
+        "id": "REQ-012",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-012.yaml",
+        "sha256": "173a1bcc724fb32b08273f6a04d82d6d710b22300a37bf09789744031a8ca51d",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "parent": "REQ-009",
+          "priority": "medium",
+          "status": "approved",
+          "title": "Status endpoint latency",
+          "type": "performance",
+          "verification": "test"
+        },
+        "id": "REQ-013",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "requirements/REQ-013.yaml",
+        "sha256": "ac6ad0747bc2d7800b5ea2cf015c9c5c711c23ca52add01a0b25de9f76a73996",
+        "type": "Requirement",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.005903,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-012"
+          ]
+        },
+        "id": "tests/integration/test_api.py::test_api_token_is_never_logged",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.006974,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-009"
+          ]
+        },
+        "id": "tests/integration/test_api.py::test_get_status_does_not_require_token",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.01045,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-009"
+          ]
+        },
+        "id": "tests/integration/test_api.py::test_get_status_returns_complete_state",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.010896,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-008",
+            "REQ-010"
+          ]
+        },
+        "id": "tests/integration/test_api.py::test_put_setpoint_out_of_range_returns_422",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.011101,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-010"
+          ]
+        },
+        "id": "tests/integration/test_api.py::test_put_setpoint_updates_controller",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.004351,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-011"
+          ]
+        },
+        "id": "tests/integration/test_api.py::test_put_setpoint_with_basic_auth_is_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.005012,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-011"
+          ]
+        },
+        "id": "tests/integration/test_api.py::test_put_setpoint_with_wrong_token_is_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.01057,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-011"
+          ]
+        },
+        "id": "tests/integration/test_api.py::test_put_setpoint_without_token_is_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.015342,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-006"
+          ]
+        },
+        "id": "tests/integration/test_api.py::test_status_enters_fail_safe_after_three_missing_readings",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0074,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-005"
+          ]
+        },
+        "id": "tests/integration/test_api.py::test_status_reports_fail_safe_on_over_temperature",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.475906,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-013"
+          ]
+        },
+        "id": "tests/perf/test_status_perf.py::test_status_p95_under_100_ms",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/perf/test_status_perf.py",
+        "sha256": "cb3f91aecb6aec43ae2c0abf0984d1f6bb7dde675e6314133ea7424eab7a111c",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.00016,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-001"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_001_temperature_is_held_within_deadband",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.000494,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-002"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_002_sensor_is_read_every_five_seconds",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.9e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-003"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_003_heating_activates_below_setpoint_minus_half",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.3e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-004"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_004_heating_deactivates_at_setpoint_plus_half",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 8.6e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-005"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_005_heating_is_forced_off_above_30_degrees",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 7e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-006"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_006_three_missing_readings_enter_fail_safe",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 6e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-007"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_007_setpoint_change_takes_effect_immediately",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-008"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_008_inclusive_setpoint_bounds_are_accepted",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-008"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_008_invalid_setpoints_are_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.005921,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-009"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_009_get_status_exposes_current_state",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.011969,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-010"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_010_put_setpoint_accepts_updates",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.009743,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-011"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_011_put_setpoint_requires_api_token",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.00572,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-012"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_012_api_token_is_not_logged",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.127578,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-013"
+          ]
+        },
+        "id": "tests/requirements/test_requirements.py::test_req_013_get_status_responds_under_100_ms",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-011"
+          ]
+        },
+        "id": "tests/unit/test_auth.py::test_bad_authorization_is_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_auth.py",
+        "sha256": "e7a7ea11539133bd8ac1394214a31d59b1dc3c4bf1815ecbec798a59cafae6b9",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.8e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-011"
+          ]
+        },
+        "id": "tests/unit/test_auth.py::test_correct_bearer_token_is_authorized",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_auth.py",
+        "sha256": "e7a7ea11539133bd8ac1394214a31d59b1dc3c4bf1815ecbec798a59cafae6b9",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.000103,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-012"
+          ]
+        },
+        "id": "tests/unit/test_auth.py::test_redact_hides_secret",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_auth.py",
+        "sha256": "e7a7ea11539133bd8ac1394214a31d59b1dc3c4bf1815ecbec798a59cafae6b9",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 7e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-003"
+          ]
+        },
+        "id": "tests/unit/test_controller.py::test_heating_activates_below_setpoint_minus_delta",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.5e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-004"
+          ]
+        },
+        "id": "tests/unit/test_controller.py::test_heating_deactivates_at_upper_threshold",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.6e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-003"
+          ]
+        },
+        "id": "tests/unit/test_controller.py::test_heating_not_activated_exactly_at_lower_threshold",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 4.8e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-001"
+          ]
+        },
+        "id": "tests/unit/test_controller.py::test_heating_stays_off_inside_deadband",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.4e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-001"
+          ]
+        },
+        "id": "tests/unit/test_controller.py::test_heating_stays_on_inside_deadband",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 4.7e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-004"
+          ]
+        },
+        "id": "tests/unit/test_controller.py::test_heating_stays_on_just_below_upper_threshold",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-007",
+            "REQ-008"
+          ]
+        },
+        "id": "tests/unit/test_controller.py::test_invalid_setpoint_raises_and_is_not_applied",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 7.5e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-007"
+          ]
+        },
+        "id": "tests/unit/test_controller.py::test_setpoint_change_applies_immediately",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 6e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-005"
+          ]
+        },
+        "id": "tests/unit/test_safety.py::test_exactly_max_temperature_is_allowed",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 6.2e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-005"
+          ]
+        },
+        "id": "tests/unit/test_safety.py::test_over_temperature_latch_survives_normal_readings",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 4.8e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-005"
+          ]
+        },
+        "id": "tests/unit/test_safety.py::test_over_temperature_latches_fail_safe_and_turns_heater_off",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 6.5e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-005",
+            "REQ-006"
+          ]
+        },
+        "id": "tests/unit/test_safety.py::test_reset_clears_latched_fail_safe",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.6e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-006"
+          ]
+        },
+        "id": "tests/unit/test_safety.py::test_reset_clears_missing_reading_fail_safe",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.7e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-006"
+          ]
+        },
+        "id": "tests/unit/test_safety.py::test_three_missing_readings_latch_fail_safe_and_turn_heater_off",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 4.8e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-006"
+          ]
+        },
+        "id": "tests/unit/test_safety.py::test_two_missing_readings_do_not_trigger_fail_safe",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.000106,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-006"
+          ]
+        },
+        "id": "tests/unit/test_safety.py::test_valid_reading_resets_missing_counter",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 7e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-002"
+          ]
+        },
+        "id": "tests/unit/test_sensor.py::test_default_sensor_repeatedly_reads_21_degrees",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_sensor.py",
+        "sha256": "b46c563025b08beeb6b0f2717aab3b8afd1e020a27b8c03eeeaa266cb4abaf62",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 4.6e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-002"
+          ]
+        },
+        "id": "tests/unit/test_sensor.py::test_sensor_interval_is_five_seconds",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_sensor.py",
+        "sha256": "b46c563025b08beeb6b0f2717aab3b8afd1e020a27b8c03eeeaa266cb4abaf62",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 4.7e-05,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-002"
+          ]
+        },
+        "id": "tests/unit/test_sensor.py::test_sensor_sticks_at_last_reading",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_sensor.py",
+        "sha256": "b46c563025b08beeb6b0f2717aab3b8afd1e020a27b8c03eeeaa266cb4abaf62",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-008"
+          ]
+        },
+        "id": "tests/unit/test_validator.py::test_boolean_values_are_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_validator.py",
+        "sha256": "f5ba766f88c74ef79b6cbe3576e32d5892f8e28e4e5e1698b98af7f6ce177a50",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-008"
+          ]
+        },
+        "id": "tests/unit/test_validator.py::test_inclusive_bounds_are_accepted",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_validator.py",
+        "sha256": "f5ba766f88c74ef79b6cbe3576e32d5892f8e28e4e5e1698b98af7f6ce177a50",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-008"
+          ]
+        },
+        "id": "tests/unit/test_validator.py::test_non_finite_values_are_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_validator.py",
+        "sha256": "f5ba766f88c74ef79b6cbe3576e32d5892f8e28e4e5e1698b98af7f6ce177a50",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed",
+          "requirements": [
+            "REQ-008"
+          ]
+        },
+        "id": "tests/unit/test_validator.py::test_out_of_range_values_are_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_validator.py",
+        "sha256": "f5ba766f88c74ef79b6cbe3576e32d5892f8e28e4e5e1698b98af7f6ce177a50",
+        "type": "Test",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.005903,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/integration/test_api.py::test_api_token_is_never_logged",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.006974,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/integration/test_api.py::test_get_status_does_not_require_token",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.01045,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/integration/test_api.py::test_get_status_returns_complete_state",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.010896,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/integration/test_api.py::test_put_setpoint_out_of_range_returns_422",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.011101,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/integration/test_api.py::test_put_setpoint_updates_controller",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.004351,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/integration/test_api.py::test_put_setpoint_with_basic_auth_is_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.005012,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/integration/test_api.py::test_put_setpoint_with_wrong_token_is_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.01057,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/integration/test_api.py::test_put_setpoint_without_token_is_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.015342,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/integration/test_api.py::test_status_enters_fail_safe_after_three_missing_readings",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0074,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/integration/test_api.py::test_status_reports_fail_safe_on_over_temperature",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/integration/test_api.py",
+        "sha256": "6a598d0d54f4800344eb58e8ce6ff7c991bec8c699da1fffae3c0ab68483595e",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.475906,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/perf/test_status_perf.py::test_status_p95_under_100_ms",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/perf/test_status_perf.py",
+        "sha256": "cb3f91aecb6aec43ae2c0abf0984d1f6bb7dde675e6314133ea7424eab7a111c",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.00016,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_001_temperature_is_held_within_deadband",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.000494,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_002_sensor_is_read_every_five_seconds",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.9e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_003_heating_activates_below_setpoint_minus_half",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.3e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_004_heating_deactivates_at_setpoint_plus_half",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 8.6e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_005_heating_is_forced_off_above_30_degrees",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 7e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_006_three_missing_readings_enter_fail_safe",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 6e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_007_setpoint_change_takes_effect_immediately",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_008_inclusive_setpoint_bounds_are_accepted",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_008_invalid_setpoints_are_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.005921,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_009_get_status_exposes_current_state",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.011969,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_010_put_setpoint_accepts_updates",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.009743,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_011_put_setpoint_requires_api_token",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.00572,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_012_api_token_is_not_logged",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.127578,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/requirements/test_requirements.py::test_req_013_get_status_responds_under_100_ms",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/requirements/test_requirements.py",
+        "sha256": "13a0c535c72bf9eed4c4c8f911304d2e343c06a8c0786bd01f68d9e4855f9265",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_auth.py::test_bad_authorization_is_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_auth.py",
+        "sha256": "e7a7ea11539133bd8ac1394214a31d59b1dc3c4bf1815ecbec798a59cafae6b9",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.8e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_auth.py::test_correct_bearer_token_is_authorized",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_auth.py",
+        "sha256": "e7a7ea11539133bd8ac1394214a31d59b1dc3c4bf1815ecbec798a59cafae6b9",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.000103,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_auth.py::test_redact_hides_secret",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_auth.py",
+        "sha256": "e7a7ea11539133bd8ac1394214a31d59b1dc3c4bf1815ecbec798a59cafae6b9",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 7e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_controller.py::test_heating_activates_below_setpoint_minus_delta",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.5e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_controller.py::test_heating_deactivates_at_upper_threshold",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.6e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_controller.py::test_heating_not_activated_exactly_at_lower_threshold",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 4.8e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_controller.py::test_heating_stays_off_inside_deadband",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.4e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_controller.py::test_heating_stays_on_inside_deadband",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 4.7e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_controller.py::test_heating_stays_on_just_below_upper_threshold",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_controller.py::test_invalid_setpoint_raises_and_is_not_applied",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 7.5e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_controller.py::test_setpoint_change_applies_immediately",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_controller.py",
+        "sha256": "6cad051e940f0b7a88f54c9f427fd2b9ede18f00524e94deb055f6fb40bd36ab",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 6e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_safety.py::test_exactly_max_temperature_is_allowed",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 6.2e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_safety.py::test_over_temperature_latch_survives_normal_readings",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 4.8e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_safety.py::test_over_temperature_latches_fail_safe_and_turns_heater_off",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 6.5e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_safety.py::test_reset_clears_latched_fail_safe",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.6e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_safety.py::test_reset_clears_missing_reading_fail_safe",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 5.7e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_safety.py::test_three_missing_readings_latch_fail_safe_and_turn_heater_off",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 4.8e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_safety.py::test_two_missing_readings_do_not_trigger_fail_safe",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.000106,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_safety.py::test_valid_reading_resets_missing_counter",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_safety.py",
+        "sha256": "564829f53789d03cee1c2848f9e6d058964a994bbaf3306bad991239094f65fb",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 7e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_sensor.py::test_default_sensor_repeatedly_reads_21_degrees",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_sensor.py",
+        "sha256": "b46c563025b08beeb6b0f2717aab3b8afd1e020a27b8c03eeeaa266cb4abaf62",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 4.6e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_sensor.py::test_sensor_interval_is_five_seconds",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_sensor.py",
+        "sha256": "b46c563025b08beeb6b0f2717aab3b8afd1e020a27b8c03eeeaa266cb4abaf62",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 4.7e-05,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_sensor.py::test_sensor_sticks_at_last_reading",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_sensor.py",
+        "sha256": "b46c563025b08beeb6b0f2717aab3b8afd1e020a27b8c03eeeaa266cb4abaf62",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_validator.py::test_boolean_values_are_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_validator.py",
+        "sha256": "f5ba766f88c74ef79b6cbe3576e32d5892f8e28e4e5e1698b98af7f6ce177a50",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_validator.py::test_inclusive_bounds_are_accepted",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_validator.py",
+        "sha256": "f5ba766f88c74ef79b6cbe3576e32d5892f8e28e4e5e1698b98af7f6ce177a50",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_validator.py::test_non_finite_values_are_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_validator.py",
+        "sha256": "f5ba766f88c74ef79b6cbe3576e32d5892f8e28e4e5e1698b98af7f6ce177a50",
+        "type": "TestResult",
+        "version": "1.0"
+      },
+      {
+        "attributes": {
+          "duration": 0.0,
+          "outcome": "passed"
+        },
+        "id": "RESULT:tests/unit/test_validator.py::test_out_of_range_values_are_rejected",
+        "last_changed_commit": "34b6729deb39442573a8822d06e746b8915d61ca",
+        "path": "tests/unit/test_validator.py",
+        "sha256": "f5ba766f88c74ef79b6cbe3576e32d5892f8e28e4e5e1698b98af7f6ce177a50",
+        "type": "TestResult",
+        "version": "1.0"
+      }
+    ],
+    "schema_version": "1.0"
+  },
+  "version": "v1.0.0"
+}

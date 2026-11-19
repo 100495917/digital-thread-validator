@@ -17,6 +17,9 @@ from . import thread_query as thread_query_module
 from . import thread_visual as thread_visual_module
 from . import trace as trace_module
 from . import validate_model, validate_reqs, validate_schema
+from .baseline import diff_baselines, write_baseline, write_baseline_diff
+from .changelog import write_changelog
+from .commits import check_commits
 from .findings import Finding, sort_findings
 from .generate import (
     generate_all,
@@ -27,16 +30,12 @@ from .generate import (
     generate_test_stubs,
 )
 from .loaders import LoadError, Requirement, load_model, load_requirements
+from .metrics import write_metrics
 from .reqcov import compute_requirements_coverage, write_reqcov_report
 from .security import gate_failed as security_gate_failed
 from .security import run_all as run_security_scan
 from .security import write_sarif as write_security_sarif
 from .security import write_security_report
-
-
-def _not_implemented(command: str, phase: int) -> None:
-    """Fail clearly for commands scheduled for a later implementation phase."""
-    raise click.ClickException(f"{command} is implemented in Phase {phase} of PLAN.md")
 
 
 def _display_path(path: Path) -> str:
@@ -497,9 +496,96 @@ def security() -> None:
 
 
 @cli.command()
+@click.option(
+    "--version",
+    default=None,
+    metavar="VERSION",
+    help="Release version to title the changelog with.",
+)
+@click.option(
+    "--output",
+    "output_path",
+    type=click.Path(path_type=Path, dir_okay=False),
+    default=Path("build/reports/changelog.md"),
+    show_default=True,
+    help="Destination changelog path.",
+)
+def changelog(version: str | None, output_path: Path) -> None:
+    """Generate the release changelog from conventional commits."""
+    try:
+        path = write_changelog(version, output=output_path, root=Path("."))
+    except OSError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    click.echo(_display_path(Path(path)))
+
+
+@cli.command()
 def metrics() -> None:
     """Compute pipeline and delivery metrics."""
-    _not_implemented("metrics", 13)
+    root = Path(".")
+    try:
+        path = Path(write_metrics(root=root))
+    except OSError as exc:
+        raise click.ClickException(str(exc)) from exc
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        payload = {}
+
+    deployment = payload.get("deployment_frequency") or {}
+    lead_time = payload.get("lead_time_hours") or {}
+    failures = payload.get("change_failure_rate") or {}
+    restore = payload.get("mean_time_to_restore_hours") or {}
+    pipeline = payload.get("pipeline") or {}
+
+    click.echo(
+        f"deployment_frequency: {deployment.get('per_week', 0.0)}/week "
+        f"({deployment.get('releases', 0)} releases in "
+        f"{deployment.get('window_days', 0)} days)"
+    )
+    click.echo(f"lead_time_median_hours: {lead_time.get('median', 0.0)}")
+    click.echo(
+        f"change_failure_rate: {float(failures.get('rate', 0.0)) * 100:.1f}% "
+        f"({failures.get('failed', 0)}/{failures.get('total', 0)})"
+    )
+    click.echo(f"mttr_hours: {restore.get('mean', 0.0)}")
+    click.echo(
+        f"tests: {pipeline.get('tests_passed', 0)} passed, "
+        f"{pipeline.get('tests_failed', 0)} failed, "
+        f"{pipeline.get('flaky_tests', 0)} flaky"
+    )
+    click.echo(f"coverage: {pipeline.get('coverage_percent', 0.0)}%")
+    click.echo(_display_path(path))
+
+
+@cli.group()
+def commits() -> None:
+    """Validate commit messages and requirement references."""
+
+
+@commits.command("check")
+@click.option(
+    "--range",
+    "range_spec",
+    default="HEAD~1..HEAD",
+    show_default=True,
+    metavar="RANGE",
+    help="Git revision range to inspect.",
+)
+@click.option(
+    "--strict",
+    is_flag=True,
+    help="Treat conventional-commit findings as errors.",
+)
+def commits_check(range_spec: str, strict: bool) -> None:
+    """Check commit subjects in a revision range."""
+    findings = check_commits(range_spec=range_spec, root=Path("."), strict=strict)
+    errors, _ = _emit_findings(findings)
+    click.echo(f"commits: {len(findings)} finding(s)")
+
+    if errors:
+        sys.exit(1)
 
 
 @cli.group()
@@ -507,13 +593,46 @@ def baseline() -> None:
     """Manage and compare release baselines."""
 
 
+@baseline.command("freeze")
+@click.argument("version")
+def baseline_freeze(version: str) -> None:
+    """Freeze the current artifacts, RTM, and thread as a baseline."""
+    try:
+        path = write_baseline(version, root=Path("."))
+    except OSError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    click.echo(_display_path(Path(path)))
+
+
+def _diff_counts(diff: dict, key: str) -> str:
+    """Render added/removed/changed counts for one baseline section."""
+    section = diff.get(key) or {}
+    changed = section.get("changed", section.get("modified", []))
+    return (
+        f"{len(section.get('added', []))} added, "
+        f"{len(section.get('removed', []))} removed, "
+        f"{len(changed)} changed"
+    )
+
+
 @baseline.command("diff")
-@click.argument("old", required=False)
-@click.argument("new", required=False)
-def baseline_diff(old: str | None, new: str | None) -> None:
+@click.argument("old")
+@click.argument("new")
+def baseline_diff(old: str, new: str) -> None:
     """Show requirement, model, and test changes between two baselines."""
-    _ = (old, new)
-    _not_implemented("baseline diff", 11)
+    root = Path(".")
+    try:
+        diff = diff_baselines(old, new, root=root)
+        json_path, markdown_path = write_baseline_diff(old, new, root=root)
+    except (OSError, ValueError) as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    click.echo(f"artifacts: {_diff_counts(diff, 'artifacts')}")
+    click.echo(f"rtm: {_diff_counts(diff, 'rtm')}")
+    click.echo(f"thread: {_diff_counts(diff, 'thread')}")
+    click.echo(_display_path(Path(json_path)))
+    click.echo(_display_path(Path(markdown_path)))
 
 
 def main() -> None:

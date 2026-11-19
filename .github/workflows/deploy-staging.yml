@@ -1,0 +1,136 @@
+name: Deploy Staging
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false
+
+jobs:
+  deploy-staging:
+    name: Deploy to staging
+    runs-on: ubuntu-latest
+
+    environment:
+      name: staging
+      url: http://127.0.0.1:8000/status
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: infra/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+
+      - name: Scan image with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: image
+          image-ref: ghcr.io/${{ github.repository }}:${{ github.sha }}
+          format: table
+          severity: CRITICAL
+          exit-code: "1"
+
+      - name: Deploy with Compose
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          THERMOSTAT_API_TOKEN: ${{ secrets.THERMOSTAT_API_TOKEN || 'dev-token' }}
+        run: |
+          # Use the exact image that was scanned and pushed instead of
+          # rebuilding it during `compose up`.
+          docker pull "ghcr.io/${GITHUB_REPOSITORY}:${GITHUB_SHA}"
+          docker tag "ghcr.io/${GITHUB_REPOSITORY}:${GITHUB_SHA}" \
+            "digital-thread-validator:${IMAGE_TAG}"
+          docker compose -f infra/docker-compose.staging.yml up -d --no-build --remove-orphans
+
+      - name: Wait for API health
+        run: |
+          curl --fail --silent --show-error \
+            --retry 30 --retry-delay 2 --retry-all-errors \
+            http://127.0.0.1:8000/status
+
+      - name: Run smoke tests
+        env:
+          THERMOSTAT_API_TOKEN: ${{ secrets.THERMOSTAT_API_TOKEN || 'dev-token' }}
+        run: |
+          python scripts/smoke_test.py \
+            --base-url http://127.0.0.1:8000 \
+            --token "$THERMOSTAT_API_TOKEN"
+
+      - name: Collect container logs
+        if: always()
+        run: |
+          mkdir -p build/reports
+          docker compose -f infra/docker-compose.staging.yml logs --no-color \
+            > build/reports/staging-compose.log 2>&1 || true
+
+      - name: Upload deployment reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: staging-deployment
+          path: |
+            build/reports/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Update digital thread with deployment
+        env:
+          DEPLOY_ENVIRONMENT: staging
+          DEPLOY_IMAGE_TAG: ${{ github.sha }}
+        run: mbse thread update
+
+      - name: Upload digital thread
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: digital-thread-staging
+          path: digital_thread/
+          retention-days: 30
+          if-no-files-found: warn
+
+  production:
+    name: Production deployment (placeholder)
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+
+    environment:
+      name: production
+
+    steps:
+      - name: Production deployment placeholder
+        run: echo "Production deployment is not configured for this project."

@@ -9,6 +9,7 @@ import mbse.cli as cli_module
 import pytest
 from click.testing import CliRunner
 from mbse.cli import cli
+from mbse.findings import Finding
 from mbse.thread import ThreadEdge, ThreadGraph, ThreadNode
 
 TOP_LEVEL_COMMANDS = [
@@ -22,6 +23,8 @@ TOP_LEVEL_COMMANDS = [
     "security",
     "metrics",
     "baseline",
+    "changelog",
+    "commits",
 ]
 
 
@@ -791,3 +794,278 @@ def test_report_prints_status_and_summary_paths(
     assert "build/reports/summary.json" in result.output
     assert "build/reports/summary.md" in result.output
     assert "docs/generated/summary.md" in result.output
+
+
+def test_help_lists_freeze_diff_and_commit_check() -> None:
+    runner = CliRunner()
+
+    baseline_help = runner.invoke(cli, ["baseline", "--help"])
+    assert baseline_help.exit_code == 0
+    assert "freeze" in baseline_help.output
+    assert "diff" in baseline_help.output
+
+    commits_help = runner.invoke(cli, ["commits", "--help"])
+    assert commits_help.exit_code == 0
+    assert "check" in commits_help.output
+
+
+def test_baseline_freeze_writes_baseline_and_prints_path(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    baseline = tmp_path / "baselines/baseline-v1.0.0.json"
+    calls: list[tuple[str, Path]] = []
+
+    def fake_write(version: str, root: Path = Path(".")) -> Path:
+        calls.append((version, root))
+        baseline.parent.mkdir(parents=True, exist_ok=True)
+        baseline.write_text("{}\n", encoding="utf-8")
+        return baseline
+
+    monkeypatch.setattr(cli_module, "write_baseline", fake_write)
+
+    result = CliRunner().invoke(cli, ["baseline", "freeze", "v1.0.0"])
+
+    assert result.exit_code == 0, result.output
+    assert "baselines/baseline-v1.0.0.json" in result.output
+    assert calls == [("v1.0.0", Path("."))]
+    assert baseline.is_file()
+
+
+def _baseline_diff_payload() -> dict:
+    return {
+        "old": "v1.0.0",
+        "new": "v1.1.0",
+        "artifacts": {
+            "added": ["src/new.py"],
+            "removed": [],
+            "changed": ["requirements/REQ-003.yaml", "models/system.yaml"],
+        },
+        "rtm": {"added": [], "removed": [], "changed": ["REQ-003"]},
+        "thread": {"added": ["REQ-003"], "removed": [], "changed": []},
+    }
+
+
+def test_baseline_diff_prints_counts_and_paths(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    diff = _baseline_diff_payload()
+    json_path = tmp_path / "build/reports/baseline_diff.json"
+    markdown_path = tmp_path / "build/reports/baseline_diff.md"
+    calls: dict[str, object] = {}
+
+    def fake_diff(old: str, new: str, root: Path = Path(".")) -> dict:
+        calls["diff"] = (old, new, root)
+        return diff
+
+    def fake_write_diff(old: str, new: str, root: Path = Path(".")) -> tuple[Path, Path]:
+        calls["write"] = (old, new, root)
+        return json_path, markdown_path
+
+    monkeypatch.setattr(cli_module, "diff_baselines", fake_diff)
+    monkeypatch.setattr(cli_module, "write_baseline_diff", fake_write_diff)
+
+    result = CliRunner().invoke(cli, ["baseline", "diff", "v1.0.0", "v1.1.0"])
+
+    assert result.exit_code == 0, result.output
+    assert "artifacts: 1 added, 0 removed, 2 changed" in result.output
+    assert "rtm: 0 added, 0 removed, 1 changed" in result.output
+    assert "thread: 1 added, 0 removed, 0 changed" in result.output
+    assert "build/reports/baseline_diff.json" in result.output
+    assert "build/reports/baseline_diff.md" in result.output
+    assert calls["diff"] == ("v1.0.0", "v1.1.0", Path("."))
+    assert calls["write"] == ("v1.0.0", "v1.1.0", Path("."))
+
+
+def test_baseline_diff_missing_baseline_exits_one(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    def fake_diff(old: str, new: str, root: Path = Path(".")) -> dict:
+        raise FileNotFoundError(f"Baseline '{old}' not found: baselines/baseline-{old}.json")
+
+    monkeypatch.setattr(cli_module, "diff_baselines", fake_diff)
+
+    result = CliRunner().invoke(cli, ["baseline", "diff", "v9.9.9", "v1.0.0"])
+
+    assert result.exit_code == 1
+    assert "Baseline 'v9.9.9' not found" in result.output
+    assert "Traceback" not in result.output
+
+
+def test_changelog_uses_default_output_and_prints_path(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    calls: dict[str, object] = {}
+
+    def fake_write(version: str | None, output: Path | None = None, root: Path = Path(".")) -> Path:
+        calls["write"] = (version, output, root)
+        path = Path(output) if output is not None else root / "build/reports/changelog.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("# Changelog\n", encoding="utf-8")
+        return path
+
+    monkeypatch.setattr(cli_module, "write_changelog", fake_write)
+
+    result = CliRunner().invoke(cli, ["changelog", "--version", "v1.0.0"])
+
+    assert result.exit_code == 0, result.output
+    assert "build/reports/changelog.md" in result.output
+    assert calls["write"] == ("v1.0.0", Path("build/reports/changelog.md"), Path("."))
+    assert (tmp_path / "build/reports/changelog.md").is_file()
+
+
+def test_changelog_writes_custom_output(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.chdir(tmp_path)
+    written = tmp_path / "docs/changelog.md"
+
+    def fake_write(version: str | None, output: Path | None = None, root: Path = Path(".")) -> Path:
+        _ = (version, root)
+        path = Path(output) if output is not None else written
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("# Changelog\n", encoding="utf-8")
+        return path
+
+    monkeypatch.setattr(cli_module, "write_changelog", fake_write)
+
+    result = CliRunner().invoke(
+        cli, ["changelog", "--version", "v1.1.0", "--output", "docs/changelog.md"]
+    )
+
+    assert result.exit_code == 0, result.output
+    assert "docs/changelog.md" in result.output
+    assert written.is_file()
+
+
+def _commit_finding(severity: str, path: str = "abc1234") -> Finding:
+    return Finding(
+        path=path,
+        rule="CC-001",
+        severity=severity,
+        message='Commit subject is not a conventional commit: "update stuff"',
+    )
+
+
+def test_commits_check_clean_range_exits_zero(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    calls: dict[str, object] = {}
+
+    def fake_check(
+        range_spec: str = "HEAD~1..HEAD",
+        root: Path = Path("."),
+        strict: bool = False,
+    ) -> list[Finding]:
+        calls["check"] = (range_spec, root, strict)
+        return []
+
+    monkeypatch.setattr(cli_module, "check_commits", fake_check)
+
+    result = CliRunner().invoke(cli, ["commits", "check"])
+
+    assert result.exit_code == 0, result.output
+    assert "commits: 0 finding(s)" in result.output
+    assert calls["check"] == ("HEAD~1..HEAD", Path("."), False)
+
+
+def test_commits_check_reports_warnings_without_failing(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    findings = [_commit_finding("warning")]
+    calls: dict[str, object] = {}
+
+    def fake_check(
+        range_spec: str = "HEAD~1..HEAD",
+        root: Path = Path("."),
+        strict: bool = False,
+    ) -> list[Finding]:
+        calls["check"] = (range_spec, root, strict)
+        return findings
+
+    monkeypatch.setattr(cli_module, "check_commits", fake_check)
+
+    result = CliRunner().invoke(cli, ["commits", "check", "--range", "main..HEAD"])
+
+    assert result.exit_code == 0, result.output
+    assert (
+        'abc1234: CC-001 warning: Commit subject is not a conventional commit: "update stuff"'
+        in result.output
+    )
+    assert "commits: 1 finding(s)" in result.output
+    assert calls["check"] == ("main..HEAD", Path("."), False)
+
+
+def test_commits_check_strict_error_exits_one(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    findings = [_commit_finding("error")]
+    calls: dict[str, object] = {}
+
+    def fake_check(
+        range_spec: str = "HEAD~1..HEAD",
+        root: Path = Path("."),
+        strict: bool = False,
+    ) -> list[Finding]:
+        calls["check"] = (range_spec, root, strict)
+        return findings
+
+    monkeypatch.setattr(cli_module, "check_commits", fake_check)
+
+    result = CliRunner().invoke(cli, ["commits", "check", "--strict"])
+
+    assert result.exit_code == 1
+    assert "abc1234: CC-001 error:" in result.output
+    assert calls["check"] == ("HEAD~1..HEAD", Path("."), True)
+
+
+def _metrics_payload() -> dict:
+    return {
+        "deployment_frequency": {"releases": 6, "window_days": 30, "per_week": 1.4},
+        "lead_time_hours": {"median": 12.5, "samples": 4},
+        "change_failure_rate": {"failed": 1, "total": 5, "rate": 0.2},
+        "mean_time_to_restore_hours": {"mean": 4.25, "incidents": 1},
+        "pipeline": {
+            "tests_total": 11,
+            "tests_passed": 10,
+            "tests_failed": 1,
+            "flaky_tests": 2,
+            "coverage_percent": 87.5,
+        },
+        "stages": [{"name": "build", "duration_seconds": 12.5}],
+        "source": "git",
+        "status": "ok",
+    }
+
+
+def test_metrics_prints_dora_pipeline_values_and_path(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    metrics_path = tmp_path / "build/reports/metrics.json"
+    calls: list[Path] = []
+
+    def fake_write(root: Path = Path(".")) -> Path:
+        calls.append(root)
+        metrics_path.parent.mkdir(parents=True, exist_ok=True)
+        metrics_path.write_text(json.dumps(_metrics_payload()), encoding="utf-8")
+        return metrics_path
+
+    monkeypatch.setattr(cli_module, "write_metrics", fake_write)
+
+    result = CliRunner().invoke(cli, ["metrics"])
+
+    assert result.exit_code == 0, result.output
+    assert "deployment_frequency: 1.4/week (6 releases in 30 days)" in result.output
+    assert "lead_time_median_hours: 12.5" in result.output
+    assert "change_failure_rate: 20.0% (1/5)" in result.output
+    assert "mttr_hours: 4.25" in result.output
+    assert "tests: 10 passed, 1 failed, 2 flaky" in result.output
+    assert "coverage: 87.5%" in result.output
+    assert "build/reports/metrics.json" in result.output
+    assert calls == [Path(".")]
