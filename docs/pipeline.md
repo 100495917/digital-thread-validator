@@ -195,7 +195,9 @@ table per section and links to each report under `reports/`.
 The command also writes the generated site pages
 `docs/generated/summary.md`, `tests.md`, `security.md`, `impact.md`, and
 `metrics.md`, with current pipeline counts and links `../reports/<file>`; DORA
-metrics are not part of this stage. Finally every file in `build/reports/` is
+metrics are produced separately by `mbse metrics` (see
+[Metrics and feedback](#metrics-and-feedback)). Finally every file in
+`build/reports/` is
 copied to `docs/reports/`, overwriting stale copies. Output is deterministic and
 contains no timestamps. The command prints the overall status and the written
 paths.
@@ -210,6 +212,247 @@ when a gate fails. It builds the site with `mkdocs build --strict`, uploads
 Pages actions. The `pr-impact.yml` workflow runs the same impact analysis on
 pull requests against the base branch and posts `build/reports/impact.md` as a
 single sticky PR comment, alongside the impact and RTM-diff artifacts.
+
+## Baselines
+
+A baseline freezes the state of the digital thread at a release boundary. It
+records content hashes rather than copies, so it is small, deterministic, and
+reviewable in a pull request.
+
+```bash
+mbse baseline freeze v1.0.0          # write baselines/baseline-v1.0.0.json
+mbse baseline diff v1.0.0 v1.1.0     # compare two frozen baselines
+```
+
+`mbse baseline freeze VERSION` writes `baselines/baseline-<VERSION>.json` and
+prints the path. The payload has sorted keys and no timestamps:
+
+| Key | Contents |
+|---|---|
+| `version` | The requested baseline name, for example `v1.0.0` |
+| `artifacts` | SHA-256 hash per tracked file under `requirements/`, `models/`, `src/**/*.py`, and `tests/**/*.py`, keyed by repository-relative path |
+| `rtm` | The current requirement traceability matrix rows from `build/reports/rtm.csv`, sorted by requirement ID |
+| `thread` | The current digital-thread snapshot from `digital_thread/thread.json`, including every node hash |
+
+`mbse baseline diff OLD NEW` loads both files, compares artifacts, RTM rows
+keyed by requirement ID, and thread nodes keyed by node ID, and reports added,
+removed, and changed entries for each. It writes
+`build/reports/baseline_diff.json` and `build/reports/baseline_diff.md`, then
+prints the artifact, RTM, and thread change counts with both paths. A missing
+baseline is a `ClickException`, so the command exits 1 instead of producing a
+partial comparison.
+
+Typical workflow: freeze `v1.0.0` when the first release is green, develop on a
+branch, then freeze `v1.1.0` on the next release tag and run
+`mbse baseline diff v1.0.0 v1.1.0` to review exactly which requirements, model
+elements, code files, tests, and thread nodes moved. Generated diff reports
+contain no timestamps and are byte-identical for unchanged baselines.
+
+## Release workflow
+
+`.github/workflows/release.yml` runs on any pushed `v*` tag (and manually through
+`workflow_dispatch` with a `version` input). It is a full release pipeline, not
+just packaging:
+
+1. Check out the repository with full history.
+2. Install the project and run `mbse validate all`, `mbse trace check`, `pytest`,
+   and `mbse security`; any failure stops the release.
+3. Run `mbse thread update` so the release's thread snapshot includes the tagged
+   commit.
+4. Run `mbse baseline freeze "$VERSION"` to write
+   `baselines/baseline-$VERSION.json`.
+5. Generate the changelog with
+   `mbse changelog --version "$VERSION" --output "CHANGELOG-$VERSION.md"`. The
+   release uses the built-in Python generator, which is the documented fallback
+   when `git-cliff` is unavailable.
+6. Upload the release assets as a workflow artifact and create a GitHub Release
+   with `softprops/action-gh-release`, failing if an expected asset is missing.
+
+The GitHub Release carries these assets:
+
+| Asset | Contents |
+|---|---|
+| `baselines/baseline-<version>.json` | Frozen artifact hashes, RTM, and thread snapshot |
+| `CHANGELOG-<version>.md` | Conventional-commit changelog for the release |
+| `build/reports/rtm.csv` | Requirement traceability matrix |
+| `build/reports/sbom.json` | CycloneDX software bill of materials |
+| `build/reports/summary.json` | Aggregated pipeline status |
+| `digital_thread/thread.json` | Digital-thread snapshot at the tag |
+
+The changelog generator groups commits by conventional type (`feat`, `fix`,
+`perf`, `refactor`, `docs`, `test`, `build`, `ci`, `chore`, `style`, `revert`)
+in a fixed order, lists each subject with its short SHA, appends referenced
+`REQ-nnn` identifiers, and covers the range from the previous `v*` tag to
+`HEAD` (or the last 100 commits when there is no previous tag).
+`mbse changelog --version VERSION --output PATH` writes to `PATH`, defaulting to
+`build/reports/changelog.md`. `git-cliff` is not required: the repository uses
+the Python generator directly, and the decision record explains why.
+
+## Conventional commits
+
+`mbse commits check` validates commit subjects in a revision range:
+
+```bash
+mbse commits check                              # default HEAD~1..HEAD
+mbse commits check --range origin/main..HEAD
+mbse commits check --range origin/main..HEAD --strict
+```
+
+| Rule | Check |
+|---|---|
+| `CC-001` | The subject matches `type(scope): summary`, with `type` in the conventional set |
+| `CC-002` | A commit touching `requirements/`, `models/`, or `src/` mentions a `REQ-nnn` identifier in its subject or body |
+
+Findings print as `{path}: {rule} {severity}: {message}`, where the path is the
+short commit SHA. Without `--strict` the findings are warnings and the command
+exits 0; with `--strict` they are errors and any finding exits 1. CI runs the
+non-strict check on every push and pull request. Merge commits and commits that
+touch no traced artifacts are still checked by `CC-001`; commits that touch no
+traced artifact skip `CC-002`.
+
+## CI pipeline and required checks
+
+`.github/workflows/ci.yml` runs on pushes and pull requests that touch
+requirements, models, source, tests, the pipeline, infrastructure, or workflows.
+Its jobs form a directed acyclic graph:
+
+```mermaid
+flowchart TD
+    L[lint-validate<br/>pre-commit, validate all, commits check] --> T[trace-check]
+    L --> G[generate]
+    L --> X[test<br/>pytest + reqcov]
+    L --> S[security]
+    T --> I[impact]
+    X --> I
+    X --> TH[thread-update]
+    S --> TH
+    G --> TH
+    L --> R[report]
+    T --> R
+    G --> R
+    X --> R
+    S --> R
+    TH --> R
+    I --> R
+    R --> DS[deploy-staging<br/>push to main only]
+    DS --> PRD[production<br/>manual approval]
+```
+
+| Job | Checks |
+|---|---|
+| `lint-validate` | `pre-commit run --all-files`, `mbse validate all`, `mbse commits check` |
+| `trace-check` | `mbse trace check` |
+| `generate` | `mbse generate all`; uploads generated docs, diagrams, stubs, OpenAPI, and SBOM |
+| `test` | `pytest`, then `mbse reqcov` |
+| `security` | `mbse security` gate plus SARIF reports |
+| `thread-update` | `mbse thread update`; uploads the thread snapshot and diff |
+| `impact` | `mbse impact --base origin/<base> --head HEAD` on PRs, `HEAD~1` on pushes |
+| `report` | Downloads every report artifact and runs `mbse report` |
+
+These jobs are the required status checks for branch protection: a pull request
+must pass lint/validate, traceability, generation, tests with requirement
+coverage, security, impact analysis, and the aggregate report before merging.
+The `report` job has `if: always()` and uses `continue-on-error` downloads so it
+still writes `summary.json`, `summary.md`, generated site pages, and artifact
+copies when an upstream gate failed; the upstream job failures remain visible in
+the workflow.
+
+Related workflows:
+
+| Workflow | Trigger | Purpose |
+|---|---|---|
+| `security.yml` | Pull requests and pushes to `main` | Gitleaks, Bandit and Semgrep SARIF, pip-audit with CycloneDX SBOM, Trivy filesystem scan |
+| `pages.yml` | Pushes to `main`, manual dispatch | Rebuild reports and the MkDocs site, deploy GitHub Pages |
+| `pr-impact.yml` | Pull requests | Post or update one sticky impact comment and upload impact artifacts |
+| `thread.yml` | Pushes to `main`, manual dispatch | Persist thread history to the orphan `digital-thread` branch |
+| `release.yml` | `v*` tags, manual dispatch | Full release pipeline, baseline, changelog, GitHub Release |
+| `deploy-staging.yml` | Pushes to `main`, manual dispatch | Build, scan, and deploy the staging stack; rollback is separate |
+| `rollback.yml` | Manual dispatch | Redeploy a previous image tag and re-run smoke tests |
+
+## Staging deployment and rollback
+
+Staging delivery is Docker-based. `infra/Dockerfile` builds the Smart Thermostat
+API, and `infra/docker-compose.staging.yml` runs it with a health check against
+`GET /status` on port 8000. Prometheus and Grafana are optional `monitoring`
+profile services and are not part of the deploy gate.
+
+`.github/workflows/deploy-staging.yml` runs on pushes to `main` and manual
+dispatch with the `staging` environment:
+
+1. Build the image from `infra/Dockerfile` and push it to GHCR tagged with the
+   commit SHA.
+2. Scan that exact image with Trivy and fail on CRITICAL vulnerabilities.
+3. Pull the scanned image, tag it locally, and start the Compose stack with
+   `--no-build --remove-orphans`.
+4. Wait for `http://127.0.0.1:8000/status` to answer.
+5. Run `scripts/smoke_test.py`, which checks `GET /status`, rejects an
+   unauthenticated `PUT /setpoint`, validates setpoint range handling, and
+   measures 100 `GET /status` requests to assert a p95 latency under 100 ms
+   (the REQ-013 performance threshold).
+6. Collect container logs into `build/reports/staging-compose.log` and upload
+   them, then run `mbse thread update` with `DEPLOY_ENVIRONMENT=staging` and
+   `DEPLOY_IMAGE_TAG=<sha>`.
+
+The deployment metadata creates a `Deployment` node in the digital thread and a
+`DEPLOYED_AS` edge from the commit to that node; the snapshot metadata records
+the environment and image tag. The `production` job in the same workflow is a
+placeholder behind the `production` environment, so it waits for an explicit
+manual approval and does not deploy automatically.
+
+To roll back, run the `Rollback` workflow manually with the previous commit SHA
+as `image_tag` and the target `environment`. It pulls
+`ghcr.io/<owner>/<repo>:<tag>`, retags it for Compose, recreates the services,
+waits for health, repeats the smoke suite including the p95 check, and uploads
+`build/reports/rollback-compose.log`. Because images are immutable and tagged
+by SHA, rollback never rebuilds code.
+
+## Metrics and feedback
+
+`mbse metrics` writes `build/reports/metrics.json` and prints the DORA
+deployment frequency, lead-time median, change failure rate, MTTR, test totals,
+coverage, and the metrics path. The command is read-only and degrades a missing
+git repository or report to zeros instead of failing; output is deterministic
+and contains no timestamps. The command exits 0 for both complete and partial
+metrics so it can run on machines without git history.
+
+### DORA metrics
+
+| Metric | Definition and source |
+|---|---|
+| Deployment frequency | `v*` tags created in the trailing 30 days, reported as releases and per-week rate |
+| Lead time for changes | Median hours from commit to the latest release tag; without tags, median hours from commits in the last 30 days to now |
+| Change failure rate | Failed reports divided by recorded `pass`/`fail` runs in `build/reports/pipeline_runs.json` |
+| Mean time to restore | Mean hours between `opened` and `restored` timestamps in `build/reports/incidents.json` |
+
+All four are derived from local git history and report files, so no GitHub API
+token is required. A GitHub API client is optional and only enriches the data;
+the committed pipeline is offline-capable by design.
+
+### Pipeline metrics
+
+`metrics.json` also carries the `pipeline` section (`tests_total`,
+`tests_passed`, `tests_failed`, `flaky_tests` from `build/reports/flaky.json`,
+and `coverage_percent` from `coverage.xml`) and a `stages` array read from
+`build/reports/timings.json`. `source` is `git` and `status` is `ok`, or
+`partial` when git is unavailable. The report page `docs/generated/summary.md`
+links the current metrics alongside the other reports.
+
+### Latency feedback loop
+
+`scripts/feedback.py` closes the loop between deployed latency and REQ-013:
+
+```bash
+python scripts/feedback.py --observed-p95-ms 120
+python scripts/feedback.py --observed-p95-ms 120 --apply
+```
+
+It reads the REQ-013 threshold from the requirements, compares the observed p95
+`GET /status` latency, writes `build/reports/feedback.json`, and exits 1 when
+the threshold is violated. With `--apply`, a violation opens or updates a GitHub
+issue through the `gh` CLI (using the token available in CI); when `gh` is
+missing, unauthenticated, or offline, the issue action is reported as `skipped`
+with a reason instead of failing the measurement. The same p95 check is
+enforced in staging and after a rollback.
 
 ## Digital thread
 

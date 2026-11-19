@@ -16,6 +16,7 @@ nav:
   - Decisions: decisions.md
   - Pipeline: pipeline.md
   - Digital thread: thread.md
+  - Demo: demo.md
   - DevSecOps: devsecops.md
 
 markdown_extensions:
