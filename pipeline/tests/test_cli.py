@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import textwrap
 from pathlib import Path
 from types import SimpleNamespace
@@ -8,6 +9,7 @@ import mbse.cli as cli_module
 import pytest
 from click.testing import CliRunner
 from mbse.cli import cli
+from mbse.thread import ThreadEdge, ThreadGraph, ThreadNode
 
 TOP_LEVEL_COMMANDS = [
     "validate",
@@ -364,3 +366,256 @@ def test_security_fails_gate_with_findings(tmp_path: Path, monkeypatch: pytest.M
     assert result.exit_code == 1
     assert "gitleaks: failed (1 finding(s))" in result.output
     assert "1 finding(s), gate failed" in result.output
+
+
+def _thread_node(node_id: str, node_type: str, **attributes: object) -> ThreadNode:
+    return ThreadNode(
+        id=node_id,
+        type=node_type,
+        path=attributes.get("path", f"path/{node_id}"),
+        sha256="a" * 64,
+        version="1.0",
+        last_changed_commit="",
+        attributes=dict(attributes),
+    )
+
+
+def _thread_graph() -> ThreadGraph:
+    requirement = _thread_node("REQ-001", "Requirement", title="Status reporting")
+    result = _thread_node(
+        "RESULT:tests/test_demo.py::test_status",
+        "TestResult",
+        outcome="failed",
+        duration=0.01,
+    )
+    edge = ThreadEdge(
+        source="REQ-001",
+        target="RESULT:tests/test_demo.py::test_status",
+        type="RESULT_OF",
+    )
+    return ThreadGraph(metadata={}, nodes=[requirement, result], edges=[edge])
+
+
+def _patch_thread_graph(monkeypatch: pytest.MonkeyPatch, graph: ThreadGraph) -> None:
+    monkeypatch.setattr(cli_module.thread_module, "load_graph", lambda root=Path("."): graph)
+
+
+def test_thread_build_prints_counts_and_written_paths(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    graph = _thread_graph()
+    thread_path = tmp_path / "digital_thread/thread.json"
+    visual_paths = [tmp_path / "docs/thread.html", tmp_path / "docs/thread.md"]
+    calls: dict[str, object] = {}
+
+    def fake_build(root: Path = Path(".")) -> ThreadGraph:
+        calls["build_root"] = root
+        return graph
+
+    def fake_write(value: ThreadGraph, root: Path = Path(".")) -> Path:
+        calls["write_root"] = root
+        calls["write_graph"] = value
+        return thread_path
+
+    def fake_visualize(value: ThreadGraph, root: Path = Path(".")) -> list[Path]:
+        calls["visual_graph"] = value
+        return visual_paths
+
+    monkeypatch.setattr(cli_module.thread_module, "build_graph", fake_build)
+    monkeypatch.setattr(cli_module.thread_module, "write_thread", fake_write)
+    monkeypatch.setattr(cli_module.thread_visual_module, "generate_visualizations", fake_visualize)
+
+    result = CliRunner().invoke(cli, ["thread", "build"])
+
+    assert result.exit_code == 0, result.output
+    assert "nodes: 2, edges: 1" in result.output
+    assert "digital_thread/thread.json" in result.output
+    assert "docs/thread.html" in result.output
+    assert "docs/thread.md" in result.output
+    assert calls["build_root"] == Path(".")
+    assert calls["write_root"] == Path(".")
+    assert calls["write_graph"] is graph
+    assert calls["visual_graph"] is graph
+
+
+def test_thread_update_prints_summary_and_paths(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    graph = _thread_graph()
+    thread_path = tmp_path / "digital_thread/thread.json"
+    snapshot = tmp_path / "digital_thread/history/local.json"
+    diff_report = tmp_path / "build/reports/thread_diff.md"
+
+    def fake_update(root: Path = Path(".")) -> dict:
+        _ = root
+        return {
+            "thread": thread_path,
+            "snapshot": snapshot,
+            "diff_report": diff_report,
+            "diff": {
+                "added_nodes": ["REQ-002"],
+                "removed_nodes": [],
+                "modified_nodes": ["REQ-001", "src/demo.py"],
+                "added_edges": [{"source": "A", "target": "B", "type": "VERIFIES"}],
+                "removed_edges": [],
+            },
+            "stale": ["REQ-001", "RESULT:tests/test_demo.py::test_status"],
+        }
+
+    monkeypatch.setattr(cli_module.thread_diff_module, "update_thread", fake_update)
+    _patch_thread_graph(monkeypatch, graph)
+
+    result = CliRunner().invoke(cli, ["thread", "update"])
+
+    assert result.exit_code == 0, result.output
+    assert "nodes: 2, edges: 1" in result.output
+    assert "added: 1, removed: 0, modified: 2, stale: 2" in result.output
+    assert "digital_thread/thread.json" in result.output
+    assert "digital_thread/history/local.json" in result.output
+    assert "build/reports/thread_diff.md" in result.output
+
+
+def test_thread_query_downstream_lists_nodes(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    graph = _thread_graph()
+    start = _thread_node("REQ-001", "Requirement")
+    downstream_nodes = [
+        _thread_node("REQ-002", "Requirement"),
+        _thread_node(
+            "RESULT:tests/test_demo.py::test_status",
+            "TestResult",
+            outcome="failed",
+        ),
+    ]
+
+    _patch_thread_graph(monkeypatch, graph)
+    monkeypatch.setattr(
+        cli_module.thread_query_module, "resolve_node", lambda value, identifier: start
+    )
+    monkeypatch.setattr(
+        cli_module.thread_query_module, "downstream", lambda value, identifier: downstream_nodes
+    )
+
+    result = CliRunner().invoke(cli, ["thread", "query", "--downstream", "REQ-001"])
+
+    assert result.exit_code == 0, result.output
+    lines = result.output.strip().splitlines()
+    assert lines == [
+        "Requirement REQ-002",
+        "TestResult RESULT:tests/test_demo.py::test_status failed",
+    ]
+
+
+def test_thread_query_why_failed_prints_outcome_and_links(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    graph = _thread_graph()
+    test = _thread_node("tests/test_demo.py::test_status", "Test")
+    payload = {
+        "test": test,
+        "result": _thread_node(
+            "RESULT:tests/test_demo.py::test_status", "TestResult", outcome="failed"
+        ),
+        "requirements": ["REQ-001"],
+        "code": ["src/demo.py"],
+        "outcome": "failed",
+    }
+
+    _patch_thread_graph(monkeypatch, graph)
+    monkeypatch.setattr(
+        cli_module.thread_query_module, "resolve_node", lambda value, identifier: test
+    )
+    monkeypatch.setattr(
+        cli_module.thread_query_module, "why_failed", lambda value, identifier: payload
+    )
+
+    result = CliRunner().invoke(
+        cli, ["thread", "query", "--why-failed", "tests/test_demo.py::test_status"]
+    )
+
+    assert result.exit_code == 0, result.output
+    assert "outcome: failed" in result.output
+    assert "requirements: REQ-001" in result.output
+    assert "code: src/demo.py" in result.output
+
+
+def test_thread_query_history_prints_commits(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    graph = _thread_graph()
+    node = _thread_node("REQ-001", "Requirement")
+    entries = [
+        {"commit": "abc1234", "subject": "Add status requirement"},
+        {"commit": "def5678", "subject": "Initial import"},
+    ]
+
+    _patch_thread_graph(monkeypatch, graph)
+    monkeypatch.setattr(
+        cli_module.thread_query_module, "resolve_node", lambda value, identifier: node
+    )
+    monkeypatch.setattr(cli_module.thread_query_module, "history", lambda root, identifier: entries)
+
+    result = CliRunner().invoke(cli, ["thread", "query", "--history", "REQ-001"])
+
+    assert result.exit_code == 0, result.output
+    assert "abc1234 Add status requirement" in result.output
+    assert "def5678 Initial import" in result.output
+
+
+def test_thread_query_json_emits_node_dicts(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    graph = _thread_graph()
+    start = _thread_node("REQ-001", "Requirement")
+    downstream_nodes = [
+        _thread_node("REQ-002", "Requirement"),
+        _thread_node("src/demo.py", "CodeModule"),
+    ]
+
+    _patch_thread_graph(monkeypatch, graph)
+    monkeypatch.setattr(
+        cli_module.thread_query_module, "resolve_node", lambda value, identifier: start
+    )
+    monkeypatch.setattr(
+        cli_module.thread_query_module, "downstream", lambda value, identifier: downstream_nodes
+    )
+
+    result = CliRunner().invoke(cli, ["thread", "query", "--downstream", "REQ-001", "--json"])
+
+    assert result.exit_code == 0, result.output
+    payload = json.loads(result.output)
+    assert [item["id"] for item in payload] == ["REQ-002", "src/demo.py"]
+    assert [item["type"] for item in payload] == ["Requirement", "CodeModule"]
+
+
+def test_thread_query_unknown_node_exits_one(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    _patch_thread_graph(monkeypatch, _thread_graph())
+    monkeypatch.setattr(
+        cli_module.thread_query_module, "resolve_node", lambda value, identifier: None
+    )
+
+    result = CliRunner().invoke(cli, ["thread", "query", "--downstream", "REQ-999"])
+
+    assert result.exit_code == 1
+    assert "unknown node: REQ-999" in result.output
+
+
+def test_thread_query_requires_exactly_one_option(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    result = CliRunner().invoke(cli, ["thread", "query"])
+
+    assert result.exit_code == 2
+    assert "exactly one of --upstream, --downstream, --why-failed, --history" in result.output

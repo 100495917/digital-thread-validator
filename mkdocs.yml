@@ -10,6 +10,7 @@ nav:
   - RTM: generated/rtm.md
   - Decisions: decisions.md
   - Pipeline: pipeline.md
+  - Digital thread: thread.md
   - DevSecOps: devsecops.md
 
 markdown_extensions:

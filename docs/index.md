@@ -21,6 +21,9 @@ these artifacts and writes reports under `build/`.
   requirements to model elements, code, and tests.
 - [Decisions](decisions.md) — binding architecture and tooling decisions.
 - [Pipeline](pipeline.md) — pipeline stages, commands, and report locations.
+- [Digital thread](thread.md) — the versioned graph of requirements, model
+  elements, code, tests, results, reports, commits, and releases, including
+  snapshots, diffs, staleness, and interactive visualization.
 
 ## Quick start
 
@@ -31,5 +34,7 @@ make trace      # check requirement-to-model-to-code-to-test traceability
 make site       # generate docs and build the MkDocs site with --strict
 ```
 
-The generated documentation pages are produced by `mbse generate docs` (run by
-`make site`); the other generated artifacts are produced by `mbse generate all`.
+The requirements, architecture, and RTM pages are produced by `mbse generate
+docs` (run by `make site`); the digital-thread page is produced by
+`mbse thread build`. The other generated artifacts are produced by
+`mbse generate all`.

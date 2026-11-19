@@ -2,11 +2,17 @@
 
 from __future__ import annotations
 
+import dataclasses
+import json
 import sys
 from pathlib import Path
 
 import click
 
+from . import thread as thread_module
+from . import thread_diff as thread_diff_module
+from . import thread_query as thread_query_module
+from . import thread_visual as thread_visual_module
 from . import trace as trace_module
 from . import validate_model, validate_reqs, validate_schema
 from .findings import Finding, sort_findings
@@ -173,22 +179,148 @@ def thread() -> None:
     """Build, update, and query the digital thread."""
 
 
+def _node_dict(node: object) -> dict:
+    """Return a JSON-safe dictionary for a thread node."""
+    return dataclasses.asdict(node)  # type: ignore[arg-type]
+
+
+def _echo_json(payload: object) -> None:
+    """Print a deterministic JSON document."""
+    click.echo(json.dumps(payload, indent=2, sort_keys=True, default=str))
+
+
+def _echo_node(node: object) -> None:
+    """Print one query result line."""
+    line = f"{node.type} {node.id}"  # type: ignore[attr-defined]
+    if node.type == "TestResult":  # type: ignore[attr-defined]
+        outcome = node.attributes.get("outcome", "unknown")  # type: ignore[attr-defined]
+        line += f" {outcome}"
+    click.echo(line)
+
+
+def _why_failed_payload(payload: dict) -> dict:
+    """Convert a why-failed result into JSON-safe data."""
+    test = payload.get("test")
+    result = payload.get("result")
+    return {
+        "test": _node_dict(test) if test is not None else None,
+        "result": _node_dict(result) if result is not None else None,
+        "requirements": list(payload.get("requirements", [])),
+        "code": list(payload.get("code", [])),
+        "outcome": payload.get("outcome"),
+    }
+
+
 @thread.command("build")
 def thread_build() -> None:
     """Build the digital thread graph."""
-    _not_implemented("thread build", 8)
+    root = Path(".")
+    graph = thread_module.build_graph(root=root)
+    thread_path = thread_module.write_thread(graph, root=root)
+    visual_paths = thread_visual_module.generate_visualizations(graph, root=root)
+
+    click.echo(f"nodes: {len(graph.nodes)}, edges: {len(graph.edges)}")
+    for path in [thread_path, *_as_paths(visual_paths)]:
+        click.echo(_display_path(Path(path)))
 
 
 @thread.command("update")
 def thread_update() -> None:
     """Update the digital thread and record its diff."""
-    _not_implemented("thread update", 8)
+    root = Path(".")
+    result = thread_diff_module.update_thread(root=root)
+    graph = thread_module.load_graph(root=root)
+    visual_paths = thread_visual_module.generate_visualizations(graph, root=root)
+    diff = result.get("diff", {})
+    stale = result.get("stale", [])
+
+    click.echo(f"nodes: {len(graph.nodes)}, edges: {len(graph.edges)}")
+    click.echo(
+        f"added: {len(diff.get('added_nodes', []))}, "
+        f"removed: {len(diff.get('removed_nodes', []))}, "
+        f"modified: {len(diff.get('modified_nodes', []))}, "
+        f"stale: {len(stale)}"
+    )
+    for key in ("thread", "snapshot", "diff_report"):
+        path = result.get(key)
+        if path:
+            click.echo(_display_path(Path(path)))
+    for path in _as_paths(visual_paths):
+        click.echo(_display_path(Path(path)))
 
 
 @thread.command("query")
-def thread_query() -> None:
+@click.option("--upstream", "upstream_id", metavar="ID", help="Show upstream nodes.")
+@click.option("--downstream", "downstream_id", metavar="ID", help="Show downstream nodes.")
+@click.option("--why-failed", "why_failed_id", metavar="ID", help="Explain a test result.")
+@click.option("--history", "history_id", metavar="ID", help="Show git history for a node.")
+@click.option("--json", "as_json", is_flag=True, help="Emit JSON.")
+def thread_query(
+    upstream_id: str | None,
+    downstream_id: str | None,
+    why_failed_id: str | None,
+    history_id: str | None,
+    as_json: bool,
+) -> None:
     """Query the digital thread."""
-    _not_implemented("thread query", 8)
+    selected = [
+        (name, value)
+        for name, value in (
+            ("upstream", upstream_id),
+            ("downstream", downstream_id),
+            ("why_failed", why_failed_id),
+            ("history", history_id),
+        )
+        if value is not None
+    ]
+    if len(selected) != 1:
+        raise click.UsageError(
+            "exactly one of --upstream, --downstream, --why-failed, --history is required"
+        )
+
+    mode, identifier = selected[0]
+    root = Path(".")
+    graph = thread_module.load_graph(root=root)
+    node = thread_query_module.resolve_node(graph, identifier)
+    if node is None:
+        raise click.ClickException(f"unknown node: {identifier}")
+
+    if mode == "upstream":
+        nodes = thread_query_module.upstream(graph, identifier)
+        if as_json:
+            _echo_json([_node_dict(item) for item in nodes])
+        else:
+            for item in nodes:
+                _echo_node(item)
+        return
+
+    if mode == "downstream":
+        nodes = thread_query_module.downstream(graph, identifier)
+        if as_json:
+            _echo_json([_node_dict(item) for item in nodes])
+        else:
+            for item in nodes:
+                _echo_node(item)
+        return
+
+    if mode == "why_failed":
+        payload = thread_query_module.why_failed(graph, identifier)
+        if as_json:
+            _echo_json(_why_failed_payload(payload))
+        else:
+            click.echo(f"outcome: {payload.get('outcome') or 'none'}")
+            requirements = ", ".join(payload.get("requirements", [])) or "none"
+            code = ", ".join(payload.get("code", [])) or "none"
+            click.echo(f"requirements: {requirements}")
+            click.echo(f"code: {code}")
+        return
+
+    entries = thread_query_module.history(root, identifier)
+    if as_json:
+        _echo_json(entries)
+    else:
+        for entry in entries:
+            click.echo(f"{entry.get('commit', '')} {entry.get('subject', '')}")
 
 
 @cli.command()

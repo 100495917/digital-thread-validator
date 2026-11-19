@@ -25,7 +25,7 @@ test-selective:
 	if [ -n "$$ids" ]; then $(PY) -m pytest $$ids; else echo "No tests selected"; fi
 
 thread:
-	$(MBSE) thread build
+	$(MBSE) thread update
 
 impact:
 	$(MBSE) impact --base $(BASE) --head $(HEAD)

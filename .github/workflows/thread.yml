@@ -1,0 +1,71 @@
+name: Digital Thread
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Needed to publish the generated snapshots to the orphan `digital-thread`
+# branch. The default GITHUB_TOKEN is sufficient for this repository.
+permissions:
+  contents: write
+
+concurrency:
+  group: digital-thread-snapshot
+  cancel-in-progress: false
+
+jobs:
+  update-thread:
+    name: Build and publish digital thread
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Full history is required for `git log`-based node versioning.
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Update digital thread
+        run: mbse thread update
+
+      - name: Upload digital thread artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: digital_thread
+          path: digital_thread/
+          if-no-files-found: error
+
+      - name: Publish digital thread to orphan branch
+        run: |
+          set -euo pipefail
+
+          SHORT_SHA="$(git rev-parse --short HEAD)"
+
+          # Preserve the generated snapshots outside the work tree before the
+          # orphan checkout clears it.
+          TMP_DIR="$(mktemp -d)"
+          cp -a digital_thread "$TMP_DIR/digital_thread"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout --orphan digital-thread
+          git rm -rf .
+          cp -a "$TMP_DIR/digital_thread" digital_thread
+          git add digital_thread
+          git commit -m "chore: update digital thread for ${SHORT_SHA}"
+          git push --force origin HEAD:digital-thread
+
+          rm -rf "$TMP_DIR"
