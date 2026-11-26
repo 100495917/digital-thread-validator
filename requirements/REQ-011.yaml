@@ -6,5 +6,7 @@ priority: high
 owner: team-security
 verification: test
 status: approved
-rationale: "Only authenticated callers may change the setpoint, so unauthenticated requests cannot alter heating behaviour."
+rationale: >-
+  Only authenticated callers may change the setpoint, so unauthenticated
+  requests cannot alter heating behaviour.
 parent: REQ-010

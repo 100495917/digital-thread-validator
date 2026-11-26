@@ -11,10 +11,11 @@ from __future__ import annotations
 import json
 import statistics
 import subprocess
-import xml.etree.ElementTree as ET
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
+
+from defusedxml import ElementTree as ET
 
 REPORT_DIRECTORY = Path("build") / "reports"
 METRICS_PATH = REPORT_DIRECTORY / "metrics.json"

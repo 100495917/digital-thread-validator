@@ -341,7 +341,7 @@ def _junit_test_id(classname: str, name: str, known: set[str]) -> str:
 
 def _load_junit(root: Path, known: set[str]) -> dict[str, dict[str, Any]]:
     """Load ``junit.xml`` results, resolving cases against known test IDs."""
-    from xml.etree import ElementTree
+    from defusedxml import ElementTree
 
     path = root / "build" / "reports" / "junit.xml"
     try:

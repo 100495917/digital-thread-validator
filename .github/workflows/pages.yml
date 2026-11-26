@@ -49,13 +49,13 @@ jobs:
       - name: Build requirements traceability matrix
         run: mbse trace rtm
 
-      - name: Requirements coverage
-        continue-on-error: true
-        run: mbse reqcov
-
       - name: Run tests
         continue-on-error: true
         run: pytest
+
+      - name: Requirements coverage
+        continue-on-error: true
+        run: mbse reqcov
 
       - name: Security gate
         continue-on-error: true
@@ -64,6 +64,9 @@ jobs:
       - name: Impact analysis
         continue-on-error: true
         run: mbse impact --base HEAD~1 --head HEAD
+
+      - name: Compute MBSE metrics
+        run: mbse metrics
 
       - name: Generate pipeline summary
         run: mbse report

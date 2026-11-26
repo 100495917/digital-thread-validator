@@ -10,9 +10,10 @@ from __future__ import annotations
 
 import json
 import shutil
-import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
+
+from defusedxml import ElementTree as ET
 
 from . import trace as trace_module
 from . import validate_reqs

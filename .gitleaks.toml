@@ -14,6 +14,8 @@ paths = [
   '''(^|/)build/''',
   '''(^|/)site/''',
   '''(^|/)node_modules/''',
+  # Baselines contain SHA-256 artifact hashes, not credentials.
+  '''(^|/)baselines/''',
   '''(^|/)build/reports/sbom\.json$''',
   '''(^|/)build/reports/security\.sarif$''',
   '''(^|/)bandit\.sarif$''',
